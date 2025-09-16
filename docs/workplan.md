@@ -114,6 +114,7 @@ Each module should deliver:
 1. Finalise bibliography and decision log structure (Phase 0).
 2. Draft initial glossary and competency questions for accounts, governance, and node roles (Phase 1).
 3. Prototype the core ontology module skeleton in Protégé, including namespaces and base classes (Phase 2 deliverable).
+   * ✅ Initialised in [`ontology/src/core.ttl`](../ontology/src/core.ttl) with foundational classes and object properties.
 4. Define automation requirements (CI tools, reasoning engines) and capture them as issues for implementation.
 
 ## Risk considerations

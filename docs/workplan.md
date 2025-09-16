@@ -37,6 +37,14 @@ This workplan outlines the research, modelling, validation, and delivery activit
 
 _Current artefacts (2024-05-02):_ [`content-audit`](inventory/content-audit.md), [`context-maps`](inventory/context-maps.md), [`competency backlog`](competency/backlog.md), and [`ontology landscape review`](research/ontology-landscape.md).
 
+### Phase 1 progress review (2025-09-16)
+
+* ✅ The content audit now inventories major Hedera and Hiero services—including consensus, token, smart contract, file, schedule, staking, mirror, governance, and Hiero extensions—giving each an initial ontological description and documentation anchor to guide modelling decisions.
+* ✅ Draft Mermaid-based context maps capture actor-to-service flows, Hiero modular layering, and end-to-end data lifecycles, clarifying how forthcoming OWL modules should interrelate.
+* ✅ The competency question backlog tracks ten multi-stakeholder questions (governance, compliance, developer tooling, analytics, Hiero transition) that will drive prioritisation once validation assets are prepared, though all entries remain in "Draft" status pending evidence gathering.
+* ✅ The external ontology landscape review summarises candidate imports (PROV-O, DCAT, DID Core, FIBO, ODRL, OpenTelemetry) and next actions for profiling them against Hedera requirements.
+* ⚠️ Gaps remain around account- and role-specific glossary detail and around formalising work to answer the highest-priority competency questions; automation requirements are documented conceptually but have not been converted into actionable tasks.
+
 ## Phase 2 – Core ontology foundation (Weeks 3-4)
 
 Focus on cross-cutting abstractions that every module depends on.
@@ -109,13 +117,16 @@ Each module should deliver:
 * **Pilot integrations:** Support proof-of-concept projects (compliance analytics, DeFi dashboards, educational materials) that consume the ontology.
 * **Maintenance cadence:** Establish quarterly review cycles to align with Hedera network upgrades, new HIPs, and Hiero milestones.
 
-## Immediate next actions
+## Immediate next actions (updated 2025-09-16)
 
-1. Finalise bibliography and decision log structure (Phase 0).
-2. Draft initial glossary and competency questions for accounts, governance, and node roles (Phase 1).
-3. Prototype the core ontology module skeleton in Protégé, including namespaces and base classes (Phase 2 deliverable).
-   * ✅ Initialised in [`ontology/src/core.ttl`](../ontology/src/core.ttl) with foundational classes and object properties.
-4. Define automation requirements (CI tools, reasoning engines) and capture them as issues for implementation.
+| # | Action | Status | Notes |
+| - | ------ | ------ | ----- |
+| 1 | Finalise bibliography and decision log structure (Phase 0). | ✅ Complete | Bibliography and decision log are seeded; continue routine maintenance as new Hedera/Hiero releases publish. |
+| 2 | Draft initial glossary and competency questions for accounts, governance, and node roles (Phase 1). | 🟡 In progress | Service-focused glossary coverage exists, but dedicated account/governance role definitions and linked competency evidence still need elaboration. |
+| 3 | Prototype the core ontology module skeleton in Protégé, including namespaces and base classes (Phase 2 deliverable). | ✅ Complete | `ontology/src/core.ttl` provides the foundational class/property scaffold for subsequent modules. |
+| 4 | Define automation requirements (CI tools, reasoning engines) and capture them as issues for implementation. | 🔄 Pending | Toolchain expectations are documented, yet no actionable tickets or scripts exist to operationalise reasoning/validation workflows. |
+| 5 | Promote CQ-GOV-001, CQ-COMP-003, and CQ-DEV-005 to "In review" by gathering required documentation citations, data sources, and draft SPARQL/SHACL validation approaches. | 🔄 New | Focus effort on producing evidence bundles for the highest-priority governance, compliance, and developer competency questions. |
+| 6 | Outline PROV-O/DCAT import and profiling tasks for the core module and schedule implementation in the Phase 2 sprint backlog. | 🔄 New | Translate ontology landscape insights into concrete modelling subtasks (e.g., namespace decisions, import scope, ROBOT templates). |
 
 ## Risk considerations
 

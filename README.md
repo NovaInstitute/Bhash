@@ -59,11 +59,16 @@ Hiero introduces modular network layers, virtualization of consensus participati
    * [`docs/references/bibliography.md`](docs/references/bibliography.md) for canonical sources.
    * [`docs/decisions/log.md`](docs/decisions/log.md) to understand accepted modelling choices.
    * [`docs/tooling/toolchain.md`](docs/tooling/toolchain.md) for ROBOT/Codex setup guidance.
-3. **Set up tooling:**
+3. **Review Phase 1 research outputs:**
+   * [`docs/inventory/content-audit.md`](docs/inventory/content-audit.md) for glossary candidates and modelling hooks.
+   * [`docs/inventory/context-maps.md`](docs/inventory/context-maps.md) for draft actor/service relationship diagrams.
+   * [`docs/competency/backlog.md`](docs/competency/backlog.md) for high-priority competency questions.
+   * [`docs/research/ontology-landscape.md`](docs/research/ontology-landscape.md) for external vocabulary alignment notes.
+4. **Set up tooling:**
    * Install [Protégé](https://protege.stanford.edu/) for authoring OWL axioms.
    * Install [ROBOT](https://robot.obolibrary.org/) with Java 11+ for automation; optional Python environment with [`rdflib`](https://rdflib.readthedocs.io/), [`pyshacl`](https://github.com/RDFLib/pySHACL), and [`owlready2`](https://owlready2.readthedocs.io/).
-4. **Collect source materials:** maintain and extend the shared bibliography of Hedera, Hiero, HIP, and mirror node references under `docs/references/`.
-5. **Model & validate:** start with the seed module defined in the workplan (accounts & governance), ensuring each class/property is backed by documentation quotes and competency questions.
+5. **Collect source materials:** maintain and extend the shared bibliography of Hedera, Hiero, HIP, and mirror node references under `docs/references/`.
+6. **Model & validate:** start with the seed module defined in the workplan (accounts & governance), ensuring each class/property is backed by documentation quotes and competency questions.
 
 ## Contributing
 

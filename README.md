@@ -27,7 +27,6 @@ Hiero introduces modular network layers, virtualization of consensus participati
 ├── README.md              # Project overview and quick links
 ├── LICENSE                # Apache 2.0 (inherited)
 ├── docs/
-│   └── workplan.md        # Detailed execution plan
 └── ontology/
     ├── src/               # OWL/RDF source files (TBD)
     ├── shapes/            # SHACL shapes for data validation (TBD)
@@ -44,22 +43,27 @@ Hiero introduces modular network layers, virtualization of consensus participati
 * **Alignment artifacts** – crosswalk sheets mapping Hedera documentation terms to ontology classes/properties will live under `docs/mappings/` (to be created).
 * **Validation** – SHACL shapes will express structural constraints derived from service APIs; automated reasoning (e.g., via the ELK or HermiT reasoner) will run in CI before releases.
 
+
 ## Working practices
 
 1. **Document-first research** – extract canonical definitions from Hedera documentation, Hiero architectural notes, HIPs, and mirror node API references before introducing new classes.
 2. **Iterative modelling** – deliver scoped ontology modules per Hedera service, validated with sample graphs and SPARQL competency queries.
 3. **Community alignment** – involve Hedera developer relations, HIP authors, and compliance experts for terminology approval and governance modelling.
-4. **Automation** – integrate Python notebooks (RDFlib, OWLReady2) or Java tooling (OWL API, ROBOT) to generate derived artefacts, run reasoning, and publish documentation.
+4. **Automation** – favour ROBOT for automated builds, reasoning, and release packaging while complementing it with Python notebooks (RDFlib, OWLReady2) for data-driven validation.
 5. **Versioning** – use semantic versioning for ontology releases (e.g., `v0.1.0` for initial scaffolding) with changelogs capturing class/property additions, modifications, and deprecations.
 
 ## Getting started
 
 1. **Review the workplan** in [`docs/workplan.md`](docs/workplan.md) to understand the staged deliverables.
-2. **Set up tooling:**
+2. **Consult Phase 0 artefacts:**
+   * [`docs/references/bibliography.md`](docs/references/bibliography.md) for canonical sources.
+   * [`docs/decisions/log.md`](docs/decisions/log.md) to understand accepted modelling choices.
+   * [`docs/tooling/toolchain.md`](docs/tooling/toolchain.md) for ROBOT/Codex setup guidance.
+3. **Set up tooling:**
    * Install [Protégé](https://protege.stanford.edu/) for authoring OWL axioms.
-   * Optionally configure a Python environment with [`rdflib`](https://rdflib.readthedocs.io/), [`pyshacl`](https://github.com/RDFLib/pySHACL), and [`owlready2`](https://owlready2.readthedocs.io/).
-3. **Collect source materials:** maintain a shared bibliography of Hedera, Hiero, HIP, and mirror node references under `docs/references/` (to be established in Phase 0).
-4. **Model & validate:** start with the seed module defined in the workplan (accounts & governance), ensuring each class/property is backed by documentation quotes and competency questions.
+   * Install [ROBOT](https://robot.obolibrary.org/) with Java 11+ for automation; optional Python environment with [`rdflib`](https://rdflib.readthedocs.io/), [`pyshacl`](https://github.com/RDFLib/pySHACL), and [`owlready2`](https://owlready2.readthedocs.io/).
+4. **Collect source materials:** maintain and extend the shared bibliography of Hedera, Hiero, HIP, and mirror node references under `docs/references/`.
+5. **Model & validate:** start with the seed module defined in the workplan (accounts & governance), ensuring each class/property is backed by documentation quotes and competency questions.
 
 ## Contributing
 

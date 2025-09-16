@@ -12,11 +12,13 @@ This workplan outlines the research, modelling, validation, and delivery activit
 
 ## Phase 0 – Project setup (Week 0)
 
-| Deliverable | Description |
-| ----------- | ----------- |
-| Bibliography | Seed `docs/references/` with links to Hedera docs, Hiero technical blog posts, HIP specifications, mirror node API references. |
-| Governance log | Create `docs/decisions/` to capture modelling decisions, open questions, and approvals. |
-| Toolchain | Decide on preferred tooling (Protégé, ROBOT, rdflib notebooks) and document setup scripts. |
+
+| Deliverable | Description | Location / Status |
+| ----------- | ----------- | ----------------- |
+| Bibliography | Seed `docs/references/` with links to Hedera docs, Hiero technical blog posts, HIP specifications, mirror node API references. | [`references/bibliography.md`](references/bibliography.md) initialised with core sources. |
+| Governance log | Create `docs/decisions/` to capture modelling decisions, open questions, and approvals. | [`decisions/log.md`](decisions/log.md) created; ROBOT adoption decision recorded. |
+| Toolchain | Decide on preferred tooling (Protégé, ROBOT, rdflib notebooks) and document setup scripts. | [`tooling/toolchain.md`](tooling/toolchain.md) documents Codex + ROBOT workflow and installation steps. |
+
 
 ## Phase 1 – Domain inventory (Weeks 1-2)
 

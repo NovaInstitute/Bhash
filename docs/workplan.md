@@ -1,0 +1,121 @@
+# Bhash Ontology Workplan
+
+This workplan outlines the research, modelling, validation, and delivery activities required to produce a comprehensive OWL ontology for the Hedera Network and the forthcoming Hiero architecture. The plan assumes an iterative delivery model with fortnightly review cycles and emphasises documentation traceability to the official Hedera manuals, HIPs, mirror node APIs, and Hiero technical notes.
+
+## Guiding principles
+
+* **Documentation-first** – every ontology element must be backed by a citation to Hedera or Hiero documentation, a HIP, or production API schema.
+* **Modular delivery** – deliver service-specific modules that can evolve independently (e.g., consensus, tokens, smart contracts) but share a common upper ontology.
+* **Competency-driven** – define competency questions before modelling and verify them via SPARQL queries or SHACL validation for each module.
+* **Alignment-friendly** – reuse or map to established vocabularies (PROV-O, DCAT, W3C DID, schema.org, FIBO for financial concepts) when semantics align.
+* **Automation-aware** – configure reasoning and validation scripts early so that ontology changes are continuously checked in CI.
+
+## Phase 0 – Project setup (Week 0)
+
+| Deliverable | Description |
+| ----------- | ----------- |
+| Bibliography | Seed `docs/references/` with links to Hedera docs, Hiero technical blog posts, HIP specifications, mirror node API references. |
+| Governance log | Create `docs/decisions/` to capture modelling decisions, open questions, and approvals. |
+| Toolchain | Decide on preferred tooling (Protégé, ROBOT, rdflib notebooks) and document setup scripts. |
+
+## Phase 1 – Domain inventory (Weeks 1-2)
+
+1. **Content audit:** Extract glossary candidates and process descriptions from Hedera docs (HCS, HTS, HSCS, File Service, Scheduled Transactions, Staking, Mirror Nodes, Token Service standards) and Hiero architectural posts.
+2. **Context diagrams:** Draft context maps showing relationships between actors (council, node operators, wallets, dApps), services, and artefacts.
+3. **Competency question backlog:** Capture high-priority queries grouped by stakeholder (governance, compliance, developer tooling, analytics).
+4. **Existing ontology review:** Identify reusable patterns (e.g., ODRL for permissions, FIBO for financial instruments, IETF DID for identifiers).
+
+## Phase 2 – Core ontology foundation (Weeks 3-4)
+
+Focus on cross-cutting abstractions that every module depends on.
+
+* **Upper-level classes:** Define `hedera:Network`, `hedera:Service`, `hedera:Actor`, `hedera:Artefact`, `hedera:Process`, `hedera:Event` with links to external vocabularies (e.g., `prov:Activity`).
+* **Identity & governance:** Model accounts, keys, staking relationships, governance bodies (Hedera Council, community validators), and regulatory roles.
+* **Transaction skeleton:** Capture the lifecycle of a Hedera transaction (initiation, consensus, execution, mirror export) and attach PROV relations for traceability.
+* **Hiero overlay:** Introduce classes for Hiero modular layers (Consensus Layer, Execution Layer, Service Layer), shards, and virtualization constructs that extend the base `hedera:Network` hierarchy.
+* **Artefact registry:** Define object properties for linking services to artefacts (e.g., `hedera:managesArtefact`, `hedera:consumesMessage`).
+* **Outputs:** Core OWL module (`ontology/src/core.ttl`), glossary entries, competency question answers for foundational queries (e.g., "Which entities participate in consensus on mainnet?").
+
+## Phase 3 – Service-specific modules (Weeks 5-10)
+
+Deliver OWL modules iteratively; each sprint targets one service.
+
+### 3A. Consensus Service (HCS)
+
+* Model topics, messages, submission flow, ordering, finality guarantees, message retention policies, and associated throttling/fee schedule concepts.
+* Represent links between topics and consuming applications (e.g., wallets, bridges, compliance pipelines).
+* Encode mirror node export artefacts (gRPC, REST) and retention windows.
+
+### 3B. Token Service (HTS)
+
+* Capture fungible/non-fungible token types, supply controls, treasury accounts, KYC/freeze/kycKey semantics, custom fees, royalty rules (HIP-423), and token relationship state machines.
+* Include HIP-driven standards (HIP-412 for NFTs, HIP-540 for stablecoins) as subclasses or profiles.
+* Model compliance-relevant states (token freeze, KYC, wipe) and events (mint, burn, transfer).
+
+### 3C. Smart Contract Service (HSCS)
+
+* Represent contracts, bytecode, contract accounts, system contracts, EVM compatibility layers, scheduled transactions triggering contracts, and precompile interactions with HTS.
+* Capture gas metering, state access patterns, and relationships to mirror node contract logs.
+
+### 3D. File & Scheduled Transaction Services
+
+* Model File Service entities (files, keys, expiration, content types) and their link to other services (e.g., storing contract bytecode).
+* Describe Scheduled Transactions, including scheduled signatures, expiration, and execution outcomes.
+
+### 3E. Mirror & Analytics Ecosystem
+
+* Capture mirror node types (community, managed, enterprise), data ingestion pipelines, REST/gRPC APIs, and exported datasets (transactions, balances, topics).
+* Model integration touchpoints for Hiero telemetry and node observability.
+
+### 3F. Hiero-specific Enhancements
+
+* Extend modules with Hiero architectural primitives: shards, cross-shard messaging, node roles (consensus, execution, availability), virtualization/rollup constructs, and onboarding workflows for permissionless validators.
+* Align terminology with Hiero documentation and capture transitions from current Hedera mainnet operations.
+
+Each module should deliver:
+
+* OWL file (`ontology/src/<module>.ttl`)
+* SHACL constraints (`ontology/shapes/<module>.ttl`)
+* Competency question log with SPARQL queries and sample answers (`docs/competency/<module>.md`)
+* Mapping table to source documentation (`docs/mappings/<module>.csv`)
+
+## Phase 4 – Integration & alignment (Weeks 11-12)
+
+* **Cross-module consistency:** Run reasoning to ensure shared classes/properties do not conflict; refactor to maintain OWL DL compliance.
+* **External alignment:** Create equivalence/subClassOf relations to external ontologies, document alignments, and resolve semantic gaps.
+* **Data pilots:** Load sample data (mirror node exports, HIP reference payloads) into a triple store (e.g., GraphDB, Blazegraph) and validate SHACL constraints.
+
+## Phase 5 – Publication & automation (Weeks 13-14)
+
+* **Documentation site:** Generate HTML documentation (via Widoco or MkDocs) summarising classes, properties, and examples.
+* **Release management:** Tag the repository (`v0.1.0`), publish packaged ontology files, and document release notes.
+* **CI/CD:** Configure GitHub Actions (or equivalent) to run unit reasoning, SHACL validation, SPARQL regression tests, and produce documentation artifacts on each push.
+
+## Phase 6 – Adoption & feedback (Ongoing)
+
+* **Community feedback loops:** Present ontology modules to Hedera and Hiero community channels, gather feedback, and track change requests.
+* **Pilot integrations:** Support proof-of-concept projects (compliance analytics, DeFi dashboards, educational materials) that consume the ontology.
+* **Maintenance cadence:** Establish quarterly review cycles to align with Hedera network upgrades, new HIPs, and Hiero milestones.
+
+## Immediate next actions
+
+1. Finalise bibliography and decision log structure (Phase 0).
+2. Draft initial glossary and competency questions for accounts, governance, and node roles (Phase 1).
+3. Prototype the core ontology module skeleton in Protégé, including namespaces and base classes (Phase 2 deliverable).
+4. Define automation requirements (CI tools, reasoning engines) and capture them as issues for implementation.
+
+## Risk considerations
+
+| Risk | Mitigation |
+| ---- | ---------- |
+| Rapid evolution of Hiero specifications | Maintain `/draft/` namespace for unstable concepts and schedule frequent documentation reviews. |
+| Overlapping semantics with external ontologies | Use explicit mapping documents and consultation with domain experts before asserting equivalence axioms. |
+| Data availability for validation | Engage mirror node operators early to obtain sample datasets and confirm SHACL constraints mirror production payloads. |
+| Toolchain complexity | Automate environment setup via scripts/containers and document manual alternatives. |
+
+## Success metrics
+
+* Coverage of priority competency questions with passing SPARQL queries.
+* Positive validation of sample datasets against SHACL shapes for each module.
+* Traceability matrix linking ontology elements to Hedera/Hiero documentation and HIP identifiers.
+* Community adoption indicators (issue reports, integration references, citations in HIP discussions).

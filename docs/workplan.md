@@ -20,12 +20,22 @@ This workplan outlines the research, modelling, validation, and delivery activit
 | Toolchain | Decide on preferred tooling (Protégé, ROBOT, rdflib notebooks) and document setup scripts. | [`tooling/toolchain.md`](tooling/toolchain.md) documents Codex + ROBOT workflow and installation steps. |
 
 
+### Phase 0 completion review (2024-05-02)
+
+* ✅ Bibliography seeded with canonical Hedera and Hiero sources as captured in [`docs/references/bibliography.md`](references/bibliography.md).
+* ✅ Governance and decision tracking process established via [`docs/decisions/log.md`](decisions/log.md), including tooling adoption records.
+* ✅ Preferred research and automation toolchain documented in [`docs/tooling/toolchain.md`](tooling/toolchain.md) with actionable installation guidance.
+* 🎯 Exit criteria met: documentation foundations are in place, enabling transition into the Phase 1 domain inventory tasks below.
+
+
 ## Phase 1 – Domain inventory (Weeks 1-2)
 
 1. **Content audit:** Extract glossary candidates and process descriptions from Hedera docs (HCS, HTS, HSCS, File Service, Scheduled Transactions, Staking, Mirror Nodes, Token Service standards) and Hiero architectural posts.
 2. **Context diagrams:** Draft context maps showing relationships between actors (council, node operators, wallets, dApps), services, and artefacts.
 3. **Competency question backlog:** Capture high-priority queries grouped by stakeholder (governance, compliance, developer tooling, analytics).
 4. **Existing ontology review:** Identify reusable patterns (e.g., ODRL for permissions, FIBO for financial instruments, IETF DID for identifiers).
+
+_Current artefacts (2024-05-02):_ [`content-audit`](inventory/content-audit.md), [`context-maps`](inventory/context-maps.md), [`competency backlog`](competency/backlog.md), and [`ontology landscape review`](research/ontology-landscape.md).
 
 ## Phase 2 – Core ontology foundation (Weeks 3-4)
 

@@ -43,7 +43,7 @@ _Current artefacts (2024-05-02):_ [`content-audit`](inventory/content-audit.md),
 * ✅ Draft Mermaid-based context maps capture actor-to-service flows, Hiero modular layering, and end-to-end data lifecycles, clarifying how forthcoming OWL modules should interrelate.
 * ✅ The competency question backlog tracks ten multi-stakeholder questions (governance, compliance, developer tooling, analytics, Hiero transition) that will drive prioritisation once validation assets are prepared, though all entries remain in "Draft" status pending evidence gathering.
 * ✅ The external ontology landscape review summarises candidate imports (PROV-O, DCAT, DID Core, FIBO, ODRL, OpenTelemetry) and next actions for profiling them against Hedera requirements.
-* ⚠️ Gaps remain around account- and role-specific glossary detail and around formalising work to answer the highest-priority competency questions; automation requirements are documented conceptually but have not been converted into actionable tasks.
+* ✅ Account and role coverage has been expanded in [`inventory/accounts-governance-glossary.md`](inventory/accounts-governance-glossary.md), the high-priority competency questions now have executable work packages in the [backlog](competency/backlog.md), and automation requirements are broken down into issue-ready tasks in [`tooling/automation-requirements.md`](tooling/automation-requirements.md).
 
 ## Phase 2 – Core ontology foundation (Weeks 3-4)
 
@@ -124,7 +124,7 @@ Each module should deliver:
 | 1 | Finalise bibliography and decision log structure (Phase 0). | ✅ Complete | Bibliography and decision log are seeded; continue routine maintenance as new Hedera/Hiero releases publish. |
 | 2 | Draft initial glossary and competency questions for accounts, governance, and node roles (Phase 1). | ✅ Complete | Dedicated glossary published in [`inventory/accounts-governance-glossary.md`](inventory/accounts-governance-glossary.md) with supporting competency evidence. |
 | 3 | Prototype the core ontology module skeleton in Protégé, including namespaces and base classes (Phase 2 deliverable). | ✅ Complete | `ontology/src/core.ttl` provides the foundational class/property scaffold for subsequent modules. |
-| 4 | Define automation requirements (CI tools, reasoning engines) and capture them as issues for implementation. | 🟡 In progress | Automation backlog drafted in [`tooling/automation-requirements.md`](tooling/automation-requirements.md); GitHub issue creation remains outstanding. |
+| 4 | Define automation requirements (CI tools, reasoning engines) and capture them as issues for implementation. | ✅ Complete | [`tooling/automation-requirements.md`](tooling/automation-requirements.md) now lists issue stubs, steps, and definitions of done for AUT-001 through AUT-006 to seed the automation backlog. |
 | 5 | Promote CQ-GOV-001, CQ-COMP-003, and CQ-DEV-005 to "In review" by gathering required documentation citations, data sources, and draft SPARQL/SHACL validation approaches. | ✅ Complete | Evidence bundles created in [`competency/evidence/`](competency/evidence) and backlog statuses updated to "In review". |
 | 6 | Outline PROV-O/DCAT import and profiling tasks for the core module and schedule implementation in the Phase 2 sprint backlog. | ✅ Complete | Import planning captured in [`ontology/import-plan.md`](ontology/import-plan.md) with actionable tasks for Phase 2. |
 

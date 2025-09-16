@@ -1,0 +1,287 @@
+@prefix : <https://bhash.dev/hedera/core/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://bhash.dev/hedera/core>
+    a owl:Ontology ;
+    dcterms:title "Bhash Core Ontology"@en ;
+    dcterms:description "Upper-level classes and properties capturing shared Hedera and Hiero network concepts."@en ;
+    dcterms:creator "Bhash Ontology Working Group"@en ;
+    dcterms:license <https://www.apache.org/licenses/LICENSE-2.0> ;
+    dcterms:source <https://docs.hedera.com/hedera> , <https://docs.hedera.com/hiero> ;
+    dcterms:created "2024-05-02"^^xsd:date ;
+    dcterms:modified "2024-05-02"^^xsd:date ;
+    owl:versionIRI <https://bhash.dev/hedera/core/0.1.0-dev> ;
+    owl:versionInfo "0.1.0-dev" ;
+    rdfs:seeAlso <https://hips.hedera.com/> ;
+    skos:editorialNote "This skeleton will evolve as service-specific modules contribute additional classes and properties."@en ;
+    .
+
+###
+# Annotation properties
+###
+
+hedera:sourceDocument
+    a owl:AnnotationProperty ;
+    rdfs:label "source document"@en ;
+    skos:definition "Reference link to Hedera or Hiero documentation that supports an ontology element."@en ;
+    .
+
+###
+# Core classes
+###
+
+hedera:Concept
+    a owl:Class ;
+    rdfs:label "Concept"@en ;
+    skos:definition "Abstract superclass for all Bhash ontology entities."@en ;
+    .
+
+hedera:Actor
+    a owl:Class ;
+    rdfs:label "Actor"@en ;
+    rdfs:subClassOf hedera:Concept , prov:Agent ;
+    skos:definition "An agent that participates in Hedera or Hiero network operations, such as councils, operators, or wallets."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/accounts> ;
+    .
+
+hedera:Network
+    a owl:Class ;
+    rdfs:label "Network"@en ;
+    rdfs:subClassOf hedera:Actor ;
+    skos:definition "A distributed environment (e.g., mainnet, testnet, shard) that provides Hedera services."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/network/nodes/mainnet-nodes> ;
+    .
+
+hedera:GovernanceBody
+    a owl:Class ;
+    rdfs:label "Governance body"@en ;
+    rdfs:subClassOf hedera:Actor ;
+    skos:definition "Formal collective responsible for decision-making over network policy or operations."@en ;
+    hedera:sourceDocument <https://hedera.com/council> ;
+    .
+
+hedera:Role
+    a owl:Class ;
+    rdfs:label "Role"@en ;
+    rdfs:subClassOf hedera:Concept , prov:Role ;
+    skos:definition "Responsibility or capacity that an actor can perform within the network."@en ;
+    .
+
+hedera:Service
+    a owl:Class ;
+    rdfs:label "Service"@en ;
+    rdfs:subClassOf hedera:Concept , schema:Service ;
+    skos:definition "A capability offered by the Hedera network such as consensus, token management, or smart contract execution."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts> ;
+    .
+
+hedera:Artefact
+    a owl:Class ;
+    rdfs:label "Artefact"@en ;
+    rdfs:subClassOf hedera:Concept , prov:Entity ;
+    skos:definition "Digital object or state produced or managed by Hedera services (topics, tokens, files, smart contracts)."@en ;
+    .
+
+hedera:Process
+    a owl:Class ;
+    rdfs:label "Process"@en ;
+    rdfs:subClassOf hedera:Concept , prov:Activity ;
+    skos:definition "Coordinated activity that changes network state, such as transaction execution or governance voting."@en ;
+    .
+
+hedera:Event
+    a owl:Class ;
+    rdfs:label "Event"@en ;
+    rdfs:subClassOf hedera:Concept , prov:Entity ;
+    skos:definition "Bounded outcome or observation emitted by a process, typically recorded through mirror nodes or logs."@en ;
+    .
+
+hedera:HieroLayer
+    a owl:Class ;
+    rdfs:label "Hiero layer"@en ;
+    rdfs:subClassOf hedera:Network ;
+    skos:definition "Logical component of the Hiero architecture (consensus, execution, or service layer)."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hiero> ;
+    .
+
+hedera:Validator
+    a owl:Class ;
+    rdfs:label "Validator"@en ;
+    rdfs:subClassOf hedera:Actor ;
+    skos:definition "Node operator that participates in consensus or execution for Hedera or Hiero networks."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hiero/concepts/validators> ;
+    .
+
+###
+# Object properties
+###
+
+hedera:governs
+    a owl:ObjectProperty ;
+    rdfs:label "governs"@en ;
+    rdfs:domain hedera:GovernanceBody ;
+    rdfs:range hedera:Network ;
+    rdfs:subPropertyOf prov:influenced ;
+    owl:inverseOf hedera:isGovernedBy ;
+    skos:definition "Relates a governance body to the network scope over which it has authority."@en ;
+    .
+
+hedera:isGovernedBy
+    a owl:ObjectProperty ;
+    rdfs:label "is governed by"@en ;
+    rdfs:domain hedera:Network ;
+    rdfs:range hedera:GovernanceBody ;
+    rdfs:subPropertyOf prov:wasInfluencedBy ;
+    skos:definition "Associates a network with the governance body that exercises authority over it."@en ;
+    .
+
+hedera:hasRole
+    a owl:ObjectProperty ;
+    rdfs:label "has role"@en ;
+    rdfs:domain hedera:Actor ;
+    rdfs:range hedera:Role ;
+    rdfs:subPropertyOf prov:hadRole ;
+    skos:definition "Associates an actor with a functional role it performs."@en ;
+    .
+
+hedera:operatesService
+    a owl:ObjectProperty ;
+    rdfs:label "operates service"@en ;
+    rdfs:domain hedera:Actor ;
+    rdfs:range hedera:Service ;
+    owl:inverseOf hedera:isOperatedBy ;
+    skos:definition "Indicates that an actor is responsible for operating or providing a service."@en ;
+    .
+
+hedera:isOperatedBy
+    a owl:ObjectProperty ;
+    rdfs:label "is operated by"@en ;
+    rdfs:domain hedera:Service ;
+    rdfs:range hedera:Actor ;
+    rdfs:subPropertyOf prov:wasAssociatedWith ;
+    skos:definition "Associates a service with the actor accountable for running it."@en ;
+    .
+
+hedera:managesArtefact
+    a owl:ObjectProperty ;
+    rdfs:label "manages artefact"@en ;
+    rdfs:domain hedera:Service ;
+    rdfs:range hedera:Artefact ;
+    skos:definition "Links a service to the artefacts whose lifecycle it controls."@en ;
+    .
+
+hedera:participatesIn
+    a owl:ObjectProperty ;
+    rdfs:label "participates in"@en ;
+    rdfs:domain hedera:Actor ;
+    rdfs:range hedera:Process ;
+    owl:inverseOf hedera:hasParticipant ;
+    skos:definition "Connects an actor to a process in which it takes part."@en ;
+    .
+
+hedera:hasParticipant
+    a owl:ObjectProperty ;
+    rdfs:label "has participant"@en ;
+    rdfs:domain hedera:Process ;
+    rdfs:range hedera:Actor ;
+    rdfs:subPropertyOf prov:wasAssociatedWith ;
+    skos:definition "Relates a process to the actors that are associated with it."@en ;
+    .
+
+hedera:producesEvent
+    a owl:ObjectProperty ;
+    rdfs:label "produces event"@en ;
+    rdfs:domain hedera:Process ;
+    rdfs:range hedera:Event ;
+    rdfs:subPropertyOf prov:generated ;
+    skos:definition "States that a process yields a specific event observation."@en ;
+    .
+
+hedera:occursOn
+    a owl:ObjectProperty ;
+    rdfs:label "occurs on"@en ;
+    rdfs:domain hedera:Process ;
+    rdfs:range hedera:Network ;
+    skos:definition "Identifies the network context in which a process executes."@en ;
+    .
+
+hedera:exposedOn
+    a owl:ObjectProperty ;
+    rdfs:label "exposed on"@en ;
+    rdfs:domain hedera:Service ;
+    rdfs:range hedera:Network ;
+    skos:definition "Indicates the network or shard through which a service is made available."@en ;
+    .
+
+hedera:registeredIn
+    a owl:ObjectProperty ;
+    rdfs:label "registered in"@en ;
+    rdfs:domain hedera:Artefact ;
+    rdfs:range hedera:Network ;
+    skos:definition "Indicates the canonical network where an artefact is recorded."@en ;
+    .
+
+###
+# Class axioms and scaffolding
+###
+
+hedera:Service
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty hedera:managesArtefact ;
+        owl:allValuesFrom hedera:Artefact
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty hedera:isOperatedBy ;
+        owl:someValuesFrom hedera:Actor
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty hedera:exposedOn ;
+        owl:someValuesFrom hedera:Network
+    ] ;
+    .
+
+hedera:Process
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty hedera:occursOn ;
+        owl:someValuesFrom hedera:Network
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty hedera:producesEvent ;
+        owl:allValuesFrom hedera:Event
+    ] ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty hedera:hasParticipant ;
+        owl:someValuesFrom hedera:Actor
+    ] ;
+    .
+
+hedera:Actor
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty hedera:participatesIn ;
+        owl:someValuesFrom hedera:Process
+    ] ;
+    .
+
+hedera:Network
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty hedera:isGovernedBy ;
+        owl:someValuesFrom hedera:GovernanceBody
+    ] ;
+    .
+

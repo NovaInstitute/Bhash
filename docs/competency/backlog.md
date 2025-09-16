@@ -21,6 +21,23 @@ This backlog captures high-priority competency questions (CQs) that will guide o
 | CQ-HIE-009 | Hiero transition | High | Which validators are participating in each Hiero shard and what onboarding state (pending, active, slashed) do they occupy? | [HIP-840](https://hips.hedera.com/hip/hip-840); [Hiero docs](https://docs.hedera.com/hiero) | Depends on forthcoming public datasets; placeholder for future integration. | Draft |
 | CQ-HIE-010 | Hiero transition | Medium | How do shard-level consensus finality times compare to mainnet benchmarks for a given epoch? | [Hiero docs](https://docs.hedera.com/hiero); [Mirror performance metrics](https://docs.hedera.com/hedera/mirror-node/architecture/metrics) | Will require time-series data capture and modelling of performance indicators. | Draft |
 
+## High-priority execution plan
+
+The following work packages decompose the three "High" priority competency questions into actionable issues. Each task should be
+captured as a GitHub issue (label: `competency`) with acceptance criteria reflecting the deliverables below.
+
+| Task ID | CQ | Focus | Deliverables | Dependencies | Status |
+| ------- | -- | ----- | ------------ | ------------ | ------ |
+| CQ-GOV-001-A | CQ-GOV-001 | Council roster ingestion | `data/council-roster.csv` sourced from hedera.com with committee assignments, plus provenance notes in [`evidence/CQ-GOV-001.md`](evidence/CQ-GOV-001.md). | Access to council roster; scraping script. | Not started |
+| CQ-GOV-001-B | CQ-GOV-001 | Governance modelling | Update `ontology/src/core.ttl` with `hedera:ValidatorOnboardingProcess` and `hedera:hasMandate` axioms aligned to glossary roles. | CQ-GOV-001-A | Not started |
+| CQ-GOV-001-C | CQ-GOV-001 | Validation assets | SPARQL query committed to `tests/queries/cq-gov-001.rq` plus SHACL shape verifying node–steward linkage. | CQ-GOV-001-B; automation tasks AUT-004/005. | Not started |
+| CQ-COMP-003-A | CQ-COMP-003 | Token compliance snapshot | Mirror REST extraction script for stablecoin tokens with key metadata stored in `data/token-compliance.json`. | Mirror node API access. | Not started |
+| CQ-COMP-003-B | CQ-COMP-003 | Role alignment | Extend glossary and ontology annotations to map token admin/freeze/metadata custodians to `hedera:ComplianceSteward` subclasses. | CQ-COMP-003-A; glossary updates. | Not started |
+| CQ-COMP-003-C | CQ-COMP-003 | Query & SHACL | SPARQL query `tests/queries/cq-comp-003.rq` and SHACL rule ensuring every stablecoin exposes accountable key custodians. | CQ-COMP-003-B; AUT-004/005. | Not started |
+| CQ-DEV-005-A | CQ-DEV-005 | Contract log fixture | Download sample contract log dataset (JSON/CSV) into `data/contracts/hts-precompiles/` with README. | Mirror node contract log endpoint; storage location. | Not started |
+| CQ-DEV-005-B | CQ-DEV-005 | Ontology extension | Introduce `hedera:PrecompileInvocation` class and link contracts to HTS precompile terms in `ontology/src/smart-contracts.ttl`. | CQ-DEV-005-A; core ontology module. | Not started |
+| CQ-DEV-005-C | CQ-DEV-005 | Analytics validation | SPARQL aggregation `tests/queries/cq-dev-005.rq` summarising gas usage and invocation counts, with expected results stored in `tests/fixtures/cq-dev-005.json`. | CQ-DEV-005-B; AUT-005. | Not started |
+
 ## Next actions
 
 * Prioritise CQ-GOV-001, CQ-COMP-003, and CQ-DEV-005 for initial ontology modelling, as they cover governance, compliance, and developer tooling focal areas.

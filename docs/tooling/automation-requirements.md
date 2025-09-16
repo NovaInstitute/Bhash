@@ -19,6 +19,64 @@ This backlog translates the toolchain expectations from `toolchain.md` into acti
 | AUT-005 | SPARQL regression suite | Configure a `tests/queries/` directory and shell wrapper that runs `sparql` queries against prepared datasets (e.g., Apache Jena `arq`). | Dataset fixture; Jena CLI. |
 | AUT-006 | Docs generation | Evaluate `robot export` or Widoco for generating HTML documentation from ontology modules; add placeholder command to build pipeline. | ROBOT export configured. |
 
+## Actionable task breakdown
+
+Translate each AUT item into a concrete GitHub issue (label: `automation`) so that implementation can be scheduled alongside ontology work. Suggested acceptance criteria are captured below.
+
+### AUT-001 – ROBOT reason target
+
+* **Issue stub:** `AUT-001: Add ROBOT reasoning Makefile target`
+* **Implementation steps:**
+  - Create `Makefile` (or `justfile`) entry `reason-core` executing `robot reason --reasoner ELK --input ontology/src/core.ttl --output build/core-reasoned.ttl`.
+  - Ensure the `build/` directory is ignored by Git and created automatically when the command runs.
+  - Document the command in `docs/tooling/toolchain.md` under the ROBOT workflow section.
+* **Definition of done:** Running `make reason-core` (or `just reason-core`) succeeds locally and produces `build/core-reasoned.ttl`; command usage is documented.
+
+### AUT-002 – ROBOT report target
+
+* **Issue stub:** `AUT-002: Provide ROBOT report for core module`
+* **Implementation steps:**
+  - Extend the automation script/Makefile with `report-core` invoking `robot report --input ontology/src/core.ttl --output build/reports/core-report.tsv`.
+  - Parse the report output in CI to fail on `ERROR` entries; store the TSV under `build/reports/`.
+  - Reference the task from decision log D-0001 to maintain traceability for ROBOT adoption.
+* **Definition of done:** Command executes locally, generates the report file, and documentation explains how to interpret unsatisfiable classes or property violations.
+
+### AUT-003 – Template pipeline
+
+* **Issue stub:** `AUT-003: Scaffold ROBOT template workflow`
+* **Implementation steps:**
+  - Create `templates/example.csv` and accompanying `templates/example-ontology.tsv` (or `.csv`) illustrating how module rows map to ontology terms.
+  - Add Makefile target `template-example` running `robot template --template templates/example.csv --output build/templates/example.ttl`.
+  - Capture usage instructions in `docs/tooling/toolchain.md` and link to the template from relevant ontology module READMEs.
+* **Definition of done:** Sample template renders successfully; generated TTL is ignored by Git but previewed in documentation; onboarding guides reference the workflow.
+
+### AUT-004 – SHACL harness
+
+* **Issue stub:** `AUT-004: Introduce reusable SHACL validation script`
+* **Implementation steps:**
+  - Add a `scripts/run-shacl.py` (or shell equivalent) invoking `pyshacl` against shapes in `ontology/shapes/` and sample data under `tests/fixtures/`.
+  - Provide a Makefile target `shacl` that sets up a Python virtual environment (if needed) and runs the script.
+  - Document environment setup (pip requirements, venv activation) in `docs/tooling/toolchain.md` and ensure compatibility with CQ validation tasks.
+* **Definition of done:** Command runs locally with a non-zero exit code on validation failures; script can be invoked from CI without manual configuration.
+
+### AUT-005 – SPARQL regression suite
+
+* **Issue stub:** `AUT-005: Configure SPARQL regression harness`
+* **Implementation steps:**
+  - Create `tests/queries/` directory with placeholder query (e.g., `smoke-test.rq`) and expected results under `tests/fixtures/`.
+  - Provide shell/Python wrapper `scripts/run-sparql.sh` (using Apache Jena `arq` or equivalent) executing all queries against prepared datasets.
+  - Wire the wrapper into the Makefile (`make sparql`) and ensure it supports per-query exit codes for CI gating.
+* **Definition of done:** Running the wrapper locally processes all `.rq` files and compares results to fixtures; documentation describes how to add new regression queries (notably for CQ tasks).
+
+### AUT-006 – Documentation generation
+
+* **Issue stub:** `AUT-006: Add ontology documentation build pipeline`
+* **Implementation steps:**
+  - Evaluate `robot export` versus Widoco; select tooling and capture reasoning in `docs/decisions/log.md` if change is required.
+  - Add Makefile target `docs` that emits HTML into `build/docs/` and references ontology modules (core + service-specific).
+  - Update repository `.gitignore` for generated docs and note publication expectations (e.g., to GitHub Pages) in `docs/tooling/toolchain.md`.
+* **Definition of done:** Local command produces browsable HTML documentation; CI plan includes publishing artefacts or marking as manual release step.
+
 ## CI/CD roadmap
 
 1. **Bootstrap GitHub Actions workflow** executing AUT-001 through AUT-005 on every push/PR.

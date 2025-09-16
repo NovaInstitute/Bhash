@@ -27,10 +27,6 @@ Hiero introduces modular network layers, virtualization of consensus participati
 ├── README.md              # Project overview and quick links
 ├── LICENSE                # Apache 2.0 (inherited)
 ├── docs/
-│   ├── workplan.md        # Detailed execution plan
-│   ├── references/        # Bibliography and archived source material
-│   ├── decisions/         # Governance and modelling decision log
-│   └── tooling/           # Toolchain and automation guides
 └── ontology/
     ├── src/               # OWL/RDF source files (TBD)
     ├── shapes/            # SHACL shapes for data validation (TBD)
@@ -46,7 +42,7 @@ Hiero introduces modular network layers, virtualization of consensus participati
 * **Competency questions** – each modelling sprint will begin by documenting competency questions (e.g., "Which accounts control the treasury of a given token?", "What consensus nodes participate in shard X under Hiero?").
 * **Alignment artifacts** – crosswalk sheets mapping Hedera documentation terms to ontology classes/properties will live under `docs/mappings/` (to be created).
 * **Validation** – SHACL shapes will express structural constraints derived from service APIs; automated reasoning (e.g., via the ELK or HermiT reasoner) will run in CI before releases.
-* **AI assistance** – Codex is the primary generative assistant for research synthesis and boilerplate; treat its output as draft material that must be reviewed against canonical sources before inclusion.
+
 
 ## Working practices
 

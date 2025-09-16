@@ -122,11 +122,11 @@ Each module should deliver:
 | # | Action | Status | Notes |
 | - | ------ | ------ | ----- |
 | 1 | Finalise bibliography and decision log structure (Phase 0). | ✅ Complete | Bibliography and decision log are seeded; continue routine maintenance as new Hedera/Hiero releases publish. |
-| 2 | Draft initial glossary and competency questions for accounts, governance, and node roles (Phase 1). | 🟡 In progress | Service-focused glossary coverage exists, but dedicated account/governance role definitions and linked competency evidence still need elaboration. |
+| 2 | Draft initial glossary and competency questions for accounts, governance, and node roles (Phase 1). | ✅ Complete | Dedicated glossary published in [`inventory/accounts-governance-glossary.md`](inventory/accounts-governance-glossary.md) with supporting competency evidence. |
 | 3 | Prototype the core ontology module skeleton in Protégé, including namespaces and base classes (Phase 2 deliverable). | ✅ Complete | `ontology/src/core.ttl` provides the foundational class/property scaffold for subsequent modules. |
-| 4 | Define automation requirements (CI tools, reasoning engines) and capture them as issues for implementation. | 🔄 Pending | Toolchain expectations are documented, yet no actionable tickets or scripts exist to operationalise reasoning/validation workflows. |
-| 5 | Promote CQ-GOV-001, CQ-COMP-003, and CQ-DEV-005 to "In review" by gathering required documentation citations, data sources, and draft SPARQL/SHACL validation approaches. | 🔄 New | Focus effort on producing evidence bundles for the highest-priority governance, compliance, and developer competency questions. |
-| 6 | Outline PROV-O/DCAT import and profiling tasks for the core module and schedule implementation in the Phase 2 sprint backlog. | 🔄 New | Translate ontology landscape insights into concrete modelling subtasks (e.g., namespace decisions, import scope, ROBOT templates). |
+| 4 | Define automation requirements (CI tools, reasoning engines) and capture them as issues for implementation. | 🟡 In progress | Automation backlog drafted in [`tooling/automation-requirements.md`](tooling/automation-requirements.md); GitHub issue creation remains outstanding. |
+| 5 | Promote CQ-GOV-001, CQ-COMP-003, and CQ-DEV-005 to "In review" by gathering required documentation citations, data sources, and draft SPARQL/SHACL validation approaches. | ✅ Complete | Evidence bundles created in [`competency/evidence/`](competency/evidence) and backlog statuses updated to "In review". |
+| 6 | Outline PROV-O/DCAT import and profiling tasks for the core module and schedule implementation in the Phase 2 sprint backlog. | ✅ Complete | Import planning captured in [`ontology/import-plan.md`](ontology/import-plan.md) with actionable tasks for Phase 2. |
 
 ## Risk considerations
 

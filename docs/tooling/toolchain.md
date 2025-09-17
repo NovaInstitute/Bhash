@@ -46,6 +46,18 @@ RDFlib remains useful for Python-based data wrangling, but ROBOT's ontology-spec
 3. **Environment variables** – set `ROBOT_JAR` if invoking the jar directly; configure `JAVA_OPTS` for memory-intensive operations.
 4. **Project scripts** – the repository `Makefile` now wraps ROBOT, SHACL, and SPARQL commands so contributors can run the full toolchain with a single dependency bootstrap.
 
+### Fluree Cloud credentials
+
+Phase A introduces a lightweight Python client for the Fluree Cloud HTTP API. Networked tests and CLI helpers expect the following environment variables:
+
+| Variable | Purpose |
+| --- | --- |
+| `FLUREE_API_TOKEN` | Bearer token generated in the Fluree Cloud console. |
+| `FLUREE_HANDLE` | Tenant handle that prefixes Cloud API routes. |
+| `FLUREE_BASE_URL` (optional) | Override for non-production tenants; defaults to `https://data.flur.ee`. |
+
+Integration tests marked with `@pytest.mark.fluree_live` remain skipped unless both the credentials are present **and** `pytest` is invoked with `--run-fluree`. Offline smoke tests use mocked HTTP responses and are safe to run by default.
+
 ## Codex collaboration guidelines
 
 1. **Prompt hygiene** – share relevant documentation excerpts when asking Codex for modelling assistance to maintain traceability.

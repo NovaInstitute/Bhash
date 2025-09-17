@@ -1,0 +1,119 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://bhash.dev/examples/token/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:StablecoinIssuer
+    a hedera:Actor ;
+    rdfs:label "Stablecoin issuer"@en ;
+    hedera:hasAccount ex:IssuerAccount ;
+    hedera:hasRole ex:USDHKYCControllerRole , ex:USDHTreasuryRole ;
+    .
+
+ex:CompliancePartner
+    a hedera:Actor ;
+    rdfs:label "Compliance partner"@en ;
+    hedera:hasAccount ex:CompliancePartnerAccount ;
+    hedera:hasRole ex:USDHFreezeControllerRole ;
+    .
+
+ex:IssuerAccount
+    a hedera:Account ;
+    rdfs:label "Issuer treasury account"@en ;
+    hedera:hasAccountId "0.0.9001" ;
+    hedera:isAccountOf ex:StablecoinIssuer ;
+    .
+
+ex:CompliancePartnerAccount
+    a hedera:Account ;
+    rdfs:label "Compliance partner account"@en ;
+    hedera:hasAccountId "0.0.9002" ;
+    hedera:isAccountOf ex:CompliancePartner ;
+    .
+
+ex:USDHKYCControllerRole
+    a hedera:KYCControllerRole ;
+    rdfs:label "USDH KYC steward"@en ;
+    hedera:controlsKey ex:USDHKYCKey ;
+    .
+
+ex:USDHFreezeControllerRole
+    a hedera:FreezeControllerRole ;
+    rdfs:label "USDH freeze steward"@en ;
+    hedera:controlsKey ex:USDHFreezeKey ;
+    .
+
+ex:USDHTreasuryRole
+    a hedera:TokenTreasuryRole ;
+    rdfs:label "USDH treasury manager"@en ;
+    hedera:controlsKey ex:USDHSupplyKey ;
+    .
+
+ex:USDH
+    a hedera:StablecoinToken ;
+    rdfs:label "USDH Stablecoin"@en ;
+    hedera:hasTokenId "0.0.9000" ;
+    hedera:hasSymbol "USDH" ;
+    hedera:hasDecimals 6 ;
+    hedera:hasInitialSupply "5000000"^^xsd:decimal ;
+    hedera:hasTreasury ex:IssuerAccount ;
+    hedera:hasKeyAssignment ex:USDHKYCKeyAssignment , ex:USDHFreezeKeyAssignment , ex:USDHSupplyKeyAssignment ;
+    hedera:provTrace <https://hips.hedera.com/hip/hip-540> ;
+    .
+
+ex:USDHKYCKey
+    a hedera:KYCKey ;
+    rdfs:label "USDH KYC key"@en ;
+    .
+
+ex:USDHFreezeKey
+    a hedera:FreezeKey ;
+    rdfs:label "USDH freeze key"@en ;
+    .
+
+ex:USDHSupplyKey
+    a hedera:SupplyKey ;
+    rdfs:label "USDH supply key"@en ;
+    .
+
+ex:USDHKYCKeyAssignment
+    a hedera:KYCKeyAssignment ;
+    hedera:assignsKey ex:USDHKYCKey ;
+    hedera:isControlledBy ex:StablecoinIssuer ;
+    hedera:hasControllerRole ex:USDHKYCControllerRole ;
+    hedera:enforcementState "present" ;
+    .
+
+ex:USDHFreezeKeyAssignment
+    a hedera:FreezeKeyAssignment ;
+    hedera:assignsKey ex:USDHFreezeKey ;
+    hedera:isControlledBy ex:CompliancePartner ;
+    hedera:hasControllerRole ex:USDHFreezeControllerRole ;
+    hedera:enforcementState "present" ;
+    .
+
+ex:USDHSupplyKeyAssignment
+    a hedera:SupplyKeyAssignment ;
+    hedera:assignsKey ex:USDHSupplyKey ;
+    hedera:isControlledBy ex:StablecoinIssuer ;
+    hedera:hasControllerRole ex:USDHTreasuryRole ;
+    hedera:enforcementState "escrow" ;
+    .
+
+ex:USDHCompliancePartnerRelationship
+    a hedera:TokenRelationship ;
+    hedera:relatesAccount ex:CompliancePartnerAccount ;
+    hedera:relatesToken ex:USDH ;
+    hedera:isKYCApproved "true"^^xsd:boolean ;
+    hedera:isFrozen "false"^^xsd:boolean ;
+    hedera:hasTokenBalance "250000"^^xsd:decimal ;
+    hedera:recordsEvent ex:USDHInitialDistribution ;
+    .
+
+ex:USDHInitialDistribution
+    a hedera:TokenTransferEvent ;
+    dcterms:description "Initial distribution of USDH to compliance partner"@en ;
+    hedera:submitsTokenTransaction ex:IssuerAccount ;
+    .

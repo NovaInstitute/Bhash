@@ -14,6 +14,7 @@ RESULTS_DIR = REPO_ROOT / "tests" / "fixtures" / "results"
 OUTPUT_DIR = REPO_ROOT / "build" / "queries"
 DATASETS = [
     REPO_ROOT / "ontology" / "examples" / "core-consensus.ttl",
+    REPO_ROOT / "ontology" / "examples" / "token-compliance.ttl",
 ]
 DATASETS.extend(sorted((REPO_ROOT / "tests" / "fixtures" / "datasets").glob("*.ttl")))
 

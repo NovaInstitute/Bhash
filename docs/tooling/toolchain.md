@@ -26,7 +26,7 @@ RDFlib remains useful for Python-based data wrangling, but ROBOT's ontology-spec
 ## Installation & environment
 
 1. **Java runtime** – install OpenJDK 11 or 17.
-2. **ROBOT** – download the latest release or install via package manager.
+2. **ROBOT** – download the latest release, install via package manager, or run the repository bootstrap script.
    ```bash
    # macOS (Homebrew)
    brew tap obolibrary/tools
@@ -38,6 +38,9 @@ RDFlib remains useful for Python-based data wrangling, but ROBOT's ontology-spec
    mv robot.jar ~/opt/robot/robot.jar
    printf '#!/usr/bin/env bash\nexec java -jar "$(dirname "$0")/../opt/robot/robot.jar" "$@"\n' > ~/bin/robot
    chmod +x ~/bin/robot
+
+   # Repository helper (Debian/Ubuntu)
+   scripts/install_robot_cli.sh
    ```
    Ensure `~/bin` is on your `PATH` (e.g., `echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc`).
 3. **Environment variables** – set `ROBOT_JAR` if invoking the jar directly; configure `JAVA_OPTS` for memory-intensive operations.

@@ -69,11 +69,18 @@ Deliver OWL modules iteratively; each sprint targets one service.
 
 ### Phase 3 progress review (2025-09-30)
 
-* ✅ Consensus Service sprint delivered a dedicated ontology module with topic/message governance, validator onboarding roles, and mirror export artefacts plus SHACL coverage to keep key requirements executable. [`ontology/src/consensus.ttl`](../ontology/src/consensus.ttl) · [`ontology/shapes/consensus.shacl.ttl`](../ontology/shapes/consensus.shacl.ttl)
-* ✅ Token Service sprint introduced HIP-540-compliant classes for stablecoins, token key assignments, and custom fees with supporting competency assets answering CQ-COMP-003. [`ontology/src/token.ttl`](../ontology/src/token.ttl) · [`docs/competency/token-compliance.md`](competency/token-compliance.md) · [`tests/queries/cq-comp-003.rq`](../tests/queries/cq-comp-003.rq)
-* ✅ Governance traceability for validator stewardship now closes CQ-GOV-001-B, with committee classes, stewardship properties, and refreshed fixtures tying council rosters to HIP mandates. [`docs/competency/backlog.md`](competency/backlog.md) · [`docs/competency/evidence/CQ-GOV-001.md`](competency/evidence/CQ-GOV-001.md)
-* ✅ Smart Contracts, File/Schedule, Mirror/Analytics, and Hiero overlay modules are now modelled with corresponding SHACL shapes, sample graphs, and competency assets, unblocking the remaining Phase 3 backlog. [`ontology/src`](../ontology/src) · [`docs/competency`](competency)
-* ✅ Shared datasets and automation hooks were added so the new modules can reuse SPARQL and SHACL pipelines (e.g., updated `scripts/run_sparql.py`, new fixtures under `data/`). [`scripts/run_sparql.py`](../scripts/run_sparql.py) · [`data/`](../data)
+**Completed**
+
+* Consensus Service sprint delivered a dedicated ontology module with topic/message governance, validator onboarding roles, and mirror export artefacts plus SHACL coverage to keep key requirements executable. [`ontology/src/consensus.ttl`](../ontology/src/consensus.ttl) · [`ontology/shapes/consensus.shacl.ttl`](../ontology/shapes/consensus.shacl.ttl)
+* Token Service sprint introduced HIP-540-compliant classes for stablecoins, token key assignments, and custom fees with supporting competency assets answering CQ-COMP-003. [`ontology/src/token.ttl`](../ontology/src/token.ttl) · [`docs/competency/token-compliance.md`](competency/token-compliance.md) · [`tests/queries/cq-comp-003.rq`](../tests/queries/cq-comp-003.rq)
+* Governance traceability for validator stewardship now closes CQ-GOV-001-B, with committee classes, stewardship properties, and refreshed fixtures tying council rosters to HIP mandates. [`docs/competency/backlog.md`](competency/backlog.md) · [`docs/competency/evidence/CQ-GOV-001.md`](competency/evidence/CQ-GOV-001.md)
+* Smart Contracts, File/Schedule, Mirror/Analytics, and Hiero overlay modules are modelled with corresponding SHACL shapes, sample graphs, and competency assets, unblocking the remaining Phase 3 backlog. [`ontology/src`](../ontology/src) · [`docs/competency`](competency)
+* Shared datasets and automation hooks were added so the new modules can reuse SPARQL and SHACL pipelines (e.g., updated `scripts/run_sparql.py`, new fixtures under `data/`). [`scripts/run_sparql.py`](../scripts/run_sparql.py) · [`data/`](../data)
+
+**Outstanding**
+
+* Extend the HTS precompile dataset with live extracts and automate RDF transformation for regression tests, building on the placeholder CSV under `data/contracts/hts-precompiles/`. [`data/contracts/hts-precompiles`](../data/contracts/hts-precompiles) · [Immediate next action #11](#immediate-next-actions-updated-2025-09-30)
+* Populate treasury analytics fixtures with operational balance snapshots to exercise the mirror retention competency beyond the seeded stub. [`data/mirror/token-balance-retention.csv`](../data/mirror/token-balance-retention.csv) · [Immediate next action #12](#immediate-next-actions-updated-2025-09-30)
 
 ### 3A. Consensus Service (HCS)
 
@@ -126,9 +133,16 @@ Each module should deliver:
 
 ### Phase 4 progress review (2025-10-02)
 
-* ✅ Bridge modules for AIAO, ClaimOnt, ImpactOnt, and InfoComm are published with shared prefixes, dual provenance annotations, and coverage of consensus, token, scheduled transaction, and telemetry workflows.
-* ✅ ESG competency query (`tests/queries/cq-esg-001.rq`) and SHACL suite run cleanly against the enriched alignment example graph, confirming cross-ontology reasoning works end to end.
-* ✅ Documentation (README, blueprint, competency notes, backlog) reflects the completed integration work, clearing the final open action in the immediate next actions list.
+**Completed**
+
+* Bridge modules for AIAO, ClaimOnt, ImpactOnt, and InfoComm are published with shared prefixes, dual provenance annotations, and coverage of consensus, token, scheduled transaction, and telemetry workflows. [`ontology/src/alignment`](../ontology/src/alignment)
+* ESG competency query (`tests/queries/cq-esg-001.rq`) and SHACL suite run cleanly against the enriched alignment example graph, confirming cross-ontology reasoning works end to end. [`tests/queries/cq-esg-001.rq`](../tests/queries/cq-esg-001.rq) · [`docs/competency/esg-alignment.md`](competency/esg-alignment.md)
+* Documentation (README, blueprint, competency notes, backlog) reflects the completed integration work, clearing the final open action in the immediate next actions list. [`README.md`](../README.md) · [`docs/ontology/phase4-alignment.md`](ontology/phase4-alignment.md)
+
+**Outstanding**
+
+* Execute the planned data pilots by loading mirror exports and HIP payloads into a triple store and capturing validation evidence; current documentation calls for GraphDB/Blazegraph runs but no automation artifacts exist yet. [`docs/workplan.md`](#phase-4--integration--alignment-weeks-11-12) · [`docs/competency/esg-alignment.md`](competency/esg-alignment.md)
+* Expand ESG alignment samples with additional SDG targets and automated telemetry refresh ahead of stakeholder review workshops. [`docs/competency/esg-alignment.md`](competency/esg-alignment.md)
 
 ## Phase 5 – Publication & automation (Weeks 13-14)
 
@@ -153,6 +167,7 @@ Each module should deliver:
 | 11 | Integrate mirror node HTS precompile traces into automated ETL prototype. | 📝 Planned | Extend `data/contracts/hts-precompiles/` with live extracts and script transformation into RDF for regression tests. |
 | 12 | Expand treasury analytics competency with real balance snapshots. | 📝 Planned | Populate `data/mirror/token-balance-retention.csv` with operational SLAs and ingest sample mirror balance exports. |
 | 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | ✅ Complete | Alignment namespace shipped with validated AIAO/ClaimOnt/ImpactOnt/InfoComm bridge modules, ESG query, and documentation refresh. |
+| 14 | Run the Phase 4 data pilot in a managed triple store and capture SHACL/SPARQL evidence for ESG alignments. | 📝 Planned | Stand up a Blazegraph or GraphDB instance, load Phase 3/4 examples, and persist validation reports for inclusion in `docs/competency/esg-alignment.md`. |
 
 ## Risk considerations
 

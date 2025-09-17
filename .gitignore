@@ -1,0 +1,12 @@
+# Build artifacts
+build/
+
+# Python virtual environments
+.venv/
+
+# Generated files
+*.pyc
+__pycache__/
+
+# Local tooling state
+*.log

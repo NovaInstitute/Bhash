@@ -12,11 +12,11 @@ This backlog translates the toolchain expectations from `toolchain.md` into acti
 
 | ID | Task | Description | Dependencies |
 | -- | ---- | ----------- | ------------ |
-| AUT-001 | ROBOT reason target | Create a `Makefile` (or `justfile`) target that runs `robot reason --reasoner ELK --input ontology/src/core.ttl --output build/core-reasoned.ttl`. | ROBOT installed; Java 11+. |
-| AUT-002 | ROBOT report target | Add command `robot report --input ontology/src/core.ttl --output build/reports/core-report.tsv` and document how to interpret unsatisfiable classes. | AUT-001 |
-| AUT-003 | Template pipeline | Scaffold a `templates/` directory with an example CSV + ROBOT template command to demonstrate module generation. | ROBOT; CSV seed. |
-| AUT-004 | SHACL harness | Introduce a Python script or ROBOT call that executes SHACL shapes in `ontology/shapes/` against sample data. Prefer `pyshacl` CLI within a reusable virtualenv. | pySHACL available. |
-| AUT-005 | SPARQL regression suite | Configure a `tests/queries/` directory and shell wrapper that runs `sparql` queries against prepared datasets (e.g., Apache Jena `arq`). | Dataset fixture; Jena CLI. |
+| AUT-001 | ROBOT reason target | Create a `Makefile` (or `justfile`) target that runs `robot reason --reasoner ELK --input ontology/src/core.ttl --output build/core-reasoned.ttl`. | ROBOT installed; Java 11+. | ✅ Implemented via `make reason-core` |
+| AUT-002 | ROBOT report target | Add command `robot report --input ontology/src/core.ttl --output build/reports/core-report.tsv` and document how to interpret unsatisfiable classes. | AUT-001 | ✅ Implemented via `make report-core` |
+| AUT-003 | Template pipeline | Scaffold a `templates/` directory with an example CSV + ROBOT template command to demonstrate module generation. | ROBOT; CSV seed. | ✅ `templates/example.csv` + `make template-example` |
+| AUT-004 | SHACL harness | Introduce a Python script or ROBOT call that executes SHACL shapes in `ontology/shapes/` against sample data. Prefer `pyshacl` CLI within a reusable virtualenv. | pySHACL available. | ✅ `scripts/run_shacl.py` + `make shacl` |
+| AUT-005 | SPARQL regression suite | Configure a `tests/queries/` directory and shell wrapper that runs `sparql` queries against prepared datasets (e.g., Apache Jena `arq`). | Dataset fixture; Jena CLI. | ✅ `scripts/run_sparql.py` + `make sparql` |
 | AUT-006 | Docs generation | Evaluate `robot export` or Widoco for generating HTML documentation from ontology modules; add placeholder command to build pipeline. | ROBOT export configured. |
 
 ## Actionable task breakdown

@@ -1,0 +1,47 @@
+@prefix : <https://bhash.dev/hedera/imports/dcat/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://bhash.dev/hedera/imports/dcat>
+    a owl:Ontology ;
+    dcterms:title "DCAT profile for Bhash"@en ;
+    dcterms:description "Trimmed subset of DCAT terms needed for mirror dataset cataloguing."@en ;
+    dcterms:source <https://www.w3.org/TR/vocab-dcat-3/> ;
+    dcterms:created "2024-09-20"^^xsd:date ;
+    dcterms:modified "2024-09-20"^^xsd:date ;
+    owl:imports <http://www.w3.org/ns/dcat> ;
+    .
+
+dcat:Dataset a owl:Class ;
+    rdfs:label "Dataset"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/dcat#> ;
+    .
+
+dcat:Distribution a owl:Class ;
+    rdfs:label "Distribution"@en ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/dcat#> ;
+    .
+
+dcat:accessURL a owl:ObjectProperty ;
+    rdfs:label "access URL"@en ;
+    rdfs:domain dcat:Distribution ;
+    rdfs:range rdfs:Resource ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/dcat#> ;
+    .
+
+dcat:downloadURL a owl:ObjectProperty ;
+    rdfs:label "download URL"@en ;
+    rdfs:domain dcat:Distribution ;
+    rdfs:range rdfs:Resource ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/dcat#> ;
+    .
+
+dcat:distribution a owl:ObjectProperty ;
+    rdfs:label "distribution"@en ;
+    rdfs:domain dcat:Dataset ;
+    rdfs:range dcat:Distribution ;
+    rdfs:isDefinedBy <http://www.w3.org/ns/dcat#> ;
+    .

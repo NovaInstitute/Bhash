@@ -1,0 +1,42 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+hedera:ConsensusNodeGovernanceShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:ConsensusNode ;
+    sh:property [
+        sh:path hedera:participatesIn ;
+        sh:qualifiedValueShape hedera:ValidatorOnboardingShape ;
+        sh:qualifiedMinCount 1 ;
+        sh:message "Consensus nodes must participate in a validator onboarding process stewarded by the council."@en ;
+    ] ;
+    .
+
+hedera:ValidatorOnboardingShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:ValidatorOnboardingProcess ;
+    sh:property [
+        sh:path hedera:hasParticipant ;
+        sh:minCount 2 ;
+        sh:message "Validator onboarding processes must include the stewarding council body and the validator candidate."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:occursOn ;
+        sh:minCount 1 ;
+        sh:message "Validator onboarding must specify the network it occurs on."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasParticipant ;
+        sh:qualifiedValueShape [
+            sh:class hedera:GovernanceBody ;
+            sh:property [
+                sh:path hedera:hasMandate ;
+                sh:minCount 1 ;
+                sh:message "Stewardship committees must list at least one mandate reference."@en ;
+            ] ;
+        ] ;
+        sh:qualifiedMinCount 1 ;
+        sh:message "At least one governance body with mandates must participate in onboarding."@en ;
+    ] ;
+    .

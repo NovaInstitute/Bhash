@@ -56,6 +56,13 @@ Focus on cross-cutting abstractions that every module depends on.
 * **Artefact registry:** Define object properties for linking services to artefacts (e.g., `hedera:managesArtefact`, `hedera:consumesMessage`).
 * **Outputs:** Core OWL module (`ontology/src/core.ttl`), glossary entries, competency question answers for foundational queries (e.g., "Which entities participate in consensus on mainnet?").
 
+### Phase 2 progress review (2025-09-16)
+
+* ✅ Core ontology updated with account/credential structures, validator onboarding processes, transaction lifecycle phases, and Hiero layer overlays, enabling downstream modules to extend shared semantics. [`ontology/src/core.ttl`](../ontology/src/core.ttl)
+* ✅ Documentation refreshed with governance/transaction glossary entries and transaction lifecycle notes to anchor modelling decisions. [`docs/inventory/accounts-governance-glossary.md`](inventory/accounts-governance-glossary.md) · [`docs/inventory/transaction-lifecycle.md`](inventory/transaction-lifecycle.md)
+* ✅ Example graph and SPARQL query published for CQ-CORE-001, demonstrating consensus participation tracing from governance mandates to validator accounts. [`ontology/examples/core-consensus.ttl`](../ontology/examples/core-consensus.ttl) · [`tests/queries/cq-core-001.rq`](../tests/queries/cq-core-001.rq) · [`docs/competency/core-foundational.md`](competency/core-foundational.md)
+* 🎯 Exit criteria met: foundational ontology constructs, glossary coverage, and a validated competency question establish the platform for Phase 3 service-specific modules.
+
 ## Phase 3 – Service-specific modules (Weeks 5-10)
 
 Deliver OWL modules iteratively; each sprint targets one service.

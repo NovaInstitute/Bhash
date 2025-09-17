@@ -1,0 +1,22 @@
+PREFIX hedera: <https://bhash.dev/hedera/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?network ?networkLabel ?validator ?validatorLabel ?operatorAccount ?mandate
+WHERE {
+  ?network a hedera:Network ;
+           rdfs:label ?networkLabel ;
+           hedera:isGovernedBy ?council .
+  ?council hedera:hasMandate ?mandate .
+
+  ?onboarding a hedera:ValidatorOnboardingProcess ;
+             hedera:occursOn ?network ;
+             hedera:targetsValidator ?validator .
+
+  ?validator a hedera:ConsensusNode ;
+             rdfs:label ?validatorLabel ;
+             hedera:hasAccount ?operatorAccount ;
+             hedera:participatesIn ?onboarding .
+
+  ?operatorAccount a hedera:Account .
+}
+ORDER BY ?networkLabel ?validatorLabel

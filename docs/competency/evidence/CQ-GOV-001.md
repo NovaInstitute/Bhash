@@ -16,20 +16,19 @@
 | Council membership roster | Associates organisational members with council committees (e.g., CoinCom) for stewardship mapping. | [hedera.com/council](https://hedera.com/council) *(requires scraping/export into structured CSV for reproducibility).* | ✅ Cached under [`data/council-roster.csv`](../../../data/council-roster.csv) |
 | HIP repository | Supplies normative mandates (e.g., validator onboarding criteria, committee responsibilities) for traceability. | [HIP GitHub archive](https://github.com/hiero-ledger/hiero-improvement-proposals) |
 
-## Proposed modelling updates
+## Implemented modelling updates (2025-09-30)
 
-1. Extend `hedera:GovernanceBody` with subclasses for council committees (CoinCom, Membership Committee) and annotate them with HIP identifiers (`dcterms:identifier`).
-2. Introduce a `hedera:ValidatorOnboardingProcess` class linking governance bodies to validator candidates via `prov:wasInformedBy` relations referencing HIP decisions.
-3. Attach `hedera:hasMandate` annotations (datatype property) capturing HIP references for each committee and encode them as SKOS notes for downstream documentation.
+1. Added `hedera:CouncilCommittee` and `hedera:ValidatorOnboardingCommittee` subclasses to the Consensus Service ontology so committee responsibilities are explicit in the TBox and annotated with `hedera:sourceDocument` citations.
+2. Introduced the `hedera:hasSteward`/`hedera:stewardsProcess` object property pair to bind validator onboarding processes to their stewarding committees, ensuring provenance back to HIP mandates through `hedera:supportedBy` and `hedera:hasMandate`.
+3. Refreshed fixtures and evidence—`tests/fixtures/datasets/cq-gov-001.ttl` now tags CoinCom and the Membership Committee as onboarding committees with `hedera:stewardsProcess` links, while `data/council-roster.csv` provides the roster-to-mandate join used by the SPARQL query.
 
 ## Validation approach
 
 * **SPARQL query prototype:**
   `tests/queries/cq-gov-001.rq` now implements the query, executing against fixtures in `tests/fixtures/datasets/cq-gov-001.ttl` and diffing against the expected results snapshot in `tests/fixtures/results/cq-gov-001.csv` through the automation harness.
-* **Mirror node reconciliation:** `ontology/shapes/consensus.shacl.ttl` introduces the SHACL shape verifying that every `hedera:ConsensusNode` references a stewarding governance body with mandates.
+* **Mirror node reconciliation:** `ontology/shapes/consensus.shacl.ttl` now validates both validator onboarding processes (`hedera:ValidatorOnboardingShape`) and the committees that steward them (`hedera:ValidatorOnboardingCommitteeShape`) to guarantee mandates are attached to every steward listed in the query output.
 
-## Outstanding tasks
+## Next follow-ups
 
-* Capture a cached copy of the HIP-840 specification to avoid Cloudflare access barriers and extract explicit onboarding state definitions.
-* Build or ingest a structured council roster (CSV/JSON) with committee assignments so the ontology can populate the `hedera:ValidatorOnboardingSteward` role.
+* Monitor HIP-840 revisions by tracking the public GitHub source ([`hiero-improvement-proposals/HIP/hip-840.md`](https://raw.githubusercontent.com/hiero-ledger/hiero-improvement-proposals/main/HIP/hip-840.md)) for changes that would alter onboarding states.
 * Align validator onboarding states with forthcoming Hiero validator lifecycle documentation once public.

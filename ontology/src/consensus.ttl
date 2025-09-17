@@ -88,6 +88,22 @@ hedera:RoleAssignment
     hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/governing-the-network#council-committees> ;
     .
 
+hedera:CouncilCommittee
+    a owl:Class ;
+    rdfs:label "Council committee"@en ;
+    rdfs:subClassOf hedera:GovernanceBody ;
+    skos:definition "Sub-structure of the Hedera Governing Council that manages delegated mandates such as finance or membership reviews."@en ;
+    hedera:sourceDocument <https://hedera.com/council> ;
+    .
+
+hedera:ValidatorOnboardingCommittee
+    a owl:Class ;
+    rdfs:label "Validator onboarding committee"@en ;
+    rdfs:subClassOf hedera:CouncilCommittee ;
+    skos:definition "Council committee that stewards validator onboarding cohorts and associated policy decisions."@en ;
+    hedera:sourceDocument <https://raw.githubusercontent.com/hashgraph/hedera-docs/main/core-concepts/staking/staking.md#phase-iii-staking-rewards-program-launch> ;
+    .
+
 hedera:ValidatorOnboardingSteward
     a owl:Class ;
     rdfs:label "Validator onboarding steward"@en ;
@@ -196,6 +212,26 @@ hedera:assignsRole
     rdfs:domain hedera:RoleAssignment ;
     rdfs:range hedera:Role ;
     skos:definition "Indicates the role granted by a role assignment process."@en ;
+    .
+
+hedera:stewardsProcess
+    a owl:ObjectProperty ;
+    rdfs:label "stewards process"@en ;
+    rdfs:domain hedera:GovernanceBody ;
+    rdfs:range hedera:GovernanceProcess ;
+    rdfs:subPropertyOf hedera:participatesIn ;
+    owl:inverseOf hedera:hasSteward ;
+    skos:definition "Identifies the governance process that a council body is accountable for overseeing."@en ;
+    .
+
+hedera:hasSteward
+    a owl:ObjectProperty ;
+    rdfs:label "has steward"@en ;
+    rdfs:domain hedera:GovernanceProcess ;
+    rdfs:range hedera:GovernanceBody ;
+    rdfs:subPropertyOf hedera:hasParticipant ;
+    owl:inverseOf hedera:stewardsProcess ;
+    skos:definition "Links a governance process to the council body that stewards the decision."@en ;
     .
 
 hedera:supportedBy

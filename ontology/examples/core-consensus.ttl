@@ -21,6 +21,22 @@ ex:HederaCouncil
     hedera:governs ex:Mainnet , ex:MainnetShardAlpha ;
     .
 
+ex:CoinComCommittee
+    a hedera:ValidatorOnboardingCommittee , hedera:GovernanceBody ;
+    rdfs:label "CoinCom committee"@en ;
+    hedera:hasMandate "HIP-840" ;
+    hedera:isSubBodyOf ex:HederaCouncil ;
+    hedera:stewardsProcess ex:Node3Onboarding ;
+    .
+
+ex:MembershipCommittee
+    a hedera:ValidatorOnboardingCommittee , hedera:GovernanceBody ;
+    rdfs:label "Membership committee"@en ;
+    hedera:hasMandate "HIP-540" ;
+    hedera:isSubBodyOf ex:HederaCouncil ;
+    hedera:stewardsProcess ex:Node3Onboarding ;
+    .
+
 ex:ConsensusService
     a hedera:Service ;
     rdfs:label "Hedera Consensus Service"@en ;
@@ -96,7 +112,8 @@ ex:Node3Onboarding
     a hedera:ValidatorOnboardingProcess ;
     rdfs:label "Node 3 onboarding"@en ;
     hedera:occursOn ex:Mainnet ;
-    hedera:hasParticipant ex:HederaCouncil , ex:Node3 ;
+    hedera:hasParticipant ex:HederaCouncil , ex:CoinComCommittee , ex:MembershipCommittee , ex:Node3 ;
+    hedera:hasSteward ex:CoinComCommittee , ex:MembershipCommittee ;
     hedera:targetsValidator ex:Node3 ;
     hedera:issuesDecision ex:OnboardNode3Decision ;
     .

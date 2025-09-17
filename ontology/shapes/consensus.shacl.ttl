@@ -22,6 +22,11 @@ hedera:ValidatorOnboardingShape
         sh:message "Validator onboarding processes must include the stewarding council body and the validator candidate."@en ;
     ] ;
     sh:property [
+        sh:path hedera:hasSteward ;
+        sh:minCount 1 ;
+        sh:message "Validator onboarding must specify at least one stewarding council committee."@en ;
+    ] ;
+    sh:property [
         sh:path hedera:occursOn ;
         sh:minCount 1 ;
         sh:message "Validator onboarding must specify the network it occurs on."@en ;
@@ -38,5 +43,20 @@ hedera:ValidatorOnboardingShape
         ] ;
         sh:qualifiedMinCount 1 ;
         sh:message "At least one governance body with mandates must participate in onboarding."@en ;
+    ] ;
+    .
+
+hedera:ValidatorOnboardingCommitteeShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:ValidatorOnboardingCommittee ;
+    sh:property [
+        sh:path hedera:stewardsProcess ;
+        sh:minCount 1 ;
+        sh:message "Validator onboarding committees must steward at least one onboarding process."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasMandate ;
+        sh:minCount 1 ;
+        sh:message "Validator onboarding committees must list the HIP or policy mandate authorising their work."@en ;
     ] ;
     .

@@ -10,17 +10,19 @@ ex:HederaCouncil
     .
 
 ex:CoinCom
-    a hedera:GovernanceBody ;
+    a hedera:ValidatorOnboardingCommittee , hedera:GovernanceBody ;
     dcterms:title "CoinCom Committee"@en ;
     hedera:hasMandate "HIP-840" ;
     hedera:isSubBodyOf ex:HederaCouncil ;
+    hedera:stewardsProcess ex:NodeOnboarding2024Q3 ;
     .
 
 ex:MembershipCommittee
-    a hedera:GovernanceBody ;
+    a hedera:ValidatorOnboardingCommittee , hedera:GovernanceBody ;
     dcterms:title "Membership Committee"@en ;
     hedera:hasMandate "HIP-540" ;
     hedera:isSubBodyOf ex:HederaCouncil ;
+    hedera:stewardsProcess ex:NodeOnboarding2024Q3 ;
     .
 
 ex:SwirldsLabs
@@ -42,7 +44,8 @@ ex:NodeOnboarding2024Q3
     a hedera:ValidatorOnboardingProcess ;
     dcterms:title "Validator onboarding cohort Q3 2024"@en ;
     hedera:occursOn ex:HederaMainnet ;
-    hedera:hasParticipant ex:HederaCouncil , ex:CoinCom , ex:SwirldsLabs , ex:Worldpay , ex:UCLCBT ;
+    hedera:hasParticipant ex:HederaCouncil , ex:CoinCom , ex:SwirldsLabs , ex:Worldpay , ex:UCLCBT , ex:MembershipCommittee ;
+    hedera:hasSteward ex:CoinCom , ex:MembershipCommittee ;
     hedera:issuesDecision ex:HIP840Mandate ;
     .
 

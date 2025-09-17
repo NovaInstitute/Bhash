@@ -3,7 +3,7 @@ PYTHON ?= python3
 VENV_DIR := build/venv
 PYTHON_BIN := $(VENV_DIR)/bin/python
 
-.PHONY: all reason-core report-core template-example shacl sparql python-venv clean
+.PHONY: all reason-core report-core template-example shacl sparql fluree-smoke python-venv clean
 
 all: reason-core report-core shacl sparql
 
@@ -30,6 +30,9 @@ shacl: python-venv
 
 sparql: python-venv
 	$(PYTHON_BIN) scripts/run_sparql.py
+
+fluree-smoke: python-venv
+	$(PYTHON_BIN) -m pytest -m fluree_smoke tests/test_fluree_client.py
 
 clean:
 	rm -rf build

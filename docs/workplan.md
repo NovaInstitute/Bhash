@@ -71,7 +71,7 @@ Deliver OWL modules iteratively; each sprint targets one service.
 
 * ✅ Consensus Service sprint delivered a dedicated ontology module with topic/message governance, validator onboarding roles, and mirror export artefacts plus SHACL coverage to keep key requirements executable. [`ontology/src/consensus.ttl`](../ontology/src/consensus.ttl) · [`ontology/shapes/consensus.shacl.ttl`](../ontology/shapes/consensus.shacl.ttl)
 * ✅ Token Service sprint introduced HIP-540-compliant classes for stablecoins, token key assignments, and custom fees with supporting competency assets answering CQ-COMP-003. [`ontology/src/token.ttl`](../ontology/src/token.ttl) · [`docs/competency/token-compliance.md`](competency/token-compliance.md) · [`tests/queries/cq-comp-003.rq`](../tests/queries/cq-comp-003.rq)
-* 🔄 Governance traceability for validator stewardship remains in progress to close CQ-GOV-001-B; consensus module scaffolding is in place but still needs end-to-end evidence bundles referencing council rosters. [`docs/competency/backlog.md`](competency/backlog.md)
+* ✅ Governance traceability for validator stewardship now closes CQ-GOV-001-B, with committee classes, stewardship properties, and refreshed fixtures tying council rosters to HIP mandates. [`docs/competency/backlog.md`](competency/backlog.md) · [`docs/competency/evidence/CQ-GOV-001.md`](competency/evidence/CQ-GOV-001.md)
 * ✅ Smart Contracts, File/Schedule, Mirror/Analytics, and Hiero overlay modules are now modelled with corresponding SHACL shapes, sample graphs, and competency assets, unblocking the remaining Phase 3 backlog. [`ontology/src`](../ontology/src) · [`docs/competency`](competency)
 * ✅ Shared datasets and automation hooks were added so the new modules can reuse SPARQL and SHACL pipelines (e.g., updated `scripts/run_sparql.py`, new fixtures under `data/`). [`scripts/run_sparql.py`](../scripts/run_sparql.py) · [`data/`](../data)
 
@@ -140,12 +140,13 @@ Each module should deliver:
 
 | # | Action | Status | Notes |
 | - | ------ | ------ | ----- |
-| 7 | Complete governance traceability modelling to close CQ-GOV-001-B (Phase 3 consensus focus). | 🔄 In progress | Extend `ontology/src/consensus.ttl` with council committee relationships and link evidence in [`docs/competency/evidence/CQ-GOV-001.md`](competency/evidence/CQ-GOV-001.md). |
+| 7 | Complete governance traceability modelling to close CQ-GOV-001-B (Phase 3 consensus focus). | ✅ Complete | Consensus module now models council committees and stewardship links; SHACL/query evidence refreshed in [`docs/competency/evidence/CQ-GOV-001.md`](competency/evidence/CQ-GOV-001.md). |
 | 8 | Assemble live stablecoin key custody snapshot for CQ-COMP-003-A. | ✅ Complete | Seeded representative fixture at `data/token-compliance.json` and wired into token compliance module pending live API automation. |
 | 9 | Kick off Smart Contract Service module covering HTS precompile usage (CQ-DEV-005-B). | ✅ Complete | `ontology/src/smart-contracts.ttl` models precompile invocations with SHACL/query automation in place. |
 | 10 | Plan File/Scheduled Transactions and Mirror/Analytics sprints with dependency on shared datasets. | ✅ Complete | File/Schedule, Mirror/Analytics, and Hiero modules shipped with shared fixtures enabling regression automation. |
 | 11 | Integrate mirror node HTS precompile traces into automated ETL prototype. | 📝 Planned | Extend `data/contracts/hts-precompiles/` with live extracts and script transformation into RDF for regression tests. |
 | 12 | Expand treasury analytics competency with real balance snapshots. | 📝 Planned | Populate `data/mirror/token-balance-retention.csv` with operational SLAs and ingest sample mirror balance exports. |
+| 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | 📝 Planned | Review the Phase 4 alignment blueprint and draft ROBOT templates for `ontology/src/alignment/aiao.ttl`. |
 
 ## Risk considerations
 

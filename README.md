@@ -73,6 +73,18 @@ python scripts/run_shacl.py    # Runs SHACL validation across aggregated example
 
 Both scripts materialise outputs under `build/` (created on demand) and report any mismatches with expected fixtures.
 
+### Go-based automation
+
+If you prefer to avoid the Python toolchain, the repository also provides a Go CLI that installs the [ROBOT](https://github.com/ontodev/robot) and [TopBraid SHACL](https://github.com/TopQuadrant/shacl) command-line tools and mirrors the regression checks:
+
+```bash
+go run ./cmd/bhashctl install  # Downloads ROBOT + SHACL into build/tools
+go run ./cmd/bhashctl sparql   # Executes all SPARQL regression queries via ROBOT
+go run ./cmd/bhashctl shacl    # Runs SHACL validation with the TopBraid CLI
+```
+
+The Go workflow downloads binaries into `build/tools/` and reuses the same fixtures and output locations as the Python scripts, allowing both approaches to coexist.
+
 ## Supporting datasets
 
 New fixtures unlock automation reuse across modules:

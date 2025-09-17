@@ -1,0 +1,6 @@
+Term,Source Document,Notes
+hedera:HieroShard,https://docs.hedera.com/hiero/concepts/shards,Defines shard boundaries within Hiero architecture.
+hedera:HieroParticipation,https://docs.hedera.com/hiero/concepts/validators,Represents validator lifecycle and onboarding state.
+hedera:HieroValidatorRole,https://docs.hedera.com/hiero/concepts/validators,Roles such as consensus proposer or availability steward.
+hedera:HieroOnboardingState,https://docs.hedera.com/hiero/concepts/validators,Enumerates onboarding phases (pending, active, slashed).
+hedera:participatesInShard,https://docs.hedera.com/hiero/concepts/shards,Links validator participation to specific shards.

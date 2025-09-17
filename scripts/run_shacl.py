@@ -14,6 +14,10 @@ SHAPES_DIR = REPO_ROOT / "ontology" / "shapes"
 DATASETS = [
     REPO_ROOT / "ontology" / "examples" / "core-consensus.ttl",
     REPO_ROOT / "ontology" / "examples" / "token-compliance.ttl",
+    REPO_ROOT / "ontology" / "examples" / "smart-contracts.ttl",
+    REPO_ROOT / "ontology" / "examples" / "file-schedule.ttl",
+    REPO_ROOT / "ontology" / "examples" / "mirror-analytics.ttl",
+    REPO_ROOT / "ontology" / "examples" / "hiero.ttl",
 ]
 DATASETS.extend(sorted((REPO_ROOT / "tests" / "fixtures" / "datasets").glob("*.ttl")))
 

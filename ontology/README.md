@@ -18,8 +18,15 @@ and Hiero layer overlays so downstream modules can specialise these foundations 
 
 `src/consensus.ttl` kicks off the Hedera Consensus Service module.  It adds explicit classes for topics, messages, node endpoints, role assignments, and validator stewardship roles aligned with HIP-840 so the governance competency questions have a dedicated namespace for service-specific concepts.
 
+Phase 3 expands the catalogue with the remaining service modules:
+
+- `src/smart-contracts.ttl` – smart contract deployment/execution semantics, HTS precompile usage, and gas analytics hooks.
+- `src/file-schedule.ttl` – File Service artefacts plus Scheduled Transaction lifecycle metadata for pending-signature monitoring.
+- `src/mirror-analytics.ttl` – mirror dataset, retention, and analytics workspace vocabulary to support treasury reporting.
+- `src/hiero.ttl` – Hiero shard participation, onboarding states, and validator roles extending the core Hiero layer abstractions.
+
 All IRIs follow the canonical namespace `https://bhash.dev/hedera/`.  Additional namespaces (e.g., `/governance/`, `/hts/`)
-will be introduced as the project migrates from the core to service-focused modelling work.
+are introduced per module so downstream integrations can import the specific slices they require.
 
 ### Example data
 

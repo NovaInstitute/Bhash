@@ -1,0 +1,47 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+hedera:PrecompileInvocationShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:PrecompileInvocation ;
+    sh:property [
+        sh:path hedera:targetsSystemContract ;
+        sh:minCount 1 ;
+        sh:message "Precompile invocations must reference the system contract they target."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasFunctionSelector ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Precompile invocations must declare the function selector used."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasGasUsed ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:message "Precompile invocations must record gas usage."@en ;
+    ] ;
+    .
+
+hedera:ContractExecutionShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:ContractExecution ;
+    sh:property [
+        sh:path hedera:executesContract ;
+        sh:minCount 1 ;
+        sh:message "Contract executions must identify the contract being executed."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasGasLimit ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:message "Contract executions must record a gas limit."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasResultStatus ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Contract executions must record a result status."@en ;
+    ] ;
+    .

@@ -1,0 +1,3 @@
+dataset,retention_days,notes
+token-balances,30,Mirror REST balances retained for one month
+contract-results,7,Contract execution history pruned weekly for analytics

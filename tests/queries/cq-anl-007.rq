@@ -1,0 +1,14 @@
+PREFIX hedera: <https://bhash.dev/hedera/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?dataset ?datasetLabel ?service ?retentionDays ?workspace
+WHERE {
+  ?dataset a hedera:MirrorDataset ;
+           hedera:hasDatasetType ?type ;
+           hedera:hasRetentionPolicy ?policy ;
+           hedera:coversService ?service ;
+           hedera:feedsAnalyticsWorkspace ?workspace .
+  OPTIONAL { ?dataset rdfs:label ?datasetLabel }
+  ?policy hedera:hasRetentionDays ?retentionDays .
+}
+ORDER BY ?dataset

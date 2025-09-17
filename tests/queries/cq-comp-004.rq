@@ -1,0 +1,15 @@
+PREFIX hedera: <https://bhash.dev/hedera/core/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT ?schedule ?transaction ?status ?missingSignatures ?expires
+WHERE {
+  ?schedule a hedera:ScheduledTransaction ;
+            hedera:hasScheduleStatus ?status ;
+            hedera:schedulesTransaction ?transaction ;
+            hedera:hasRequiredSignatureCount ?required ;
+            hedera:hasCollectedSignatureCount ?collected ;
+            hedera:hasScheduleExpiration ?expires .
+  FILTER(?status = "pending-signatures")
+  BIND(xsd:integer(?required - ?collected) AS ?missingSignatures)
+}
+ORDER BY DESC(?missingSignatures)

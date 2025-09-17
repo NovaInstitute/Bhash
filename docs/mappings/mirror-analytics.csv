@@ -1,0 +1,6 @@
+Term,Source Document,Notes
+hedera:MirrorDataset,https://docs.hedera.com/hedera/mirror-node/architecture/record-and-balance-files,Datasets exported from mirror nodes for analytics.
+hedera:DatasetRetentionPolicy,https://docs.hedera.com/hedera/mirror-node/architecture/record-and-balance-files,Defines retention windows for mirror datasets.
+hedera:MirrorRestAPI,https://docs.hedera.com/hedera/mirror-node/sdks-and-apis/rest-api,REST interface enumerating dataset endpoints.
+hedera:AnalyticsWorkspace,https://docs.hedera.com/hedera/mirror-node/architecture/overview,Represents downstream BI/analytics consumers.
+hedera:feedsAnalyticsWorkspace,https://docs.hedera.com/hedera/mirror-node/architecture/overview,Property linking datasets to consuming workspaces.

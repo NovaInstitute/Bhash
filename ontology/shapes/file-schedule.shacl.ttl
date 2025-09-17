@@ -1,0 +1,47 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+hedera:PendingScheduleShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:PendingSchedule ;
+    sh:property [
+        sh:path hedera:hasScheduleStatus ;
+        sh:hasValue "pending-signatures" ;
+        sh:message "Pending schedules must use the pending-signatures status code."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasRequiredSignatureCount ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:message "Pending schedules must declare the total required signature count."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasCollectedSignatureCount ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:message "Pending schedules must record how many signatures are collected."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasScheduleExpiration ;
+        sh:minCount 1 ;
+        sh:datatype xsd:dateTime ;
+        sh:message "Pending schedules must specify an expiration timestamp."@en ;
+    ] ;
+    .
+
+hedera:FileBytecodeShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:File ;
+    sh:property [
+        sh:path hedera:hasFileId ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Files must declare a ledger identifier."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:storesArtefact ;
+        sh:minCount 1 ;
+        sh:message "Files storing contract bytecode must reference the artefact they contain."@en ;
+    ] ;
+    .

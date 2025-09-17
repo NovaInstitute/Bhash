@@ -1,0 +1,2 @@
+contract,invocation,precompile,gasUsed
+https://bhash.dev/examples/contracts/DEXContract,https://bhash.dev/examples/contracts/HTSInvocation,https://bhash.dev/examples/contracts/HTSPrecompile,42000

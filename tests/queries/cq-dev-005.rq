@@ -1,0 +1,14 @@
+PREFIX hedera: <https://bhash.dev/hedera/core/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
+SELECT ?contract ?invocation ?precompile ?gasUsed
+WHERE {
+  ?execution a hedera:ContractExecution ;
+             hedera:executesContract ?contract ;
+             hedera:includesInvocation ?invocation .
+
+  ?invocation a hedera:PrecompileInvocation ;
+              hedera:targetsSystemContract ?precompile ;
+              hedera:hasGasUsed ?gasUsed .
+}
+ORDER BY DESC(?gasUsed)

@@ -1,0 +1,76 @@
+@prefix exsc: <https://bhash.dev/examples/contracts/> .
+@prefix exfs: <https://bhash.dev/examples/file/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+exsc:SmartContractService
+    a hedera:SmartContractService ;
+    rdfs:label "Mainnet Smart Contract Service"@en ;
+    hedera:hasGasSchedule exsc:MainnetGasSchedule ;
+    .
+
+exsc:MainnetGasSchedule
+    a hedera:GasFeeSchedule ;
+    rdfs:label "Q3 2025 gas fee schedule"@en ;
+    .
+
+exsc:DEXContract
+    a hedera:SmartContract ;
+    rdfs:label "DEX Router"@en ;
+    hedera:hasContractId "0.0.8012" ;
+    hedera:hasBytecode exsc:DEXBytecode ;
+    hedera:hasInvocationCount 128 ;
+    hedera:invokesSystemContract exsc:HTSPrecompile ;
+    .
+
+exsc:DEXAccount
+    a hedera:ContractAccount ;
+    rdfs:label "DEX Router account"@en ;
+    hedera:hasAccountId "0.0.8012" ;
+    hedera:isAccountOf exsc:DEXContract ;
+    .
+
+exsc:DEXBytecode
+    a hedera:ContractBytecode ;
+    hedera:storesBytecodeIn exfs:DEXBytecodeFile ;
+    .
+
+exsc:HTSPrecompile
+    a hedera:Precompile ;
+    rdfs:label "HTS Token Service precompile"@en ;
+    .
+
+exsc:SwapExecution
+    a hedera:ContractExecution ;
+    hedera:executesContract exsc:DEXContract ;
+    hedera:hasGasLimit 750000 ;
+    hedera:hasResultStatus "SUCCESS" ;
+    hedera:includesInvocation exsc:HTSInvocation ;
+    hedera:emitsContractEvent exsc:SwapEvent ;
+    hedera:hasOpcodeTrace exsc:SwapOpcodeTrace ;
+    .
+
+exsc:HTSInvocation
+    a hedera:PrecompileInvocation ;
+    hedera:targetsSystemContract exsc:HTSPrecompile ;
+    hedera:hasFunctionSelector "0x16700000" ;
+    hedera:hasGasUsed 42000 ;
+    prov:wasAssociatedWith exsc:SwapExecution ;
+    .
+
+exsc:SwapEvent
+    a hedera:ContractEvent ;
+    hedera:recordsLog exsc:SwapLog ;
+    .
+
+exsc:SwapLog
+    a hedera:ContractLog ;
+    rdfs:label "Swap log"@en ;
+    .
+
+exsc:SwapOpcodeTrace
+    a hedera:OpcodeTrace ;
+    hedera:hasGasBreakdown "intrinsic=21000;opcode=15000;surcharge=6000" ;
+    .

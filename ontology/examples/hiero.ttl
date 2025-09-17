@@ -1,0 +1,74 @@
+@prefix exh: <https://bhash.dev/examples/hiero/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+exh:ShardAlpha
+    a hedera:HieroShard ;
+    rdfs:label "Shard Alpha"@en ;
+    hedera:hasShardIdentifier "alpha" ;
+    .
+
+exh:ShardBeta
+    a hedera:HieroShard ;
+    rdfs:label "Shard Beta"@en ;
+    hedera:hasShardIdentifier "beta" ;
+    .
+
+exh:HieroConsensusLayer
+    a hedera:HieroConsensusLayer ;
+    rdfs:label "Hiero consensus layer"@en ;
+    .
+
+exh:ValidatorAtlas
+    a hedera:Validator ;
+    rdfs:label "Atlas Validators"@en ;
+    .
+
+exh:ValidatorBeacon
+    a hedera:HieroAvailabilityNode ;
+    rdfs:label "Beacon Availability"@en ;
+    .
+
+exh:ConsensusRole
+    a hedera:HieroValidatorRole ;
+    rdfs:label "Consensus proposer"@en ;
+    .
+
+exh:AvailabilityRole
+    a hedera:HieroValidatorRole ;
+    rdfs:label "Availability steward"@en ;
+    .
+
+exh:OnboardingStatePending
+    a hedera:HieroOnboardingState ;
+    rdfs:label "Pending"@en ;
+    .
+
+exh:OnboardingStateActive
+    a hedera:HieroOnboardingState ;
+    rdfs:label "Active"@en ;
+    .
+
+exh:AtlasParticipation
+    a hedera:HieroParticipation ;
+    hedera:participationOf exh:ValidatorAtlas ;
+    hedera:participatesInShard exh:ShardAlpha ;
+    hedera:assumesHieroRole exh:ConsensusRole ;
+    hedera:supportsLayer exh:HieroConsensusLayer ;
+    hedera:hasOnboardingState exh:OnboardingStateActive ;
+    hedera:hasParticipationStatus "active" ;
+    hedera:hasActivationDate "2025-09-15"^^xsd:date ;
+    hedera:hasValidatorScore "0.92"^^xsd:decimal ;
+    .
+
+exh:BeaconParticipation
+    a hedera:HieroParticipation ;
+    hedera:participationOf exh:ValidatorBeacon ;
+    hedera:participatesInShard exh:ShardBeta ;
+    hedera:assumesHieroRole exh:AvailabilityRole ;
+    hedera:supportsLayer exh:HieroConsensusLayer ;
+    hedera:hasOnboardingState exh:OnboardingStatePending ;
+    hedera:hasParticipationStatus "pending" ;
+    hedera:hasValidatorScore "0.75"^^xsd:decimal ;
+    .

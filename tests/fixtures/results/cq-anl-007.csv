@@ -1,0 +1,3 @@
+dataset,datasetLabel,service,retentionDays,workspace
+https://bhash.dev/examples/mirror/ContractResultsDataset,Contract results stream,https://bhash.dev/hedera/core/SmartContractService,7,https://bhash.dev/examples/mirror/ExecutionInsightsWorkspace
+https://bhash.dev/examples/mirror/TokenBalancesDataset,Token balances snapshot,https://bhash.dev/hedera/core/TokenService,30,https://bhash.dev/examples/mirror/TreasuryDashboard

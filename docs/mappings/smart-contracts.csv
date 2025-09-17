@@ -1,0 +1,6 @@
+Term,Source Document,Notes
+hedera:SmartContract,https://docs.hedera.com/hedera/core-concepts/smart-contracts/introduction,Defines deployed EVM bytecode and associated accounts.
+hedera:Precompile,https://docs.hedera.com/hedera/core-concepts/smart-contracts/system-contracts#token-service-precompile,Links to HTS system contract integration points.
+hedera:PrecompileInvocation,https://docs.hedera.com/hedera/mirror-node/sdks-and-apis/rest-api#tag/Contracts,Mirror API exposes precompile invocation metadata for analytics.
+hedera:ContractExecution,https://docs.hedera.com/hedera/sdks-and-apis/smart-contracts/contract-call,Represents contract call transactions with gas limits and status.
+hedera:GasFeeSchedule,https://docs.hedera.com/hedera/core-concepts/smart-contracts/gas-and-fees,Provides schedule for intrinsic/opcode/surcharge gas metrics.

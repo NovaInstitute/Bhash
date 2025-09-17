@@ -42,6 +42,7 @@ ex:MainnetShardAlpha
     rdfs:label "Mainnet shard alpha"@en ;
     hedera:isShardOf ex:Mainnet ;
     hedera:isGovernedBy ex:HederaCouncil ;
+    hedera:hasShardIdentifier "alpha" ;
     .
 
 ex:Node3
@@ -136,6 +137,15 @@ ex:MainnetMirrorDataset
     dcterms:description "REST dataset exposing transactions, balances, and topics for analytics"@en ;
     dcat:accessURL <https://mainnet-public.mirrornode.hedera.com/api/v1/> ;
     hedera:isPublishedBy ex:MirrorNode ;
+    hedera:hasDatasetType "transactions" ;
+    hedera:coversService hedera:ConsensusService ;
+    hedera:hasRetentionPolicy ex:MainnetMirrorRetention ;
+    .
+
+ex:MainnetMirrorRetention
+    a hedera:DatasetRetentionPolicy ;
+    rdfs:label "Mainnet mirror retention"@en ;
+    hedera:hasRetentionDays 90 ;
     .
 
 ex:ConsensusTransaction

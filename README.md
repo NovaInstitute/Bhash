@@ -1,82 +1,86 @@
 # Bhash: Hedera Network Ontology
 
-Bhash is an open knowledge engineering effort to describe the Hedera Network in a machine-interpretable way. The goal is to capture the actors, assets, services, processes, and governance rules that appear across the Hedera Consensus Service (HCS), Token Service (HTS), Smart Contract Service (HSCS), File Service, and related tooling in a unified OWL/RDF ontology. By modelling Hedera's public documentation and implementation guidance—including the recently announced Hiero network architecture—we aim to provide reusable semantics for analytics, compliance, education, and integration projects.
+Bhash is an open knowledge engineering effort to describe the Hedera Network and the forthcoming Hiero architecture in a machine-interpretable way. The project captures the actors, assets, services, processes, and governance rules that appear across the Hedera Consensus Service (HCS), Token Service (HTS), Smart Contract Service (HSCS), File Service, Scheduled Transactions, mirror node ecosystem, and Hiero overlay. By modelling Hedera's public documentation and implementation guidance—including Hiero validator onboarding—we provide reusable semantics for analytics, compliance, education, and integration projects.
 
 ## Why an ontology?
 
 * **Shared vocabulary** – establish stable identifiers and definitions for Hedera-specific notions such as accounts, topics, tokens, scheduled transactions, staking nodes, and fee schedules.
-* **Interoperability** – align Hedera concepts with standard vocabularies (PROV-O for provenance, DCAT for data catalogues, W3C DID Core for identities, etc.) so that data from mirror nodes, dApps, and compliance tools can interoperate.
-* **Reasoning** – enable automated validation (via OWL reasoning and SHACL constraints) for network states, policy rules, token compliance requirements, and smart contract metadata.
+* **Interoperability** – align Hedera concepts with standard vocabularies (PROV-O, DCAT, W3C DID Core, etc.) so that data from mirror nodes, dApps, and compliance tools can interoperate.
+* **Reasoning & validation** – enable automated validation (via OWL reasoning and SHACL constraints) for network states, policy rules, token compliance requirements, smart contract metadata, and Hiero onboarding milestones.
 * **Documentation** – provide an authoritative reference that augments Hedera/Hiero manuals with explicit relationships that are otherwise scattered across prose and code.
 
-## Scope overview
+## Current Phase 3 deliverables
 
-The ontology will ultimately cover four complementary viewpoints:
+Phase 3 targets service-specific ontology modules. The following artefacts are now available:
 
-1. **Network Topology** – councils, permissioned and permissionless node operators, consensus and mirror nodes, network shards/regions introduced with Hiero, and environments (mainnet, testnet, previewnet, devnet).
-2. **Identity & Accounts** – accounts, keys, roles, staking metadata, scheduled/smart contract-controlled accounts, treasury accounts, HIP-defined standards.
-3. **Services & Artefacts** – topics, messages, file objects, fungible/non-fungible tokens, token classes (HIP-412, HIP-540), token relationships, smart contracts, contract bytecode/files, scheduled transactions, system contracts.
-4. **Process & Governance** – transaction lifecycle, consensus flow, staking and reward cycles, network upgrade procedures, compliance/regulatory processes, fee schedules, and telemetry exposed through mirror node APIs.
+| Domain | Ontology module | SHACL | Example graph | Competency assets |
+| ------ | ---------------- | ----- | ------------- | ----------------- |
+| Consensus Service | `ontology/src/consensus.ttl` | `ontology/shapes/consensus.shacl.ttl` | `ontology/examples/core-consensus.ttl` | `docs/competency/core-foundational.md` |
+| Token Service | `ontology/src/token.ttl` | `ontology/shapes/token.shacl.ttl` | `ontology/examples/token-compliance.ttl` | `docs/competency/token-compliance.md` |
+| Smart Contract Service | `ontology/src/smart-contracts.ttl` | `ontology/shapes/smart-contracts.shacl.ttl` | `ontology/examples/smart-contracts.ttl` | `docs/competency/smart-contracts.md` |
+| File & Schedule Services | `ontology/src/file-schedule.ttl` | `ontology/shapes/file-schedule.shacl.ttl` | `ontology/examples/file-schedule.ttl` | `docs/competency/file-schedule.md` |
+| Mirror & Analytics Ecosystem | `ontology/src/mirror-analytics.ttl` | `ontology/shapes/mirror-analytics.shacl.ttl` | `ontology/examples/mirror-analytics.ttl` | `docs/competency/mirror-analytics.md` |
+| Hiero overlay | `ontology/src/hiero.ttl` | `ontology/shapes/hiero.shacl.ttl` | `ontology/examples/hiero.ttl` | `docs/competency/hiero.md` |
 
-Hiero introduces modular network layers, virtualization of consensus participation, and the path toward permissionless validator onboarding. These aspects will be modelled alongside legacy Hedera concepts so that the ontology can express both historical and forward-looking architecture.
+Each module is backed by competency questions, SPARQL regression queries under `tests/queries/`, expected results in `tests/fixtures/results/`, and SHACL shapes verifying structural requirements.
 
-## Planned repository structure
+## Repository layout
 
 ```text
 .
-├── README.md              # Project overview and quick links
-├── LICENSE                # Apache 2.0 (inherited)
+├── README.md
+├── data/                     # Source datasets and fixtures backing competency questions
+│   ├── contracts/hts-precompiles/sample-invocations.csv
+│   ├── mirror/token-balance-retention.csv
+│   └── token-compliance.json
 ├── docs/
-└── ontology/
-    ├── src/               # OWL/RDF source files (TBD)
-    ├── shapes/            # SHACL shapes for data validation (TBD)
-    └── examples/          # Sample RDF graphs and competency questions (TBD)
+│   ├── competency/           # Competency question answers, backlog, and evidence bundles
+│   ├── mappings/             # Crosswalks linking ontology terms to source documentation
+│   ├── workplan.md           # Iterative roadmap and phase reviews
+│   └── ...                   # Research notes, references, governance decisions
+├── ontology/
+│   ├── src/                  # OWL/Turtle source files for each module
+│   ├── shapes/               # SHACL shapes aligned with module requirements
+│   └── examples/             # Example graphs powering SPARQL and SHACL regression tests
+├── scripts/                  # Automation for running SPARQL and SHACL checks
+└── tests/
+    ├── queries/              # SPARQL regression queries
+    ├── fixtures/results/     # Expected query outputs
+    └── fixtures/datasets/    # Supplementary RDF datasets
 ```
 
-> **Note:** Only documentation is present initially. Ontology artefacts will be added as the modelling work progresses following the workplan.
+## Running validation
 
-## Tooling & conventions
+Install the Python dependencies once (`pip install -r requirements.txt`), then execute:
 
-* **Ontology language** – OWL 2 DL serialised in Turtle (`.ttl`) for human readability; JSON-LD exports will be generated for integration scenarios.
-* **Namespace strategy** – canonical namespace `https://bhash.dev/hedera/` with modular sub-namespaces per service (`.../hcs/`, `.../hts/`, `.../governance/`, etc.). Stable URIs will be reserved for Hedera/Hiero concepts; ephemeral or speculative notions will live in a `/draft/` namespace until ratified.
-* **Competency questions** – each modelling sprint will begin by documenting competency questions (e.g., "Which accounts control the treasury of a given token?", "What consensus nodes participate in shard X under Hiero?").
-* **Alignment artifacts** – crosswalk sheets mapping Hedera documentation terms to ontology classes/properties will live under `docs/mappings/` (to be created).
-* **Validation** – SHACL shapes will express structural constraints derived from service APIs; automated reasoning (e.g., via the ELK or HermiT reasoner) will run in CI before releases.
+```bash
+python scripts/run_sparql.py   # Executes all regression queries against example graphs
+python scripts/run_shacl.py    # Runs SHACL validation across aggregated example data
+```
 
+Both scripts materialise outputs under `build/` (created on demand) and report any mismatches with expected fixtures.
+
+## Supporting datasets
+
+New fixtures unlock automation reuse across modules:
+
+* `data/contracts/hts-precompiles/sample-invocations.csv` – representative mirror node export for HTS precompile analytics.
+* `data/token-compliance.json` – snapshot of key custodians backing the HIP-540 example.
+* `data/mirror/token-balance-retention.csv` – retention planning worksheet for treasury analytics datasets.
+
+These lightweight fixtures inform the example RDF graphs and will be replaced with live extracts once data pipelines are automated.
 
 ## Working practices
 
-1. **Document-first research** – extract canonical definitions from Hedera documentation, Hiero architectural notes, HIPs, and mirror node API references before introducing new classes.
+1. **Document-first research** – extract canonical definitions from Hedera/Hiero documentation, HIPs, and mirror node references before introducing new classes.
 2. **Iterative modelling** – deliver scoped ontology modules per Hedera service, validated with sample graphs and SPARQL competency queries.
 3. **Community alignment** – involve Hedera developer relations, HIP authors, and compliance experts for terminology approval and governance modelling.
-4. **Automation** – favour ROBOT for automated builds, reasoning, and release packaging while complementing it with Python notebooks (RDFlib, OWLReady2) for data-driven validation.
-5. **Versioning** – use semantic versioning for ontology releases (e.g., `v0.1.0` for initial scaffolding) with changelogs capturing class/property additions, modifications, and deprecations.
+4. **Automation** – leverage ROBOT, rdflib, and pySHACL for continuous validation; scripts in `scripts/` orchestrate regression runs locally.
+5. **Versioning** – use semantic versioning for ontology releases with changelogs capturing class/property additions and deprecations.
 
-## Getting started
+## Getting involved
 
-1. **Review the workplan** in [`docs/workplan.md`](docs/workplan.md) to understand the staged deliverables.
-2. **Consult Phase 0 artefacts:**
-   * [`docs/references/bibliography.md`](docs/references/bibliography.md) for canonical sources.
-   * [`docs/decisions/log.md`](docs/decisions/log.md) to understand accepted modelling choices.
-   * [`docs/tooling/toolchain.md`](docs/tooling/toolchain.md) for ROBOT/Codex setup guidance.
-3. **Review Phase 1 research outputs:**
-   * [`docs/inventory/content-audit.md`](docs/inventory/content-audit.md) for glossary candidates and modelling hooks.
-   * [`docs/inventory/context-maps.md`](docs/inventory/context-maps.md) for draft actor/service relationship diagrams.
-   * [`docs/competency/backlog.md`](docs/competency/backlog.md) for high-priority competency questions.
-   * [`docs/research/ontology-landscape.md`](docs/research/ontology-landscape.md) for external vocabulary alignment notes.
-4. **Set up tooling:**
-   * Install [Protégé](https://protege.stanford.edu/) for authoring OWL axioms.
-   * Install [ROBOT](https://robot.obolibrary.org/) with Java 11+ for automation; optional Python environment with [`rdflib`](https://rdflib.readthedocs.io/), [`pyshacl`](https://github.com/RDFLib/pySHACL), and [`owlready2`](https://owlready2.readthedocs.io/).
-5. **Collect source materials:** maintain and extend the shared bibliography of Hedera, Hiero, HIP, and mirror node references under `docs/references/`.
-6. **Model & validate:** start with the seed module defined in the workplan (accounts & governance), ensuring each class/property is backed by documentation quotes and competency questions.
-
-## Contributing
-
-Contributions are welcome! Please open an issue describing the Hedera/Hiero concept you plan to model, include citations to the relevant documentation, and propose competency questions your addition should satisfy. Pull requests should include:
-
-* Updated OWL/Turtle files
-* Updated documentation (glossary entries, competency questions, or mapping tables)
-* Validation evidence (reasoner logs, SHACL reports, or sample SPARQL answers)
+Contributions are welcome! Please open an issue describing the Hedera/Hiero concept you plan to model, include citations to relevant documentation, and propose competency questions your addition should satisfy. Pull requests should include updated OWL/Turtle files, documentation, mapping tables, and validation evidence (SPARQL outputs or SHACL reports).
 
 ## Reference materials
 

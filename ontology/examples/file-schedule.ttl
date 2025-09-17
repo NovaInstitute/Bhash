@@ -1,0 +1,78 @@
+@prefix exfs: <https://bhash.dev/examples/file/> .
+@prefix exsc: <https://bhash.dev/examples/contracts/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+exfs:FileService
+    a hedera:FileService ;
+    rdfs:label "Mainnet File Service"@en ;
+    .
+
+exfs:DEXBytecodeFile
+    a hedera:File ;
+    hedera:hasFileId "0.0.350" ;
+    hedera:hasFileMemo "DEX router bytecode" ;
+    hedera:hasFileSize 14368 ;
+    hedera:hasFileKey exfs:OperatorKey ;
+    hedera:storesArtefact exsc:DEXBytecode ;
+    hedera:hasFileContent exfs:DEXBytecodeContent ;
+    .
+
+exfs:OperatorKey
+    a hedera:FileKey ;
+    rdfs:label "Operator multisig"@en ;
+    .
+
+exfs:DEXBytecodeContent
+    a hedera:FileContent ;
+    .
+
+exfs:ScheduleService
+    a hedera:ScheduleService ;
+    rdfs:label "Scheduled Transaction Service"@en ;
+    .
+
+exfs:EmergencyPauseSchedule
+    a hedera:PendingSchedule ,
+        hedera:ScheduledTransaction ;
+    hedera:hasScheduleId "0.0.9101" ;
+    hedera:hasScheduleStatus "pending-signatures" ;
+    hedera:hasScheduleMemo "Pause DEX router until audit complete" ;
+    hedera:hasSchedulePayer "0.0.5005" ;
+    hedera:hasRequiredSignatureCount 3 ;
+    hedera:hasCollectedSignatureCount 2 ;
+    hedera:hasScheduleExpiration "2025-10-01T00:00:00Z"^^xsd:dateTime ;
+    hedera:requiresSignature exfs:SecurityCouncil , exfs:OperationsLead , exfs:ComplianceOfficer ;
+    hedera:hasCollectedSignature exfs:SecurityCouncilSignature , exfs:OperationsLeadSignature ;
+    hedera:schedulesTransaction exsc:SwapExecution ;
+    .
+
+exfs:SecurityCouncil
+    a hedera:Account ;
+    rdfs:label "Security council account"@en ;
+    hedera:hasAccountId "0.0.6001" ;
+    .
+
+exfs:OperationsLead
+    a hedera:Account ;
+    rdfs:label "Operations lead"@en ;
+    hedera:hasAccountId "0.0.6002" ;
+    .
+
+exfs:ComplianceOfficer
+    a hedera:Account ;
+    rdfs:label "Compliance officer"@en ;
+    hedera:hasAccountId "0.0.6003" ;
+    .
+
+exfs:SecurityCouncilSignature
+    a hedera:ScheduleSignature ;
+    prov:wasAssociatedWith exfs:SecurityCouncil ;
+    .
+
+exfs:OperationsLeadSignature
+    a hedera:ScheduleSignature ;
+    prov:wasAssociatedWith exfs:OperationsLead ;
+    .

@@ -1,0 +1,40 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+hedera:HieroParticipationShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:HieroParticipation ;
+    sh:property [
+        sh:path hedera:participationOf ;
+        sh:minCount 1 ;
+        sh:message "Hiero participation instances must identify a validator."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:participatesInShard ;
+        sh:minCount 1 ;
+        sh:message "Hiero participation instances must identify a shard."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasOnboardingState ;
+        sh:minCount 1 ;
+        sh:message "Hiero participation instances must declare an onboarding state."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasParticipationStatus ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Hiero participation instances must provide a textual status."@en ;
+    ] ;
+    .
+
+hedera:HieroShardShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:HieroShard ;
+    sh:property [
+        sh:path hedera:hasShardIdentifier ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Hiero shards must declare a shard identifier."@en ;
+    ] ;
+    .

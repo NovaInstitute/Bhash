@@ -19,26 +19,14 @@
 
 ## Proposed modelling updates
 
-1. Add `hedera:SystemContractCall` as a subclass of `hedera:Process` capturing the called system contract address, selector, and resulting HTS action.
-2. Extend `hedera:SmartContract` with a property `hedera:invokesSystemContract` linking to the `hedera:SystemContract` individual (e.g., `hedera:HTSPrecompile`).
-3. Record gas metrics using data properties (`hedera:intrinsicGas`, `hedera:opcodeGas`, `hedera:systemContractGas`) aligned with the gas reference definitions for downstream analytics.
+1. Introduced `hedera:ContractExecution`, `hedera:PrecompileInvocation`, and supporting object properties (`hedera:executesContract`, `hedera:includesInvocation`, `hedera:targetsSystemContract`) to capture invocation provenance.
+2. Linked smart contracts to stored bytecode files and gas fee schedules so that execution metadata can be contextualised.
+3. Added datatype properties (`hedera:hasGasLimit`, `hedera:hasGasUsed`, `hedera:hasFunctionSelector`, `hedera:hasGasBreakdown`) to express analytics-ready metrics from mirror node opcode traces.
 
 ## Validation approach
 
-* **SPARQL query prototype:**
-  ```sparql
-  PREFIX hedera: <https://bhash.dev/hedera/core/>
-  SELECT ?contract ?htsCall ?gasTotal
-  WHERE {
-    ?htsCall a hedera:SystemContractCall ;
-             hedera:targetsSystemContract hedera:HTSPrecompile ;
-             hedera:totalGasUsed ?gasTotal ;
-             prov:wasAssociatedWith ?contract .
-  }
-  ORDER BY DESC(?gasTotal)
-  ```
-  This query lists contracts invoking the HTS precompile ordered by gas consumption.
-* **SHACL shape:** Ensure every `hedera:SystemContractCall` linked to `hedera:HTSPrecompile` contains data for intrinsic, opcode, and surcharge gas components to satisfy analytics requirements.
+* **SPARQL query:** `tests/queries/cq-dev-005.rq` enumerates contracts, their precompile invocations, target precompiles, and gas usage.
+* **SHACL:** `ontology/shapes/smart-contracts.shacl.ttl` verifies that executions and invocations contain contract references, gas metrics, and selectors.
 
 ## Outstanding tasks
 

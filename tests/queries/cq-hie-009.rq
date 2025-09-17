@@ -1,0 +1,16 @@
+PREFIX hedera: <https://bhash.dev/hedera/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?validator ?validatorLabel ?shard ?shardLabel ?state ?status ?score
+WHERE {
+  ?participation a hedera:HieroParticipation ;
+                 hedera:participationOf ?validator ;
+                 hedera:participatesInShard ?shard ;
+                 hedera:hasOnboardingState ?stateNode ;
+                 hedera:hasParticipationStatus ?status ;
+                 hedera:hasValidatorScore ?score .
+  OPTIONAL { ?validator rdfs:label ?validatorLabel }
+  OPTIONAL { ?shard rdfs:label ?shardLabel }
+  OPTIONAL { ?stateNode rdfs:label ?state }
+}
+ORDER BY ?validator

@@ -1,0 +1,35 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+hedera:MirrorDatasetShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:MirrorDataset ;
+    sh:property [
+        sh:path hedera:hasDatasetType ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Mirror datasets must declare a dataset type."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:coversService ;
+        sh:minCount 1 ;
+        sh:message "Mirror datasets must identify the Hedera service they cover."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasRetentionPolicy ;
+        sh:minCount 1 ;
+        sh:message "Mirror datasets must link to a retention policy."@en ;
+    ] ;
+    .
+
+hedera:DatasetRetentionShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:DatasetRetentionPolicy ;
+    sh:property [
+        sh:path hedera:hasRetentionDays ;
+        sh:minCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:message "Retention policies must specify retention days."@en ;
+    ] ;
+    .

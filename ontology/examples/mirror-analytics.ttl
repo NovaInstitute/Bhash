@@ -1,0 +1,69 @@
+@prefix exma: <https://bhash.dev/examples/mirror/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+exma:CommunityMirror
+    a hedera:MirrorService ;
+    rdfs:label "Community mirror service"@en ;
+    hedera:exposesRestEndpoint exma:CommunityMirrorREST ;
+    hedera:publishesDataset exma:TokenBalancesDataset , exma:ContractResultsDataset ;
+    .
+
+exma:CommunityMirrorREST
+    a hedera:MirrorRestAPI ;
+    rdfs:label "Community mirror REST"@en ;
+    .
+
+exma:TokenBalancesDataset
+    a hedera:MirrorDataset ;
+    rdfs:label "Token balances snapshot"@en ;
+    hedera:hasDatasetType "balances" ;
+    hedera:hasDatasetURI "https://mirror.example/api/v1/balances" ;
+    hedera:coversService hedera:TokenService ;
+    hedera:feedsAnalyticsWorkspace exma:TreasuryDashboard ;
+    hedera:hasRetentionPolicy exma:BalancesRetention ;
+    .
+
+exma:BalancesRetention
+    a hedera:DatasetRetentionPolicy ;
+    hedera:hasRetentionDays 30 ;
+    .
+
+exma:ContractResultsDataset
+    a hedera:MirrorDataset ;
+    rdfs:label "Contract results stream"@en ;
+    hedera:hasDatasetType "contract-results" ;
+    hedera:hasDatasetURI "https://mirror.example/api/v1/contracts/results" ;
+    hedera:coversService hedera:SmartContractService ;
+    hedera:feedsAnalyticsWorkspace exma:ExecutionInsightsWorkspace ;
+    hedera:hasRetentionPolicy exma:ContractRetention ;
+    .
+
+exma:ContractRetention
+    a hedera:DatasetRetentionPolicy ;
+    hedera:hasRetentionDays 7 ;
+    .
+
+exma:TreasuryDashboard
+    a hedera:AnalyticsWorkspace ;
+    rdfs:label "Treasury distribution dashboard"@en ;
+    hedera:hasWorkspacePurpose "Visualise treasury vs external token balances" ;
+    .
+
+exma:ExecutionInsightsWorkspace
+    a hedera:AnalyticsWorkspace ;
+    rdfs:label "Execution insights"@en ;
+    hedera:hasWorkspacePurpose "Analyse smart contract performance and gas costs" ;
+    .
+
+exma:DailyIngestionPipeline
+    a hedera:IngestionPipeline ;
+    hedera:producesMetric exma:PipelineLagMetric ;
+    .
+
+exma:PipelineLagMetric
+    a hedera:TelemetryMetric ;
+    hedera:hasMetricValue "2.5"^^xsd:decimal ;
+    hedera:hasMetricWindow "1h" ;
+    .

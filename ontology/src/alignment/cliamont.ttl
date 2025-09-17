@@ -1,0 +1,105 @@
+@prefix : <https://bhash.dev/hedera/alignment/cliamont/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix cliamont: <https://datadudes.xyz/ontology/cliamont#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://bhash.dev/hedera/alignment/cliamont>
+    a owl:Ontology ;
+    dcterms:title "CliaMont alignment module"@en ;
+    dcterms:description "Aligns Hedera scheduled transactions and governance commitments with CliaMont climate mitigation and adaptation concepts."@en ;
+    dcterms:creator "Bhash Ontology Working Group"@en ;
+    dcterms:created "2025-10-01"^^xsd:date ;
+    dcterms:modified "2025-10-01"^^xsd:date ;
+    owl:imports <https://bhash.dev/hedera/core> ,
+        <https://bhash.dev/hedera/file-schedule> ;
+    owl:versionInfo "0.1.0-dev" ;
+    skos:editorialNote "Phase 4 bridge module mapping scheduled sustainability actions to CliaMont mitigation and adaptation taxonomies."@en ;
+    .
+
+###
+# Alignment classes
+###
+
+hedera:ScheduledMitigationAction
+    a owl:Class ;
+    rdfs:label "Scheduled mitigation action"@en ;
+    rdfs:subClassOf hedera:ScheduledTransaction ,
+        cliamont:MitigationAction ;
+    skos:definition "Scheduled transaction whose execution funds or enables a climate mitigation activity."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/introduction> ;
+    dcterms:source <https://datadudes.xyz/cliamont#MitigationAction> ;
+    .
+
+hedera:ClimateAdaptationSchedule
+    a owl:Class ;
+    rdfs:label "Climate adaptation schedule"@en ;
+    rdfs:subClassOf hedera:ScheduledTransaction ,
+        cliamont:AdaptationCommitment ;
+    skos:definition "Scheduled transaction capturing staged funding for adaptation programmes."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/how-scheduled-transactions-work> ;
+    dcterms:source <https://datadudes.xyz/cliamont#AdaptationCommitment> ;
+    .
+
+hedera:ResilienceMilestone
+    a owl:Class ;
+    rdfs:label "Resilience milestone"@en ;
+    rdfs:subClassOf hedera:Event ,
+        cliamont:ResilienceOutcome ;
+    skos:definition "Network event used as a milestone for tracking adaptation commitments."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hiero/roadmap> ;
+    dcterms:source <https://datadudes.xyz/cliamont#ResilienceOutcome> ;
+    .
+
+###
+# Alignment properties
+###
+
+hedera:advancesClimateObjective
+    a owl:ObjectProperty ;
+    rdfs:label "advances climate objective"@en ;
+    rdfs:domain hedera:ScheduledTransaction ;
+    rdfs:range cliamont:ClimateObjective ;
+    rdfs:subPropertyOf cliamont:advancesObjective ;
+    skos:definition "Associates a scheduled transaction with the climate objective it advances."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/introduction> ;
+    dcterms:source <https://datadudes.xyz/cliamont#advancesObjective> ;
+    .
+
+hedera:linkedImpactAssertion
+    a owl:ObjectProperty ;
+    rdfs:label "linked impact assertion"@en ;
+    rdfs:domain hedera:ScheduledTransaction ;
+    rdfs:range cliamont:ImpactStatement ;
+    rdfs:subPropertyOf cliamont:documentsOutcome ;
+    skos:definition "Connects a scheduled action to the impact statement documenting its execution."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/how-scheduled-transactions-work> ;
+    dcterms:source <https://datadudes.xyz/cliamont#ImpactStatement> ;
+    .
+
+hedera:tracksResilienceMilestone
+    a owl:ObjectProperty ;
+    rdfs:label "tracks resilience milestone"@en ;
+    rdfs:domain hedera:ScheduledTransaction ;
+    rdfs:range hedera:ResilienceMilestone ;
+    rdfs:subPropertyOf cliamont:monitorsIndicator ;
+    skos:definition "Identifies the network milestone used to evidence progress against a climate action."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hiero/roadmap> ;
+    dcterms:source <https://datadudes.xyz/cliamont#monitorsIndicator> ;
+    .
+
+hedera:hasClimateWindow
+    a owl:DatatypeProperty ;
+    rdfs:label "has climate window"@en ;
+    rdfs:domain hedera:ScheduledTransaction ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf cliamont:hasReportingPeriod ;
+    skos:definition "Specifies the reporting period for a scheduled climate commitment."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/how-scheduled-transactions-work> ;
+    dcterms:source <https://datadudes.xyz/cliamont#hasReportingPeriod> ;
+    .

@@ -74,7 +74,13 @@ hedera:summarisesToken
     .
 
 hedera:hasMetricValue
+    a owl:DatatypeProperty ;
+    rdfs:label "has metric value"@en ;
+    rdfs:domain hedera:TelemetryMetric ;
+    rdfs:range xsd:decimal ;
     rdfs:subPropertyOf impactont:hasMetricValue ;
+    skos:definition "Quantitative value reported for a Hedera-aligned impact metric."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/architecture/metrics> ;
     dcterms:source <https://datadudes.xyz/impactont#hasMetricValue> ;
     .
 

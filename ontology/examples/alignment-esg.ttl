@@ -91,6 +91,8 @@ ex:ReforestationSchedule
     hedera:advancesClimateObjective claimont:ForestRestorationObjective ;
     .
 
+ex:ReforestationSchedule a claimont:MitigationAction .
+
 claimont:ForestRestorationObjective
     a claimont:ClimateObjective ;
     rdfs:label "Forest Restoration Objective"@en ;
@@ -118,3 +120,7 @@ ex:MirrorNodeAlpha hedera:publishesImpactDataset ex:ReforestationDataset .
 ex:ReforestationAssertion a aiao:ImpactAssertion .
 
 ex:ReforestationMetric impactont:hasMetricValue "1250"^^xsd:decimal .
+
+ex:ReforestationMetric a impactont:KPI .
+
+ex:MirrorNodeAlpha a infocomm:CommunicationNode .

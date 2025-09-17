@@ -7,7 +7,7 @@ hedera:PendingScheduleShape
     sh:targetClass hedera:PendingSchedule ;
     sh:property [
         sh:path hedera:hasScheduleStatus ;
-        sh:hasValue "pending-signatures" ;
+        sh:in ( "pending-signatures" "pending-signatures"^^xsd:string ) ;
         sh:message "Pending schedules must use the pending-signatures status code."@en ;
     ] ;
     sh:property [

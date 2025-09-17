@@ -2,7 +2,7 @@ Term,Source Document,Notes
 hedera:MirrorCommunicationNode,https://docs.hedera.com/hedera/mirror-node,Mirror nodes distribute telemetry feeds and align with InfoComm communication node semantics.
 hedera:HieroCommunicationSegment,https://docs.hedera.com/hiero/concepts/shards,Hiero shards are treated as network segments for telemetry routing.
 hedera:ImpactTelemetryExchange,https://docs.hedera.com/hiero/concepts/validators,Telemetry exchanges document data flows analogous to InfoComm exchange processes.
-hedera:routesThroughSegment,https://docs.hedera.com/hiero/concepts/shards,Telemetry routing references the shard segment carrying ESG data.
+hedera:routesThroughSegment,https://docs.hedera.com/hiero/concepts/shards,Telemetry routing references the shard segment carrying anthropogenic impact data.
 hedera:servedByNode,https://docs.hedera.com/hedera/mirror-node/sdks-and-apis/rest-api,Mirror APIs describe the communication node responsible for delivery.
 hedera:publishesImpactDataset,https://docs.hedera.com/hedera/mirror-node/sdks-and-apis/rest-api,Dataset publication aligns with InfoComm interface exposure requirements.
 hedera:anchorsTelemetryPolicy,https://docs.hedera.com/hedera/mirror-node/architecture/overview,SLA policies govern telemetry distribution per InfoComm agreements.

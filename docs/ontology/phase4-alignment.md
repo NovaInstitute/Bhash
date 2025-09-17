@@ -5,7 +5,7 @@ This blueprint operationalises the Phase 4 integration goal of binding Hedera-na
 ## Objectives
 
 1. **Traceability:** Preserve provenance from Hedera transactions and governance artefacts into impact reporting statements.
-2. **Semantic interoperability:** Ensure ESG, climate, and infrastructure concepts reuse established classes/properties from the external ontologies without creating logical conflicts.
+2. **Semantic interoperability:** Ensure anthropogenic impact, climate, and infrastructure concepts reuse established classes/properties from the external ontologies without creating logical conflicts.
 3. **Automation-readiness:** Leverage ROBOT and existing SPARQL/SHACL pipelines so bridge modules participate in automated reasoning and validation.
 
 ## Deliverables
@@ -20,27 +20,27 @@ This blueprint operationalises the Phase 4 integration goal of binding Hedera-na
 | `docs/mappings/claimont-alignment.csv` | Provenance map for ClaimOnt bridge classes and properties. | Documentation lead | ✅ Complete (2025-10-02) |
 | `docs/mappings/impactont-alignment.csv` | Traceability for ImpactOnt KPI and policy alignments. | Documentation lead | ✅ Complete (2025-10-02) |
 | `docs/mappings/infocomm-alignment.csv` | Source references for InfoComm communication asset mappings. | Documentation lead | ✅ Complete (2025-10-02) |
-| `tests/queries/cq-esg-001.rq` | Competency query demonstrating cross-ontology ESG reporting. | Tooling lead | ✅ Complete |
+| `tests/queries/cq-impact-001.rq` | Competency query demonstrating cross-ontology anthropogenic impact reporting. | Tooling lead | ✅ Complete |
 
 ## Integration steps
 
 1. **Term scoping:**
-   * Used `robot extract --method MIREOT` to keep imports minimal while still covering the CQ-ESG-001 competency scope.
+   * Used `robot extract --method MIREOT` to keep imports minimal while still covering the CQ-IMPACT-001 competency scope.
    * Consolidated namespace declarations under `ontology/src/alignment/prefixes.ttl` and referenced them from every bridge module.
 2. **Bridge modelling:**
    * Asserted `owl:subClassOf` and sub-property relations for Hedera classes/properties that specialise the external vocabularies, with dual provenance annotations (`hedera:sourceDocument`, `dcterms:source`).
-   * Expanded KPI coverage with ImpactOnt-aligned datatypes so ESG metrics surface cleanly in downstream dashboards.
+   * Expanded KPI coverage with ImpactOnt-aligned datatypes so anthropogenic impact metrics surface cleanly in downstream dashboards.
 3. **Validation hooks:**
-   * Executed the ESG regression query (`tests/queries/cq-esg-001.rq`) and SHACL suite to confirm the bridge modules integrate with existing automation.
+   * Executed the anthropogenic impact regression query (`tests/queries/cq-impact-001.rq`) and SHACL suite to confirm the bridge modules integrate with existing automation.
    * Added ImpactOnt datatype constraints (e.g., `hedera:hasMetricValue`, `hedera:hasImpactVariance`) to keep KPI instances machine-validated.
 4. **Pilot datasets:**
-   * Enriched `ontology/examples/alignment-esg.ttl` with AIAO/ClaimOnt/ImpactOnt/InfoComm instances that demonstrate cross-ontology reasoning.
-   * Recorded the successful walkthrough in `docs/competency/esg-alignment.md`, including next steps for live telemetry onboarding.
+   * Enriched `ontology/examples/alignment-impact.ttl` with AIAO/ClaimOnt/ImpactOnt/InfoComm instances that demonstrate cross-ontology reasoning.
+   * Recorded the successful walkthrough in `docs/competency/anthropogenic-impact-alignment.md`, including next steps for live telemetry onboarding.
 
 ## Phase 4 completion review (2025-10-02)
 
-* ✅ All four alignment modules now compile without reasoning errors and expose consistent annotations, enabling external ESG stakeholders to query Hedera data via their native ontologies.
-* ✅ The ESG competency query returns the expected dataset-to-assertion trace, exercising AIAO, ClaimOnt, ImpactOnt, and InfoComm alignments end to end.
+* ✅ All four alignment modules now compile without reasoning errors and expose consistent annotations, enabling external anthropogenic impact stakeholders to query Hedera data via their native ontologies.
+* ✅ The anthropogenic impact competency query returns the expected dataset-to-assertion trace, exercising AIAO, ClaimOnt, ImpactOnt, and InfoComm alignments end to end.
 * ✅ Documentation and mapping matrices highlight the provenance for each bridge, closing the outstanding Phase 4 action items in the workplan.
 
 ## Open questions

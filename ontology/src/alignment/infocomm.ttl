@@ -52,7 +52,7 @@ hedera:ImpactTelemetryExchange
     rdfs:label "Impact telemetry exchange"@en ;
     rdfs:subClassOf hedera:Process ,
         infocomm:ExchangeProcess ;
-    skos:definition "Process shuttling ESG telemetry between Hiero shards and mirror services."@en ;
+    skos:definition "Process shuttling anthropogenic impact telemetry between Hiero shards and mirror services."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hiero/concepts/validators> ;
     dcterms:source <https://datadudes.xyz/infocomm#ExchangeProcess> ;
     .

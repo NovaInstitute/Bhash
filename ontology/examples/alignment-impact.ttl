@@ -1,4 +1,4 @@
-@prefix ex: <https://bhash.dev/examples/esg/> .
+@prefix ex: <https://bhash.dev/examples/impact/> .
 @prefix hedera: <https://bhash.dev/hedera/core/> .
 @prefix aiao: <https://datadudes.xyz/ontology/aiao#> .
 @prefix claimont: <https://datadudes.xyz/claimont#> .
@@ -26,6 +26,16 @@ impactont:SDG15LifeOnLand
 impactont:ForestResiliencePolicy
     a impactont:PolicyInstrument ;
     rdfs:label "Forest Resilience Policy"@en ;
+    .
+
+impactont:SDG13ClimateAction
+    a impactont:SDGGoal ;
+    rdfs:label "SDG 13 Climate Action"@en ;
+    .
+
+impactont:CarbonResiliencePolicy
+    a impactont:PolicyInstrument ;
+    rdfs:label "Carbon Resilience Policy"@en ;
     .
 
 infocomm:SLA-EcoTelemetry
@@ -56,6 +66,13 @@ ex:MirrorNodeAlpha
     hedera:hasTelemetryLatency "2.5"^^xsd:decimal ;
     .
 
+ex:MirrorNodeBeta
+    a hedera:MirrorCommunicationNode ;
+    rdfs:label "Mirror Node Beta"@en ;
+    hedera:anchorsTelemetryPolicy infocomm:SLA-EcoTelemetry ;
+    hedera:hasTelemetryLatency "3.1"^^xsd:decimal ;
+    .
+
 ex:ReforestationDataset
     a hedera:MirrorDataset ;
     rdfs:label "Reforestation Balance Dataset"@en ;
@@ -71,6 +88,21 @@ ex:ReforestationRetentionPolicy
     hedera:hasRetentionDays "30"^^xsd:integer ;
     .
 
+ex:SoilCarbonDataset
+    a hedera:MirrorDataset ;
+    rdfs:label "Soil Carbon Dataset"@en ;
+    hedera:hasDatasetType "impact-carbon" ;
+    hedera:hasDatasetURI "https://mirror.hedera.example/datasets/soil-carbon"^^xsd:anyURI ;
+    hedera:coversService hedera:TokenService ;
+    hedera:hasRetentionPolicy ex:SoilCarbonRetentionPolicy ;
+    .
+
+ex:SoilCarbonRetentionPolicy
+    a hedera:DatasetRetentionPolicy ;
+    rdfs:label "Soil Carbon Retention"@en ;
+    hedera:hasRetentionDays "45"^^xsd:integer ;
+    .
+
 ex:ReforestationMetric
     a hedera:TreasuryImpactKPI ;
     rdfs:label "Reforestation Treasury Coverage"@en ;
@@ -80,6 +112,17 @@ ex:ReforestationMetric
     hedera:hasImpactVariance "45"^^xsd:decimal ;
     hedera:targetsSDGGoal impactont:SDG15LifeOnLand ;
     hedera:alignsWithPolicy impactont:ForestResiliencePolicy ;
+    .
+
+ex:SoilCarbonMetric
+    a hedera:TreasuryImpactKPI ;
+    rdfs:label "Soil Carbon Coverage"@en ;
+    hedera:summarisesToken ex:CarbonCreditToken ;
+    hedera:hasMetricValue "980"^^xsd:decimal ;
+    hedera:hasImpactBaseline "900"^^xsd:decimal ;
+    hedera:hasImpactVariance "20"^^xsd:decimal ;
+    hedera:targetsSDGGoal impactont:SDG13ClimateAction ;
+    hedera:alignsWithPolicy impactont:CarbonResiliencePolicy ;
     .
 
 ex:ReforestationSchedule
@@ -98,11 +141,39 @@ claimont:ForestRestorationObjective
     rdfs:label "Forest Restoration Objective"@en ;
     .
 
+ex:SoilCarbonSchedule
+    a hedera:ScheduledMitigationAction ;
+    rdfs:label "Soil Carbon Sampling"@en ;
+    hedera:hasClimateWindow "2024-Q3" ;
+    hedera:linkedImpactAssertion ex:SoilCarbonImpactStatement ;
+    hedera:tracksResilienceMilestone ex:HieroUpgradeQ4 ;
+    hedera:advancesClimateObjective claimont:CarbonSequestrationObjective ;
+    .
+
+ex:SoilCarbonSchedule a claimont:MitigationAction .
+
+claimont:CarbonSequestrationObjective
+    a claimont:ClimateObjective ;
+    rdfs:label "Carbon Sequestration Objective"@en ;
+    .
+
+ex:SoilCarbonImpactStatement
+    a claimont:ImpactStatement ;
+    rdfs:label "Q3 Soil Carbon Impact Statement"@en ;
+    .
+
 ex:TelemetryExchangeQ4
     a hedera:ImpactTelemetryExchange ;
     rdfs:label "Q4 Telemetry Exchange"@en ;
     hedera:routesThroughSegment ex:HieroSegmentA ;
     hedera:servedByNode ex:MirrorNodeAlpha ;
+    .
+
+ex:TelemetryExchangeQ3
+    a hedera:ImpactTelemetryExchange ;
+    rdfs:label "Q3 Telemetry Exchange"@en ;
+    hedera:routesThroughSegment ex:HieroSegmentA ;
+    hedera:servedByNode ex:MirrorNodeBeta ;
     .
 
 ex:ReforestationAssertion
@@ -115,6 +186,16 @@ ex:ReforestationAssertion
     hedera:capturesImpactWindow "2024-Q4" ;
     .
 
+ex:SoilCarbonAssertion
+    a hedera:ConsensusImpactAssertion ;
+    rdfs:label "Soil Carbon Impact Assertion"@en ;
+    hedera:hasImpactSubject ex:CommunityTreasury ;
+    hedera:reportsImpactIndicator ex:SoilCarbonMetric ;
+    hedera:deliveredBySchedule ex:SoilCarbonSchedule ;
+    hedera:referencesMirrorDataset ex:SoilCarbonDataset ;
+    hedera:capturesImpactWindow "2024-Q3" ;
+    .
+
 ex:MirrorNodeAlpha hedera:publishesImpactDataset ex:ReforestationDataset .
 
 ex:ReforestationAssertion a aiao:ImpactAssertion .
@@ -124,3 +205,13 @@ ex:ReforestationMetric impactont:hasMetricValue "1250"^^xsd:decimal .
 ex:ReforestationMetric a impactont:KPI .
 
 ex:MirrorNodeAlpha a infocomm:CommunicationNode .
+
+ex:MirrorNodeBeta hedera:publishesImpactDataset ex:SoilCarbonDataset .
+
+ex:MirrorNodeBeta a infocomm:CommunicationNode .
+
+ex:SoilCarbonAssertion a aiao:ImpactAssertion .
+
+ex:SoilCarbonMetric impactont:hasMetricValue "980"^^xsd:decimal .
+
+ex:SoilCarbonMetric a impactont:KPI .

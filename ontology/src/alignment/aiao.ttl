@@ -12,7 +12,7 @@
 <https://bhash.dev/hedera/alignment/aiao>
     a owl:Ontology ;
     dcterms:title "AIAO alignment module"@en ;
-    dcterms:description "Bridges Hedera consensus and token events to Anthropogenic Impact Accounting Ontology assertions for ESG reporting."@en ;
+    dcterms:description "Bridges Hedera consensus and token events to Anthropogenic Impact Accounting Ontology assertions for anthropogenic impact reporting."@en ;
     dcterms:creator "Bhash Ontology Working Group"@en ;
     dcterms:created "2025-10-01"^^xsd:date ;
     dcterms:modified "2025-10-01"^^xsd:date ;
@@ -21,7 +21,7 @@
         <https://bhash.dev/hedera/token> ,
         <https://bhash.dev/hedera/mirror-analytics> ;
     owl:versionInfo "0.1.0-dev" ;
-    skos:editorialNote "Phase 4 bridge module initiating ESG integration by tying consensus topic evidence and token reserve events to AIAO impact assertions."@en ;
+    skos:editorialNote "Phase 4 bridge module initiating anthropogenic impact integration by tying consensus topic evidence and token reserve events to AIAO impact assertions."@en ;
     .
 
 ###
@@ -33,7 +33,7 @@ hedera:ConsensusImpactAssertion
     rdfs:label "Consensus impact assertion"@en ;
     rdfs:subClassOf hedera:TopicMessage ,
         aiao:ImpactAssertion ;
-    skos:definition "Consensus Service message curated to substantiate an ESG impact assertion."@en ;
+    skos:definition "Consensus Service message curated to substantiate an anthropogenic impact assertion."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/hedera-consensus-service/message-flows> ;
     dcterms:source <https://datadudes.xyz/aiao#ImpactAssertion> ;
     .
@@ -53,7 +53,7 @@ hedera:MirrorImpactIndicator
     rdfs:label "Mirror impact indicator"@en ;
     rdfs:subClassOf hedera:TelemetryMetric ,
         aiao:ImpactIndicator ;
-    skos:definition "Telemetry metric derived from mirror analytics that feeds ESG indicator dashboards."@en ;
+    skos:definition "Telemetry metric derived from mirror analytics that feeds anthropogenic impact indicator dashboards."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/architecture/metrics> ;
     dcterms:source <https://datadudes.xyz/aiao#ImpactIndicator> ;
     .

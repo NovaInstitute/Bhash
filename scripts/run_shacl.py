@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Run SHACL validation over example datasets."""
+
+# DEPRECATED: use ``bhashctl shacl`` (Go implementation) instead.
 from __future__ import annotations
 
 import pathlib

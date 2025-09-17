@@ -1,0 +1,112 @@
+@prefix : <https://bhash.dev/hedera/alignment/impactont/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix impactont: <https://datadudes.xyz/ontology/impactont#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://bhash.dev/hedera/alignment/impactont>
+    a owl:Ontology ;
+    dcterms:title "ImpactOnt alignment module"@en ;
+    dcterms:description "Connects Hedera treasury and compliance analytics to ImpactOnt KPI structures for sustainability dashboards."@en ;
+    dcterms:creator "Bhash Ontology Working Group"@en ;
+    dcterms:created "2025-10-01"^^xsd:date ;
+    dcterms:modified "2025-10-01"^^xsd:date ;
+    owl:imports <https://bhash.dev/hedera/core> ,
+        <https://bhash.dev/hedera/token> ,
+        <https://bhash.dev/hedera/mirror-analytics> ;
+    owl:versionInfo "0.1.0-dev" ;
+    skos:editorialNote "Phase 4 bridge module translating Hedera compliance metrics into ImpactOnt KPI and SDG linkages."@en ;
+    .
+
+###
+# Alignment classes
+###
+
+hedera:TreasuryImpactKPI
+    a owl:Class ;
+    rdfs:label "Treasury impact KPI"@en ;
+    rdfs:subClassOf hedera:TelemetryMetric ,
+        impactont:KPI ;
+    skos:definition "Metric summarising treasury-controlled token balances for sustainability reporting."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/architecture/metrics> ;
+    dcterms:source <https://datadudes.xyz/impactont#KPI> ;
+    .
+
+hedera:ComplianceAlignmentScore
+    a owl:Class ;
+    rdfs:label "Compliance alignment score"@en ;
+    rdfs:subClassOf hedera:TelemetryMetric ,
+        impactont:ComplianceIndicator ;
+    skos:definition "Composite indicator evaluating adherence to sustainability-linked compliance rules."@en ;
+    hedera:sourceDocument <https://hips.hedera.com/hip/hip-540> ;
+    dcterms:source <https://datadudes.xyz/impactont#ComplianceIndicator> ;
+    .
+
+###
+# Alignment properties
+###
+
+hedera:targetsSDGGoal
+    a owl:ObjectProperty ;
+    rdfs:label "targets SDG goal"@en ;
+    rdfs:domain hedera:TelemetryMetric ;
+    rdfs:range impactont:SDGGoal ;
+    rdfs:subPropertyOf impactont:targetsSDG ;
+    skos:definition "Indicates which Sustainable Development Goal a Hedera metric supports."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/architecture/metrics> ;
+    dcterms:source <https://datadudes.xyz/impactont#targetsSDG> ;
+    .
+
+hedera:summarisesToken
+    a owl:ObjectProperty ;
+    rdfs:label "summarises token"@en ;
+    rdfs:domain hedera:TelemetryMetric ;
+    rdfs:range hedera:Token ;
+    rdfs:subPropertyOf impactont:measuresAsset ;
+    skos:definition "Identifies the token whose balances underpin a KPI."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/sdks-and-apis/token-service/token-relationships> ;
+    dcterms:source <https://datadudes.xyz/impactont#measuresAsset> ;
+    .
+
+hedera:hasMetricValue
+    rdfs:subPropertyOf impactont:hasMetricValue ;
+    dcterms:source <https://datadudes.xyz/impactont#hasMetricValue> ;
+    .
+
+hedera:hasImpactVariance
+    a owl:DatatypeProperty ;
+    rdfs:label "has impact variance"@en ;
+    rdfs:domain hedera:TelemetryMetric ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf impactont:hasVariance ;
+    skos:definition "Captures the variance observed for an impact KPI across a reporting period."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/architecture/metrics> ;
+    dcterms:source <https://datadudes.xyz/impactont#hasVariance> ;
+    .
+
+hedera:alignsWithPolicy
+    a owl:ObjectProperty ;
+    rdfs:label "aligns with policy"@en ;
+    rdfs:domain hedera:TelemetryMetric ;
+    rdfs:range impactont:PolicyInstrument ;
+    rdfs:subPropertyOf impactont:supportedByPolicy ;
+    skos:definition "States which policy instrument governs the sustainability KPI."@en ;
+    hedera:sourceDocument <https://hips.hedera.com/hip/hip-540> ;
+    dcterms:source <https://datadudes.xyz/impactont#supportedByPolicy> ;
+    .
+
+hedera:hasImpactBaseline
+    a owl:DatatypeProperty ;
+    rdfs:label "has impact baseline"@en ;
+    rdfs:domain hedera:TelemetryMetric ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf impactont:hasBaselineValue ;
+    skos:definition "Baseline quantitative value used for comparing KPI improvement."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/architecture/metrics> ;
+    dcterms:source <https://datadudes.xyz/impactont#hasBaselineValue> ;
+    .

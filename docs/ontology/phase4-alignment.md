@@ -12,18 +12,18 @@ This blueprint operationalises the Phase 4 integration goal of binding Hedera-na
 
 | Artefact | Description | Owner | Status |
 | -------- | ----------- | ----- | ------ |
-| `ontology/src/alignment/aiao.ttl` | MIREOT-trimmed import/bridge linking Hedera consensus & token events to `aiao:ImpactAssertion` patterns. | Ontology modellers | 📝 Planned |
-| `ontology/src/alignment/cliamont.ttl` | Alignment axioms connecting sustainability commitments and scheduled actions to CliaMont mitigation/adaptation classes. | Ontology modellers | 📝 Planned |
-| `ontology/src/alignment/impactont.ttl` | Bridges HTS compliance & treasury analytics metrics to ImpactOnt KPIs with provenance annotations. | Ontology modellers | 📝 Planned |
-| `ontology/src/alignment/infocomm.ttl` | Maps Hedera/Hiero infrastructure classes (nodes, shards, pipelines) to InfoComm communication assets. | Ontology modellers | 📝 Planned |
-| `docs/mappings/aiao-alignment.csv` | Traceability matrix referencing Hedera docs/HIPs that justify each mapping. | Documentation lead | 📝 Planned |
-| `tests/queries/cq-esg-001.rq` | Competency query demonstrating cross-ontology ESG reporting. | Tooling lead | 📝 Planned |
+| `ontology/src/alignment/aiao.ttl` | MIREOT-trimmed import/bridge linking Hedera consensus & token events to `aiao:ImpactAssertion` patterns. | Ontology modellers | 🔄 In progress |
+| `ontology/src/alignment/cliamont.ttl` | Alignment axioms connecting sustainability commitments and scheduled actions to CliaMont mitigation/adaptation classes. | Ontology modellers | 🔄 In progress |
+| `ontology/src/alignment/impactont.ttl` | Bridges HTS compliance & treasury analytics metrics to ImpactOnt KPIs with provenance annotations. | Ontology modellers | 🔄 In progress |
+| `ontology/src/alignment/infocomm.ttl` | Maps Hedera/Hiero infrastructure classes (nodes, shards, pipelines) to InfoComm communication assets. | Ontology modellers | 🔄 In progress |
+| `docs/mappings/aiao-alignment.csv` | Traceability matrix referencing Hedera docs/HIPs that justify each mapping. | Documentation lead | ✅ Complete |
+| `tests/queries/cq-esg-001.rq` | Competency query demonstrating cross-ontology ESG reporting. | Tooling lead | ✅ Complete |
 
 ## Integration steps
 
 1. **Term scoping:**
    * Use `robot extract --method MIREOT` to pull only the terms required to satisfy targeted competency questions.
-   * Maintain a shared `alignment-prefixes.ttl` file to control namespace declarations and avoid duplication.
+   * Maintain a shared `alignment-prefixes.ttl` file to control namespace declarations and avoid duplication. *(Initial prefixes committed under `ontology/src/alignment/prefixes.ttl`.)*
 2. **Bridge modelling:**
    * Start with `owl:equivalentClass`/`owl:subClassOf` assertions where Hedera classes are narrower than the external ontologies.
    * Annotate every bridge axiom with `dcterms:source` linking to Hedera documentation (HIPs, service manuals) and to the relevant ontology documentation.

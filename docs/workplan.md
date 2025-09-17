@@ -146,7 +146,7 @@ Each module should deliver:
 | 10 | Plan File/Scheduled Transactions and Mirror/Analytics sprints with dependency on shared datasets. | ✅ Complete | File/Schedule, Mirror/Analytics, and Hiero modules shipped with shared fixtures enabling regression automation. |
 | 11 | Integrate mirror node HTS precompile traces into automated ETL prototype. | 📝 Planned | Extend `data/contracts/hts-precompiles/` with live extracts and script transformation into RDF for regression tests. |
 | 12 | Expand treasury analytics competency with real balance snapshots. | 📝 Planned | Populate `data/mirror/token-balance-retention.csv` with operational SLAs and ingest sample mirror balance exports. |
-| 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | 📝 Planned | Review the Phase 4 alignment blueprint and draft ROBOT templates for `ontology/src/alignment/aiao.ttl`. |
+| 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | 🔄 In progress | Alignment namespace created with initial AIAO/CliaMont/ImpactOnt/InfoComm bridge modules plus ESG query fixture. |
 
 ## Risk considerations
 

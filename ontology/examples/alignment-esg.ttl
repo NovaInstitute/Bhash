@@ -1,0 +1,120 @@
+@prefix ex: <https://bhash.dev/examples/esg/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix aiao: <https://datadudes.xyz/ontology/aiao#> .
+@prefix cliamont: <https://datadudes.xyz/ontology/cliamont#> .
+@prefix impactont: <https://datadudes.xyz/ontology/impactont#> .
+@prefix infocomm: <https://datadudes.xyz/ontology/infocomm#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ex:CommunityTreasury
+    a hedera:Account ;
+    rdfs:label "Community Reforestation Treasury"@en ;
+    .
+
+ex:CarbonCreditToken
+    a hedera:FungibleToken ;
+    rdfs:label "Carbon Credit Token"@en ;
+    hedera:hasTreasury ex:CommunityTreasury ;
+    .
+
+impactont:SDG15LifeOnLand
+    a impactont:SDGGoal ;
+    rdfs:label "SDG 15 Life on Land"@en ;
+    .
+
+impactont:ForestResiliencePolicy
+    a impactont:PolicyInstrument ;
+    rdfs:label "Forest Resilience Policy"@en ;
+    .
+
+infocomm:SLA-EcoTelemetry
+    a infocomm:ServiceLevelAgreement ;
+    rdfs:label "Eco Telemetry SLA"@en ;
+    .
+
+ex:ReforestationImpactStatement
+    a cliamont:ImpactStatement ;
+    rdfs:label "Q4 Reforestation Impact Statement"@en ;
+    .
+
+ex:HieroUpgradeQ4
+    a hedera:ResilienceMilestone ;
+    rdfs:label "Hiero Q4 Sustainability Upgrade"@en ;
+    .
+
+ex:HieroSegmentA
+    a hedera:HieroCommunicationSegment ;
+    rdfs:label "Hiero Segment A"@en ;
+    hedera:hasShardIdentifier "SEG-A" ;
+    .
+
+ex:MirrorNodeAlpha
+    a hedera:MirrorCommunicationNode ;
+    rdfs:label "Mirror Node Alpha"@en ;
+    hedera:anchorsTelemetryPolicy infocomm:SLA-EcoTelemetry ;
+    hedera:hasTelemetryLatency "2.5"^^xsd:decimal ;
+    .
+
+ex:ReforestationDataset
+    a hedera:MirrorDataset ;
+    rdfs:label "Reforestation Balance Dataset"@en ;
+    hedera:hasDatasetType "impact-balances" ;
+    hedera:hasDatasetURI "https://mirror.hedera.example/datasets/reforestation"^^xsd:anyURI ;
+    hedera:coversService hedera:TokenService ;
+    hedera:hasRetentionPolicy ex:ReforestationRetentionPolicy ;
+    .
+
+ex:ReforestationRetentionPolicy
+    a hedera:DatasetRetentionPolicy ;
+    rdfs:label "Reforestation Dataset Retention"@en ;
+    hedera:hasRetentionDays "30"^^xsd:integer ;
+    .
+
+ex:ReforestationMetric
+    a hedera:TreasuryImpactKPI ;
+    rdfs:label "Reforestation Treasury Coverage"@en ;
+    hedera:summarisesToken ex:CarbonCreditToken ;
+    hedera:hasMetricValue "1250"^^xsd:decimal ;
+    hedera:hasImpactBaseline "1000"^^xsd:decimal ;
+    hedera:hasImpactVariance "45"^^xsd:decimal ;
+    hedera:targetsSDGGoal impactont:SDG15LifeOnLand ;
+    hedera:alignsWithPolicy impactont:ForestResiliencePolicy ;
+    .
+
+ex:ReforestationSchedule
+    a hedera:ScheduledMitigationAction ;
+    rdfs:label "Scheduled Funding for Reforestation"@en ;
+    hedera:hasClimateWindow "2024-Q4" ;
+    hedera:linkedImpactAssertion ex:ReforestationImpactStatement ;
+    hedera:tracksResilienceMilestone ex:HieroUpgradeQ4 ;
+    hedera:advancesClimateObjective cliamont:ForestRestorationObjective ;
+    .
+
+cliamont:ForestRestorationObjective
+    a cliamont:ClimateObjective ;
+    rdfs:label "Forest Restoration Objective"@en ;
+    .
+
+ex:TelemetryExchangeQ4
+    a hedera:ImpactTelemetryExchange ;
+    rdfs:label "Q4 Telemetry Exchange"@en ;
+    hedera:routesThroughSegment ex:HieroSegmentA ;
+    hedera:servedByNode ex:MirrorNodeAlpha ;
+    .
+
+ex:ReforestationAssertion
+    a hedera:StablecoinReserveAssertion ;
+    rdfs:label "Reforestation Impact Assertion"@en ;
+    hedera:hasImpactSubject ex:CommunityTreasury ;
+    hedera:reportsImpactIndicator ex:ReforestationMetric ;
+    hedera:deliveredBySchedule ex:ReforestationSchedule ;
+    hedera:referencesMirrorDataset ex:ReforestationDataset ;
+    hedera:capturesImpactWindow "2024-Q4" ;
+    .
+
+ex:MirrorNodeAlpha hedera:publishesImpactDataset ex:ReforestationDataset .
+
+ex:ReforestationAssertion a aiao:ImpactAssertion .
+
+ex:ReforestationMetric impactont:hasMetricValue "1250"^^xsd:decimal .

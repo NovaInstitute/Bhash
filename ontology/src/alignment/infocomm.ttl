@@ -1,0 +1,117 @@
+@prefix : <https://bhash.dev/hedera/alignment/infocomm/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix infocomm: <https://datadudes.xyz/ontology/infocomm#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://bhash.dev/hedera/alignment/infocomm>
+    a owl:Ontology ;
+    dcterms:title "InfoComm alignment module"@en ;
+    dcterms:description "Maps Hedera/Hiero infrastructure elements to InfoComm communication assets for sustainability telemetry exchanges."@en ;
+    dcterms:creator "Bhash Ontology Working Group"@en ;
+    dcterms:created "2025-10-01"^^xsd:date ;
+    dcterms:modified "2025-10-01"^^xsd:date ;
+    owl:imports <https://bhash.dev/hedera/core> ,
+        <https://bhash.dev/hedera/mirror-analytics> ,
+        <https://bhash.dev/hedera/hiero> ;
+    owl:versionInfo "0.1.0-dev" ;
+    skos:editorialNote "Phase 4 bridge module exposing mirror nodes and Hiero shards as InfoComm communication nodes and network segments."@en ;
+    .
+
+###
+# Alignment classes
+###
+
+hedera:MirrorCommunicationNode
+    a owl:Class ;
+    rdfs:label "Mirror communication node"@en ;
+    rdfs:subClassOf hedera:MirrorService ,
+        infocomm:CommunicationNode ;
+    skos:definition "Mirror service interpreted as a communication node within the InfoComm ontology."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node> ;
+    dcterms:source <https://datadudes.xyz/infocomm#CommunicationNode> ;
+    .
+
+hedera:HieroCommunicationSegment
+    a owl:Class ;
+    rdfs:label "Hiero communication segment"@en ;
+    rdfs:subClassOf hedera:HieroShard ,
+        infocomm:NetworkSegment ;
+    skos:definition "Hiero shard treated as a communication segment for impact telemetry flows."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hiero/concepts/shards> ;
+    dcterms:source <https://datadudes.xyz/infocomm#NetworkSegment> ;
+    .
+
+hedera:ImpactTelemetryExchange
+    a owl:Class ;
+    rdfs:label "Impact telemetry exchange"@en ;
+    rdfs:subClassOf hedera:Process ,
+        infocomm:ExchangeProcess ;
+    skos:definition "Process shuttling ESG telemetry between Hiero shards and mirror services."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hiero/concepts/validators> ;
+    dcterms:source <https://datadudes.xyz/infocomm#ExchangeProcess> ;
+    .
+
+###
+# Alignment properties
+###
+
+hedera:routesThroughSegment
+    a owl:ObjectProperty ;
+    rdfs:label "routes through segment"@en ;
+    rdfs:domain hedera:ImpactTelemetryExchange ;
+    rdfs:range infocomm:NetworkSegment ;
+    rdfs:subPropertyOf infocomm:traversesSegment ;
+    skos:definition "Identifies the network segment used to transport telemetry."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hiero/concepts/shards> ;
+    dcterms:source <https://datadudes.xyz/infocomm#traversesSegment> ;
+    .
+
+hedera:servedByNode
+    a owl:ObjectProperty ;
+    rdfs:label "served by node"@en ;
+    rdfs:domain hedera:ImpactTelemetryExchange ;
+    rdfs:range infocomm:CommunicationNode ;
+    rdfs:subPropertyOf infocomm:isServedBy ;
+    skos:definition "Associates a telemetry exchange with the communication node responsible for delivering data."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/sdks-and-apis/rest-api> ;
+    dcterms:source <https://datadudes.xyz/infocomm#isServedBy> ;
+    .
+
+hedera:publishesImpactDataset
+    a owl:ObjectProperty ;
+    rdfs:label "publishes impact dataset"@en ;
+    rdfs:domain infocomm:CommunicationNode ;
+    rdfs:range hedera:MirrorDataset ;
+    rdfs:subPropertyOf infocomm:exposesInterface ;
+    skos:definition "States that a communication node exposes a mirror dataset interface."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/sdks-and-apis/rest-api> ;
+    dcterms:source <https://datadudes.xyz/infocomm#exposesInterface> ;
+    .
+
+hedera:anchorsTelemetryPolicy
+    a owl:ObjectProperty ;
+    rdfs:label "anchors telemetry policy"@en ;
+    rdfs:domain infocomm:CommunicationNode ;
+    rdfs:range infocomm:ServiceLevelAgreement ;
+    rdfs:subPropertyOf infocomm:boundByAgreement ;
+    skos:definition "Connects a mirror communication node to the service-level agreement governing telemetry distribution."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/architecture/overview> ;
+    dcterms:source <https://datadudes.xyz/infocomm#boundByAgreement> ;
+    .
+
+hedera:hasTelemetryLatency
+    a owl:DatatypeProperty ;
+    rdfs:label "has telemetry latency"@en ;
+    rdfs:domain infocomm:CommunicationNode ;
+    rdfs:range xsd:decimal ;
+    rdfs:subPropertyOf infocomm:hasLatency ;
+    skos:definition "Latency observed when distributing telemetry through a communication node."@en ;
+    hedera:sourceDocument <https://docs.hedera.com/hedera/mirror-node/architecture/metrics> ;
+    dcterms:source <https://datadudes.xyz/infocomm#hasLatency> ;
+    .

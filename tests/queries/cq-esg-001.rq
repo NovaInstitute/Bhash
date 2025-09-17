@@ -1,0 +1,31 @@
+PREFIX hedera: <https://bhash.dev/hedera/core/>
+PREFIX aiao: <https://datadudes.xyz/ontology/aiao#>
+PREFIX cliamont: <https://datadudes.xyz/ontology/cliamont#>
+PREFIX impactont: <https://datadudes.xyz/ontology/impactont#>
+PREFIX infocomm: <https://datadudes.xyz/ontology/infocomm#>
+
+SELECT ?assertion ?subject ?indicator ?value ?sdgGoal ?schedule ?node
+WHERE {
+  ?assertion a aiao:ImpactAssertion ;
+             hedera:hasImpactSubject ?subject ;
+             hedera:reportsImpactIndicator ?indicator .
+
+  ?indicator a impactont:KPI ;
+             hedera:hasMetricValue ?value .
+
+  OPTIONAL {
+    ?indicator hedera:targetsSDGGoal ?sdgGoal .
+  }
+
+  OPTIONAL {
+    ?assertion hedera:deliveredBySchedule ?schedule .
+    ?schedule a cliamont:MitigationAction .
+  }
+
+  OPTIONAL {
+    ?assertion hedera:referencesMirrorDataset ?dataset .
+    ?node a infocomm:CommunicationNode ;
+          hedera:publishesImpactDataset ?dataset .
+  }
+}
+ORDER BY ?assertion

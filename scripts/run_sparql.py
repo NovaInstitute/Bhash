@@ -19,6 +19,7 @@ DATASETS = [
     REPO_ROOT / "ontology" / "examples" / "file-schedule.ttl",
     REPO_ROOT / "ontology" / "examples" / "mirror-analytics.ttl",
     REPO_ROOT / "ontology" / "examples" / "hiero.ttl",
+    REPO_ROOT / "ontology" / "examples" / "alignment-esg.ttl",
 ]
 DATASETS.extend(sorted((REPO_ROOT / "tests" / "fixtures" / "datasets").glob("*.ttl")))
 

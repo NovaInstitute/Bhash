@@ -8,9 +8,9 @@ Phase 0 establishes the shared tooling required to research, author, and continu
 | ---- | ---- | ------- | ----------- |
 | AI-assisted research & drafting | **Codex** | Summarise Hedera/Hiero documentation, draft competency questions, and bootstrap ontology skeletons or SHACL templates under human review. | Engage Codex through the repository issue/PR workflow. Capture prompts and generated artefacts in decision records when they influence modelling. |
 | Ontology authoring | Protégé | Interactive OWL editing, class hierarchy management, annotation authoring. | Install Protégé 5.5+; configure the Bhash namespace prefix and enable reasoning with HermiT/ELK for spot checks. |
-| Automated build/test | **ROBOT** | Command-line automation for OWL workflows: template expansion, reasoning, integrity reports, release packaging. | Requires Java 11+. Install via [ROBOT releases](https://github.com/ontodev/robot/releases) or Homebrew (`brew tap obolibrary/tools && brew install robot`). Documented below. |
-| Data scripting | RDFlib (optional) | Python-based RDF manipulation for ad-hoc scripts, dataset ingestion, or SPARQL prototyping. | Managed in a `requirements.txt` when scripts are introduced. |
-| Validation | pySHACL (optional) | Execute SHACL constraints against sample data exports. | Install via pip in the ontology tooling environment. |
+| Automation & validation | **Go CLI (`cmd/bhashctl`)** | Orchestrates ROBOT-driven SPARQL suites and TopBraid SHACL validation while keeping fixtures in sync. | Install Go 1.21+. Run `go run ./cmd/bhashctl install` to download ROBOT and the TopBraid SHACL CLI into `build/tools/`, then reuse `go run ./cmd/bhashctl {sparql,shacl}` for checks. |
+| Underlying ontology automation | ROBOT | CLI executed by `bhashctl` for reasoning, report generation, and release assembly. | Advanced users can call `robot` directly; the Go CLI fetches the jar automatically and exposes configuration under `internal/tools`. |
+| Legacy data scripting | Python 3 + RDFlib (optional) | Historical ingestion helpers and Fluree prototypes awaiting Go ports. | Create a virtual environment manually (`python3 -m venv build/venv && build/venv/bin/pip install -r requirements.txt`) if you need to run scripts under `scripts/`. |
 
 ## Why ROBOT for automation?
 
@@ -21,12 +21,18 @@ ROBOT provides first-class support for ontology engineering pipelines:
 * **Release assembly** – merge modules, extract subsets, and publish versioned artifacts with provenance metadata (`robot annotate`, `robot export`).
 * **CI integration** – straightforward CLI invocation that fits GitHub Actions, enabling continuous checks on pull requests.
 
-RDFlib remains useful for Python-based data wrangling, but ROBOT's ontology-specific automation better satisfies the "automatic building and testing" requirement.
+The Go-based `bhashctl` CLI standardises ontology automation while still leveraging ROBOT under the hood. Python remains available for ad-hoc data wrangling, but new validation and regression work should target the Go tooling for consistency and testability.
 
 ## Installation & environment
 
-1. **Java runtime** – install OpenJDK 11 or 17.
-2. **ROBOT** – download the latest release, install via package manager, or run the repository bootstrap script.
+1. **Go toolchain** – install Go 1.21+ so the repository CLI can compile and run.
+2. **Java runtime** – install OpenJDK 11 or 17; both ROBOT and the TopBraid SHACL CLI require a JVM.
+3. **Bootstrap automation** – from the repository root, run:
+   ```bash
+   go run ./cmd/bhashctl install
+   ```
+   The command downloads ROBOT and the TopBraid SHACL distribution into `build/tools/` and records paths in `.bhashctl.yaml`. Subsequent `go run ./cmd/bhashctl sparql` and `go run ./cmd/bhashctl shacl` invocations reuse the cached binaries.
+4. **Optional manual ROBOT install** – if you prefer direct CLI access, you can still install ROBOT via package managers or the helper script below. Ensure `~/bin` is on your `PATH` (e.g., `echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc`).
    ```bash
    # macOS (Homebrew)
    brew tap obolibrary/tools
@@ -36,15 +42,14 @@ RDFlib remains useful for Python-based data wrangling, but ROBOT's ontology-spec
    curl -L -o robot.jar https://github.com/ontodev/robot/releases/download/v1.9.5/robot.jar
    mkdir -p ~/opt/robot ~/bin
    mv robot.jar ~/opt/robot/robot.jar
-   printf '#!/usr/bin/env bash\nexec java -jar "$(dirname "$0")/../opt/robot/robot.jar" "$@"\n' > ~/bin/robot
+   printf '#!/usr/bin/env bash
+exec java -jar "$(dirname "$0")/../opt/robot/robot.jar" "$@"
+' > ~/bin/robot
    chmod +x ~/bin/robot
 
    # Repository helper (Debian/Ubuntu)
    scripts/install_robot_cli.sh
    ```
-   Ensure `~/bin` is on your `PATH` (e.g., `echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc`).
-3. **Environment variables** – set `ROBOT_JAR` if invoking the jar directly; configure `JAVA_OPTS` for memory-intensive operations.
-4. **Project scripts** – the repository `Makefile` now wraps ROBOT, SHACL, and SPARQL commands so contributors can run the full toolchain with a single dependency bootstrap.
 
 ### Fluree Cloud credentials
 
@@ -67,20 +72,21 @@ Integration tests marked with `@pytest.mark.fluree_live` remain skipped unless b
 
 ## Automation targets (Phase 3 bootstrap)
 
-The `Makefile` in the repository root exposes the first wave of automation targets referenced in the Phase 2 backlog:
+The Go CLI now fronts the regression workflow, with Make targets reserved for lower-level ROBOT utilities:
 
-| Target | Command | Purpose |
-| ------ | ------- | ------- |
-| `make reason-core` | `robot reason --reasoner ELK --input ontology/src/core.ttl --output build/core-reasoned.ttl` | Executes ELK reasoning over the core module and writes the inferred ontology under `build/`. |
-| `make report-core` | `robot report --input ontology/src/core.ttl --output build/reports/core-report.tsv` | Generates ROBOT integrity reports so unsatisfiable classes or property warnings surface early. |
-| `make template-example` | `robot template --template templates/example.csv --output build/templates/example.ttl` | Demonstrates the CSV-to-OWL workflow using the example template seeded for AUT-003. |
-| `make shacl` | `pyshacl` (via `scripts/run_shacl.py`) | Validates repository example data against SHACL shapes in `ontology/shapes/`. Reports are stored in `build/reports/` on failure. |
-| `make sparql` | `scripts/run_sparql.py` | Runs regression SPARQL queries in `tests/queries/` against bundled fixtures and compares the output with expected CSV snapshots. |
+| Command | Purpose |
+| ------- | ------- |
+| `go run ./cmd/bhashctl install` | Downloads ROBOT and the TopBraid SHACL CLI into `build/tools/` and records paths in `.bhashctl.yaml`. |
+| `go run ./cmd/bhashctl sparql` | Merges example datasets with ROBOT and executes every query under `tests/queries/`, comparing outputs to `tests/fixtures/results/`. |
+| `go run ./cmd/bhashctl shacl` | Aggregates example data and shapes before invoking the TopBraid validator; writes reports to `build/reports/` on failure. |
+| `make reason-core` | `robot reason --reasoner ELK --input ontology/src/core.ttl --output build/core-reasoned.ttl` – run ELK reasoning over the core module. |
+| `make report-core` | `robot report --input ontology/src/core.ttl --output build/reports/core-report.tsv` – generate integrity reports to catch unsatisfiable classes or warnings. |
+| `make template-example` | `robot template --template templates/example.csv --output build/templates/example.ttl` – demonstrate the CSV-to-OWL workflow seeded for AUT-003. |
 
-Running any Python-backed target will create a virtual environment under `build/venv` and install dependencies from `requirements.txt`. Delete the `build/` directory (`make clean`) if you need to recreate the environment from scratch.
+The Go commands cache their downloads under `build/tools/`; delete `build/` if you need to force a fresh install.
 
 ## Next automation steps
 
-* Extend CI workflows so GitHub Actions executes `make reason-core`, `make report-core`, `make shacl`, and `make sparql` on each pull request.
+* Extend CI workflows so GitHub Actions runs `go run ./cmd/bhashctl install`, `go run ./cmd/bhashctl sparql`, `go run ./cmd/bhashctl shacl`, and the ROBOT reasoning/report targets on each pull request.
 * Add ROBOT profile verification (`robot verify-profile --profile DL`) once PROV-O/DCAT imports stabilise and additional modules land.
-* Provide Python notebooks leveraging RDFlib for data-driven validation once sample mirror node datasets are introduced.
+* Migrate remaining data helpers from Python to Go so ingestion and validation share the same toolchain.

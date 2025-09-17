@@ -14,20 +14,15 @@ Phase 3 introduces executable artefacts for CQ-COMP-004 to monitor deferred tran
 
 ### Execution notes
 
-1. Execute the SPARQL query to list pending schedules with missing signatures and expirations:
+1. Use the Go CLI to install tooling (first run only) and execute the SPARQL regression suite that covers this competency query:
    ```bash
-   arq --data ontology/src/core.ttl \
-       --data ontology/src/file-schedule.ttl \
-       --data ontology/src/smart-contracts.ttl \
-       --data ontology/examples/file-schedule.ttl \
-       --query tests/queries/cq-comp-004.rq
+   go run ./cmd/bhashctl install
+   go run ./cmd/bhashctl sparql
    ```
-2. The query computes `missingSignatures` by subtracting collected signatures from the required total, enabling alerting pipelines.
-3. Validate the dataset with SHACL to ensure pending schedules track signature counts and expiration timestamps:
+2. The resulting `cq-comp-004.csv` under `build/queries/` lists pending schedules with missing signatures and expirations, and the command reports deviations from fixtures.
+3. Validate the dataset with SHACL via the Go CLI to ensure pending schedules track signature counts and expiration timestamps:
    ```bash
-   python -m pyshacl --data-file ontology/examples/file-schedule.ttl \
-                     --shacl-file ontology/shapes/file-schedule.shacl.ttl \
-                     --inference rdfs
+   go run ./cmd/bhashctl shacl
    ```
 
 ### Sample result (derived from `ontology/examples/file-schedule.ttl`)

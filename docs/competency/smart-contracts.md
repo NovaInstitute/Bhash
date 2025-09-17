@@ -14,20 +14,15 @@ Phase 3 delivers executable artefacts for CQ-DEV-005 to trace Hedera Token Servi
 
 ### Execution notes
 
-1. Load the ontology and example graph into an RDF store and execute the SPARQL query:
+1. Use the Go CLI to install tooling (first run only) and execute the SPARQL regression suite that includes this query:
    ```bash
-   arq --data ontology/src/core.ttl \
-       --data ontology/src/token.ttl \
-       --data ontology/src/smart-contracts.ttl \
-       --data ontology/examples/smart-contracts.ttl \
-       --query tests/queries/cq-dev-005.rq
+   go run ./cmd/bhashctl install
+   go run ./cmd/bhashctl sparql
    ```
-2. Results list each `hedera:ContractExecution` paired with the `hedera:Precompile` it invoked and the gas consumed per invocation.
-3. Run SHACL validation to ensure executions and invocations include the metadata required for analytics tooling:
+2. The ROBOT-backed run writes results for `cq-dev-005.rq` to `build/queries/cq-dev-005.csv` and flags any differences from the expected fixture under `tests/fixtures/results/`.
+3. Run SHACL validation with the same CLI to ensure executions and invocations include the metadata required for analytics tooling:
    ```bash
-   python -m pyshacl --data-file ontology/examples/smart-contracts.ttl \
-                     --shacl-file ontology/shapes/smart-contracts.shacl.ttl \
-                     --inference rdfs
+   go run ./cmd/bhashctl shacl
    ```
 
 ### Sample result (derived from `ontology/examples/smart-contracts.ttl`)

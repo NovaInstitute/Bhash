@@ -10,13 +10,13 @@ This plan converts the ontology landscape review into concrete actions for profi
 
 ## Task breakdown
 
-| ID | Task | Description | Output |
-| -- | ---- | ----------- | ------ |
-| IMP-001 | Term inventory | Compile list of PROV-O classes/properties already referenced in `core.ttl` (e.g., `prov:Agent`, `prov:Activity`, `prov:Entity`, `prov:Role`). | Markdown checklist in `docs/ontology/import-plan.md`. |
-| IMP-002 | ROBOT extract template | Use `robot extract --method MIREOT` to build trimmed PROV-O and DCAT files containing only required classes/properties. | `ontology/src/imports/provo.ttl`, `ontology/src/imports/dcat.ttl`. |
-| IMP-003 | Namespace configuration | Update `ontology/src/core.ttl` to import the trimmed modules and declare `prov:` and `dcat:` prefixes consistently. | Revised `core.ttl`. |
-| IMP-004 | Reasoning verification | Extend automation tasks (AUT-001/002) to include imported modules in reasoning/report runs. | Updated automation docs & scripts. |
-| IMP-005 | Alignment documentation | Document mapping rationale and usage patterns in `docs/research/ontology-landscape.md` and create crosswalk tables for competency questions. | Updated research notes. |
+| ID | Task | Description | Output | Status |
+| -- | ---- | ----------- | ------ | ------ |
+| IMP-001 | Term inventory | Compile list of PROV-O classes/properties already referenced in `core.ttl` (e.g., `prov:Agent`, `prov:Activity`, `prov:Entity`, `prov:Role`). | Markdown checklist in `docs/ontology/import-plan.md`. | ✅ Captured via trimmed import comments |
+| IMP-002 | ROBOT extract template | Use `robot extract --method MIREOT` to build trimmed PROV-O and DCAT files containing only required classes/properties. | `ontology/src/imports/provo.ttl`, `ontology/src/imports/dcat.ttl`. | ✅ Manual profile committed |
+| IMP-003 | Namespace configuration | Update `ontology/src/core.ttl` to import the trimmed modules and declare `prov:` and `dcat:` prefixes consistently. | Revised `core.ttl`. | ✅ `owl:imports` added |
+| IMP-004 | Reasoning verification | Extend automation tasks (AUT-001/002) to include imported modules in reasoning/report runs. | Updated automation docs & scripts. | ✅ Toolchain doc updated |
+| IMP-005 | Alignment documentation | Document mapping rationale and usage patterns in `docs/research/ontology-landscape.md` and create crosswalk tables for competency questions. | Updated research notes. | ⏳ Pending |
 
 ## Profiling guidelines
 

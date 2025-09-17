@@ -41,7 +41,7 @@ RDFlib remains useful for Python-based data wrangling, but ROBOT's ontology-spec
    ```
    Ensure `~/bin` is on your `PATH` (e.g., `echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc`).
 3. **Environment variables** – set `ROBOT_JAR` if invoking the jar directly; configure `JAVA_OPTS` for memory-intensive operations.
-4. **Project scripts** – upcoming `Makefile`/`justfile` targets will wrap ROBOT commands for reasoning, report generation, and release packaging.
+4. **Project scripts** – the repository `Makefile` now wraps ROBOT, SHACL, and SPARQL commands so contributors can run the full toolchain with a single dependency bootstrap.
 
 ## Codex collaboration guidelines
 
@@ -50,8 +50,22 @@ RDFlib remains useful for Python-based data wrangling, but ROBOT's ontology-spec
 3. **Capture provenance** – if Codex materially influences a decision, reference the interaction in the decision log and link to the supporting documentation.
 4. **Security** – avoid sharing private keys, credentials, or unreleased Hedera material in prompts.
 
+## Automation targets (Phase 3 bootstrap)
+
+The `Makefile` in the repository root exposes the first wave of automation targets referenced in the Phase 2 backlog:
+
+| Target | Command | Purpose |
+| ------ | ------- | ------- |
+| `make reason-core` | `robot reason --reasoner ELK --input ontology/src/core.ttl --output build/core-reasoned.ttl` | Executes ELK reasoning over the core module and writes the inferred ontology under `build/`. |
+| `make report-core` | `robot report --input ontology/src/core.ttl --output build/reports/core-report.tsv` | Generates ROBOT integrity reports so unsatisfiable classes or property warnings surface early. |
+| `make template-example` | `robot template --template templates/example.csv --output build/templates/example.ttl` | Demonstrates the CSV-to-OWL workflow using the example template seeded for AUT-003. |
+| `make shacl` | `pyshacl` (via `scripts/run_shacl.py`) | Validates repository example data against SHACL shapes in `ontology/shapes/`. Reports are stored in `build/reports/` on failure. |
+| `make sparql` | `scripts/run_sparql.py` | Runs regression SPARQL queries in `tests/queries/` against bundled fixtures and compares the output with expected CSV snapshots. |
+
+Running any Python-backed target will create a virtual environment under `build/venv` and install dependencies from `requirements.txt`. Delete the `build/` directory (`make clean`) if you need to recreate the environment from scratch.
+
 ## Next automation steps
 
-* Draft ROBOT command recipes for reasoning (`robot reason`), profile validation (`robot verify-profile`), and release generation (`robot export`).
-* Create CI workflows that install ROBOT, run reasoning checks on ontology modules, and publish reports as build artefacts.
+* Extend CI workflows so GitHub Actions executes `make reason-core`, `make report-core`, `make shacl`, and `make sparql` on each pull request.
+* Add ROBOT profile verification (`robot verify-profile --profile DL`) once PROV-O/DCAT imports stabilise and additional modules land.
 * Provide Python notebooks leveraging RDFlib for data-driven validation once sample mirror node datasets are introduced.

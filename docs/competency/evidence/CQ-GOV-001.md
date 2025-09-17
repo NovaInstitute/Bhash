@@ -13,7 +13,7 @@
 | Asset | Purpose | Access method |
 | ----- | ------- | ------------- |
 | Mirror node `GET /api/v1/network/nodes` | Provides canonical list of current consensus node operators, their account IDs, staking weights, and service endpoints for cross-checking Council stewardship. | [REST API network endpoint](https://raw.githubusercontent.com/hashgraph/hedera-docs/main/sdks-and-apis/rest-api/network.md) |
-| Council membership roster | Associates organisational members with council committees (e.g., CoinCom) for stewardship mapping. | [hedera.com/council](https://hedera.com/council) *(requires scraping/export into structured CSV for reproducibility).* |
+| Council membership roster | Associates organisational members with council committees (e.g., CoinCom) for stewardship mapping. | [hedera.com/council](https://hedera.com/council) *(requires scraping/export into structured CSV for reproducibility).* | ✅ Cached under [`data/council-roster.csv`](../../../data/council-roster.csv) |
 | HIP repository | Supplies normative mandates (e.g., validator onboarding criteria, committee responsibilities) for traceability. | [HIP GitHub archive](https://github.com/hiero-ledger/hiero-improvement-proposals) |
 
 ## Proposed modelling updates
@@ -25,21 +25,8 @@
 ## Validation approach
 
 * **SPARQL query prototype:**
-  ```sparql
-  PREFIX hedera: <https://bhash.dev/hedera/core/>
-  PREFIX dcterms: <http://purl.org/dc/terms/>
-  SELECT ?councilMember ?committee ?hip
-  WHERE {
-    ?committee a hedera:GovernanceBody ;
-               hedera:hasRole hedera:ValidatorOnboardingSteward ;
-               dcterms:identifier ?hip .
-    ?membership hedera:hasParticipant ?councilMember ;
-                hedera:hasParticipant ?committee ;
-                a hedera:ValidatorOnboardingProcess .
-  }
-  ```
-  This returns council organisations linked to onboarding processes and surfaces the governing HIP identifiers.
-* **Mirror node reconciliation:** create a SHACL shape verifying that every active consensus node (`hedera:ConsensusNode`) is `isOperatedBy` an actor that participates in a governance process endorsed by a HIP reference.
+  `tests/queries/cq-gov-001.rq` now implements the query, executing against fixtures in `tests/fixtures/datasets/cq-gov-001.ttl` and diffing against the expected results snapshot in `tests/fixtures/results/cq-gov-001.csv` through the automation harness.
+* **Mirror node reconciliation:** `ontology/shapes/consensus.shacl.ttl` introduces the SHACL shape verifying that every `hedera:ConsensusNode` references a stewarding governance body with mandates.
 
 ## Outstanding tasks
 

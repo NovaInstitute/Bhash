@@ -28,9 +28,9 @@ captured as a GitHub issue (label: `competency`) with acceptance criteria reflec
 
 | Task ID | CQ | Focus | Deliverables | Dependencies | Status |
 | ------- | -- | ----- | ------------ | ------------ | ------ |
-| CQ-GOV-001-A | CQ-GOV-001 | Council roster ingestion | `data/council-roster.csv` sourced from hedera.com with committee assignments, plus provenance notes in [`evidence/CQ-GOV-001.md`](evidence/CQ-GOV-001.md). | Access to council roster; scraping script. | Not started |
-| CQ-GOV-001-B | CQ-GOV-001 | Governance modelling | Update `ontology/src/core.ttl` with `hedera:ValidatorOnboardingProcess` and `hedera:hasMandate` axioms aligned to glossary roles. | CQ-GOV-001-A | Not started |
-| CQ-GOV-001-C | CQ-GOV-001 | Validation assets | SPARQL query committed to `tests/queries/cq-gov-001.rq` plus SHACL shape verifying node–steward linkage. | CQ-GOV-001-B; automation tasks AUT-004/005. | Not started |
+| CQ-GOV-001-A | CQ-GOV-001 | Council roster ingestion | `data/council-roster.csv` sourced from hedera.com with committee assignments, plus provenance notes in [`evidence/CQ-GOV-001.md`](evidence/CQ-GOV-001.md). | Access to council roster; scraping script. | ✅ Complete |
+| CQ-GOV-001-B | CQ-GOV-001 | Governance modelling | Update consensus module with validator stewardship roles and committee hierarchies aligned to glossary entries. | CQ-GOV-001-A | 🔄 In progress |
+| CQ-GOV-001-C | CQ-GOV-001 | Validation assets | SPARQL query committed to `tests/queries/cq-gov-001.rq` plus SHACL shape verifying node–steward linkage. | CQ-GOV-001-B; automation tasks AUT-004/005. | ✅ Complete |
 | CQ-COMP-003-A | CQ-COMP-003 | Token compliance snapshot | Mirror REST extraction script for stablecoin tokens with key metadata stored in `data/token-compliance.json`. | Mirror node API access. | Not started |
 | CQ-COMP-003-B | CQ-COMP-003 | Role alignment | Extend glossary and ontology annotations to map token admin/freeze/metadata custodians to `hedera:ComplianceSteward` subclasses. | CQ-COMP-003-A; glossary updates. | Not started |
 | CQ-COMP-003-C | CQ-COMP-003 | Query & SHACL | SPARQL query `tests/queries/cq-comp-003.rq` and SHACL rule ensuring every stablecoin exposes accountable key custodians. | CQ-COMP-003-B; AUT-004/005. | Not started |

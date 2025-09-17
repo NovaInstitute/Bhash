@@ -1,0 +1,85 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://bhash.dev/examples/cq-gov-001/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:HederaCouncil
+    a hedera:GovernanceBody ;
+    dcterms:title "Hedera Governing Council"@en ;
+    hedera:hasMandate "HIP-840 validator onboarding"@en , "HIP-540 membership stewardship"@en ;
+    .
+
+ex:CoinCom
+    a hedera:GovernanceBody ;
+    dcterms:title "CoinCom Committee"@en ;
+    hedera:hasMandate "HIP-840" ;
+    hedera:isSubBodyOf ex:HederaCouncil ;
+    .
+
+ex:MembershipCommittee
+    a hedera:GovernanceBody ;
+    dcterms:title "Membership Committee"@en ;
+    hedera:hasMandate "HIP-540" ;
+    hedera:isSubBodyOf ex:HederaCouncil ;
+    .
+
+ex:SwirldsLabs
+    a hedera:Actor ;
+    dcterms:title "Swirlds Labs"@en ;
+    .
+
+ex:Worldpay
+    a hedera:Actor ;
+    dcterms:title "Worldpay"@en ;
+    .
+
+ex:UCLCBT
+    a hedera:Actor ;
+    dcterms:title "UCL Centre for Blockchain Technologies"@en ;
+    .
+
+ex:NodeOnboarding2024Q3
+    a hedera:ValidatorOnboardingProcess ;
+    dcterms:title "Validator onboarding cohort Q3 2024"@en ;
+    hedera:occursOn ex:HederaMainnet ;
+    hedera:hasParticipant ex:HederaCouncil , ex:CoinCom , ex:SwirldsLabs , ex:Worldpay , ex:UCLCBT ;
+    hedera:issuesDecision ex:HIP840Mandate ;
+    .
+
+ex:HIP840Mandate
+    a hedera:GovernanceDecision ;
+    dcterms:title "HIP-840 onboarding mandate"@en ;
+    dcterms:identifier "HIP-840" ;
+    .
+
+ex:HIP540Mandate
+    a hedera:GovernanceDecision ;
+    dcterms:title "HIP-540 membership charter"@en ;
+    dcterms:identifier "HIP-540" ;
+    .
+
+ex:HederaMainnet
+    a hedera:Network ;
+    dcterms:title "Hedera Mainnet"@en ;
+    .
+
+ex:SwirldsLabsStewardship
+    a hedera:RoleAssignment ;
+    hedera:assignsRole hedera:ValidatorOnboardingSteward ;
+    hedera:hasParticipant ex:CoinCom , ex:SwirldsLabs ;
+    hedera:supportedBy ex:HIP840Mandate ;
+    .
+
+ex:WorldpayStewardship
+    a hedera:RoleAssignment ;
+    hedera:assignsRole hedera:ValidatorOnboardingSteward ;
+    hedera:hasParticipant ex:CoinCom , ex:Worldpay ;
+    hedera:supportedBy ex:HIP840Mandate ;
+    .
+
+ex:UCLStewardship
+    a hedera:RoleAssignment ;
+    hedera:assignsRole hedera:ValidatorOnboardingSteward ;
+    hedera:hasParticipant ex:MembershipCommittee , ex:UCLCBT ;
+    hedera:supportedBy ex:HIP540Mandate ;
+    .

@@ -1,0 +1,4 @@
+ID,LABEL,TYPE,SUBCLASS_OF,DEFINITION
+ID,Label,A,,
+https://bhash.dev/hedera/consensus/SampleTopic,"Sample governance topic",owl:Class,https://bhash.dev/hedera/core/ConsensusTopic,"Consensus topic derived from template workflow"
+https://bhash.dev/hedera/consensus/SampleAdminKey,"Sample admin key",owl:Class,https://bhash.dev/hedera/core/TopicAdminKey,"Admin key created through the ROBOT template example"

@@ -67,6 +67,16 @@ Focus on cross-cutting abstractions that every module depends on.
 
 Deliver OWL modules iteratively; each sprint targets one service.
 
+### Phase 3G. Operational integrations (Go SDK + Fluree)
+
+* **Goal:** Deliver an implementation reference that demonstrates how Hedera artefacts modelled in the ontology can be created programmatically and persisted into Fluree for downstream analytics.
+* **Scope:** Extend the existing Go command-line tooling to interact with Hedera via the Hiero (Hedera) Go SDK and persist artefact metadata into Fluree using HTTP interactions that respect the ontology-driven schemas.
+* **Outcomes:**
+  * Go packages under `internal/hedera` and `internal/fluree` that encapsulate SDK and HTTP logic with reusable interfaces.
+  * CLI workflows (e.g., `cmd/bhashctl`) that create topics, accounts, tokens, etc., returning ontology-aligned payloads ready for Fluree ingestion.
+  * Fluree ledger bootstrap scripts or fixtures mapping ontology classes/properties to Fluree collections and predicates, plus sample queries reflecting competency questions.
+  * Documentation capturing configuration, authentication, and operational runbooks for running end-to-end artefact creation and persistence flows.
+
 ### Phase 3 progress review (2025-09-30)
 
 **Completed**
@@ -168,6 +178,8 @@ Each module should deliver:
 | 12 | Expand treasury analytics competency with real balance snapshots. | 📝 Planned | Populate `data/mirror/token-balance-retention.csv` with operational SLAs and ingest sample mirror balance exports. |
 | 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | ✅ Complete | Alignment namespace shipped with validated AIAO/ClaimOnt/ImpactOnt/InfoComm bridge modules, anthropogenic impact query, and documentation refresh. |
 | 14 | Run the Phase 4 data pilot in a managed triple store and capture SHACL/SPARQL evidence for anthropogenic impact alignments. | ✅ Complete | `scripts/run_phase4_pilot.py` provisions an Oxigraph store, loads Phase 3/4 artefacts, and stores evidence in `build/pilots/phase4/`. |
+| 15 | Design Hedera Go SDK integration surfaces aligned with ontology constructs. | 🆕 Proposed | Audit `hiero-sdk-go` for account/topic/token operations, define abstraction interfaces, and plan configuration management for credentials and network targeting. |
+| 16 | Implement Fluree ingestion layer and link to Hedera artefact workflows. | 🆕 Proposed | Model Fluree collections/predicates from ontology classes, create HTTP client package, and script end-to-end artefact creation + persistence scenarios. |
 
 ## Risk considerations
 

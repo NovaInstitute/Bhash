@@ -7,7 +7,7 @@ Phase 4 introduces the cross-ontology assets required to exercise CQ-ESG-001 and
 * **Status:** Prototype ontology bridges, sample graph, and SPARQL query committed.
 * **Scope:** Show how scheduled mitigation actions funded on Hedera surface as AIAO impact assertions with provenance to mirror datasets and sustainability KPIs.
 * **Inputs:**
-  * Ontology: `ontology/src/alignment/aiao.ttl`, `ontology/src/alignment/cliamont.ttl`, `ontology/src/alignment/impactont.ttl`, `ontology/src/alignment/infocomm.ttl`
+  * Ontology: `ontology/src/alignment/aiao.ttl`, `ontology/src/alignment/claimont.ttl`, `ontology/src/alignment/impactont.ttl`, `ontology/src/alignment/infocomm.ttl`
   * Sample graph: `ontology/examples/alignment-esg.ttl`
   * Query: `tests/queries/cq-esg-001.rq`
 
@@ -15,7 +15,7 @@ Phase 4 introduces the cross-ontology assets required to exercise CQ-ESG-001 and
 
 1. Load the core and alignment ontologies alongside the ESG sample graph into an RDF store.
 2. Execute the SPARQL query to retrieve each `aiao:ImpactAssertion`, its Hedera subject, associated KPI metrics, optional SDG goal, related scheduled mitigation action, and the communication node exposing evidence datasets.
-3. Review the results to verify that Hedera concepts inherit semantics from AIAO, CliaMont, ImpactOnt, and InfoComm through the bridge axioms.
+3. Review the results to verify that Hedera concepts inherit semantics from AIAO, ClaimOnt, ImpactOnt, and InfoComm through the bridge axioms.
 
 ### Sample result (derived from `ontology/examples/alignment-esg.ttl`)
 

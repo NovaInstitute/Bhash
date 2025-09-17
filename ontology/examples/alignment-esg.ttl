@@ -1,7 +1,7 @@
 @prefix ex: <https://bhash.dev/examples/esg/> .
 @prefix hedera: <https://bhash.dev/hedera/core/> .
 @prefix aiao: <https://datadudes.xyz/ontology/aiao#> .
-@prefix cliamont: <https://datadudes.xyz/ontology/cliamont#> .
+@prefix claimont: <https://datadudes.xyz/claimont#> .
 @prefix impactont: <https://datadudes.xyz/ontology/impactont#> .
 @prefix infocomm: <https://datadudes.xyz/ontology/infocomm#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -34,7 +34,7 @@ infocomm:SLA-EcoTelemetry
     .
 
 ex:ReforestationImpactStatement
-    a cliamont:ImpactStatement ;
+    a claimont:ImpactStatement ;
     rdfs:label "Q4 Reforestation Impact Statement"@en ;
     .
 
@@ -88,11 +88,11 @@ ex:ReforestationSchedule
     hedera:hasClimateWindow "2024-Q4" ;
     hedera:linkedImpactAssertion ex:ReforestationImpactStatement ;
     hedera:tracksResilienceMilestone ex:HieroUpgradeQ4 ;
-    hedera:advancesClimateObjective cliamont:ForestRestorationObjective ;
+    hedera:advancesClimateObjective claimont:ForestRestorationObjective ;
     .
 
-cliamont:ForestRestorationObjective
-    a cliamont:ClimateObjective ;
+claimont:ForestRestorationObjective
+    a claimont:ClimateObjective ;
     rdfs:label "Forest Restoration Objective"@en ;
     .
 

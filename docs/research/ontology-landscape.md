@@ -13,7 +13,7 @@ Phase 1 requires identifying reusable vocabularies that can accelerate Bhash mod
 | [ODRL](https://www.w3.org/TR/odrl-model/) | Policy/permission modelling. | Custom fee rules, access control statements for topics/files. | Evaluate complexity relative to simpler policy shapes. |
 | [OpenTelemetry semantic conventions](https://opentelemetry.io/docs/specs/semconv/) | Telemetry schema for observability. | Potential mapping for node metrics and mirror observability data. | Likely optional until telemetry integration is prioritised. |
 | [AIAO](https://datadudes.xyz/aiao) | Anthropogenic impact accounting upper ontology. | Provides environmental and social impact scaffolding for ESG reporting on Hedera-hosted assets. | Requires bridge module translating Hedera service events into impact indicators. |
-| [CliaMont](https://datadudes.xyz/cliamont) | Climate accounting ontology for mitigation/adaptation measures. | Align Hedera staking, sustainability initiatives, and carbon credit tokens with climate metrics. | Need domain expert review to avoid overstating equivalence relationships. |
+| [ClaimOnt](https://datadudes.xyz/claimont) | Climate accounting ontology for mitigation/adaptation measures. | Align Hedera staking, sustainability initiatives, and carbon credit tokens with climate metrics. | Need domain expert review to avoid overstating equivalence relationships. |
 | [ImpactOnt](https://datadudes.xyz/impactont) | Ontology for modelling impact investment portfolios and KPIs. | Map Hedera token compliance and treasury analytics concepts to impact investment observables. | Ensure financial definitions complement existing FIBO alignments. |
 | [InfoComm](https://datadudes.xyz/infocomm) | Information and communication infrastructure ontology. | Useful for representing Hedera network infrastructure, mirror data pipelines, and observability dependencies. | Identify overlap with Hiero virtualization constructs before importing. |
 
@@ -61,10 +61,10 @@ Phase 1 requires identifying reusable vocabularies that can accelerate Bhash mod
 * Hedera token and treasury analytics modules can expose activity traces (e.g., sustainability-linked tokens, carbon offsets) as `aiao:ImpactAssertion` instances referencing consensus transactions.
 * Next step: design a bridge shape that consumes Hedera transaction provenance and emits AIAO-compatible impact statements for ESG pilots.
 
-### CliaMont
+### ClaimOnt
 
 * Focused on climate mitigation/adaptation measures, emissions accounting, and policy instruments.
-* Scheduled transactions and governance artefacts can document climate-related commitments by mapping to `cliamont:ClimateAction` and `cliamont:MitigationMeasure` classes.
+* Scheduled transactions and governance artefacts can document climate-related commitments by mapping to `claimont:ClimateAction` and `claimont:MitigationMeasure` classes.
 * Next step: convene with Hedera sustainability programme owners to validate which ledger events constitute authoritative climate actions.
 
 ### ImpactOnt

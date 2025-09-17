@@ -1,6 +1,6 @@
-@prefix : <https://bhash.dev/hedera/alignment/cliamont/> .
+@prefix : <https://bhash.dev/hedera/alignment/claimont/> .
 @prefix hedera: <https://bhash.dev/hedera/core/> .
-@prefix cliamont: <https://datadudes.xyz/ontology/cliamont#> .
+@prefix claimont: <https://datadudes.xyz/claimont#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
@@ -9,17 +9,17 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://bhash.dev/hedera/alignment/cliamont>
+<https://bhash.dev/hedera/alignment/claimont>
     a owl:Ontology ;
-    dcterms:title "CliaMont alignment module"@en ;
-    dcterms:description "Aligns Hedera scheduled transactions and governance commitments with CliaMont climate mitigation and adaptation concepts."@en ;
+    dcterms:title "ClaimOnt alignment module"@en ;
+    dcterms:description "Aligns Hedera scheduled transactions and governance commitments with ClaimOnt climate mitigation and adaptation concepts."@en ;
     dcterms:creator "Bhash Ontology Working Group"@en ;
     dcterms:created "2025-10-01"^^xsd:date ;
     dcterms:modified "2025-10-01"^^xsd:date ;
     owl:imports <https://bhash.dev/hedera/core> ,
         <https://bhash.dev/hedera/file-schedule> ;
     owl:versionInfo "0.1.0-dev" ;
-    skos:editorialNote "Phase 4 bridge module mapping scheduled sustainability actions to CliaMont mitigation and adaptation taxonomies."@en ;
+    skos:editorialNote "Phase 4 bridge module mapping scheduled sustainability actions to ClaimOnt mitigation and adaptation taxonomies."@en ;
     .
 
 ###
@@ -30,30 +30,30 @@ hedera:ScheduledMitigationAction
     a owl:Class ;
     rdfs:label "Scheduled mitigation action"@en ;
     rdfs:subClassOf hedera:ScheduledTransaction ,
-        cliamont:MitigationAction ;
+        claimont:MitigationAction ;
     skos:definition "Scheduled transaction whose execution funds or enables a climate mitigation activity."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/introduction> ;
-    dcterms:source <https://datadudes.xyz/cliamont#MitigationAction> ;
+    dcterms:source <https://datadudes.xyz/claimont#MitigationAction> ;
     .
 
 hedera:ClimateAdaptationSchedule
     a owl:Class ;
     rdfs:label "Climate adaptation schedule"@en ;
     rdfs:subClassOf hedera:ScheduledTransaction ,
-        cliamont:AdaptationCommitment ;
+        claimont:AdaptationCommitment ;
     skos:definition "Scheduled transaction capturing staged funding for adaptation programmes."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/how-scheduled-transactions-work> ;
-    dcterms:source <https://datadudes.xyz/cliamont#AdaptationCommitment> ;
+    dcterms:source <https://datadudes.xyz/claimont#AdaptationCommitment> ;
     .
 
 hedera:ResilienceMilestone
     a owl:Class ;
     rdfs:label "Resilience milestone"@en ;
     rdfs:subClassOf hedera:Event ,
-        cliamont:ResilienceOutcome ;
+        claimont:ResilienceOutcome ;
     skos:definition "Network event used as a milestone for tracking adaptation commitments."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hiero/roadmap> ;
-    dcterms:source <https://datadudes.xyz/cliamont#ResilienceOutcome> ;
+    dcterms:source <https://datadudes.xyz/claimont#ResilienceOutcome> ;
     .
 
 ###
@@ -64,22 +64,22 @@ hedera:advancesClimateObjective
     a owl:ObjectProperty ;
     rdfs:label "advances climate objective"@en ;
     rdfs:domain hedera:ScheduledTransaction ;
-    rdfs:range cliamont:ClimateObjective ;
-    rdfs:subPropertyOf cliamont:advancesObjective ;
+    rdfs:range claimont:ClimateObjective ;
+    rdfs:subPropertyOf claimont:advancesObjective ;
     skos:definition "Associates a scheduled transaction with the climate objective it advances."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/introduction> ;
-    dcterms:source <https://datadudes.xyz/cliamont#advancesObjective> ;
+    dcterms:source <https://datadudes.xyz/claimont#advancesObjective> ;
     .
 
 hedera:linkedImpactAssertion
     a owl:ObjectProperty ;
     rdfs:label "linked impact assertion"@en ;
     rdfs:domain hedera:ScheduledTransaction ;
-    rdfs:range cliamont:ImpactStatement ;
-    rdfs:subPropertyOf cliamont:documentsOutcome ;
+    rdfs:range claimont:ImpactStatement ;
+    rdfs:subPropertyOf claimont:documentsOutcome ;
     skos:definition "Connects a scheduled action to the impact statement documenting its execution."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/how-scheduled-transactions-work> ;
-    dcterms:source <https://datadudes.xyz/cliamont#ImpactStatement> ;
+    dcterms:source <https://datadudes.xyz/claimont#ImpactStatement> ;
     .
 
 hedera:tracksResilienceMilestone
@@ -87,10 +87,10 @@ hedera:tracksResilienceMilestone
     rdfs:label "tracks resilience milestone"@en ;
     rdfs:domain hedera:ScheduledTransaction ;
     rdfs:range hedera:ResilienceMilestone ;
-    rdfs:subPropertyOf cliamont:monitorsIndicator ;
+    rdfs:subPropertyOf claimont:monitorsIndicator ;
     skos:definition "Identifies the network milestone used to evidence progress against a climate action."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hiero/roadmap> ;
-    dcterms:source <https://datadudes.xyz/cliamont#monitorsIndicator> ;
+    dcterms:source <https://datadudes.xyz/claimont#monitorsIndicator> ;
     .
 
 hedera:hasClimateWindow
@@ -98,8 +98,8 @@ hedera:hasClimateWindow
     rdfs:label "has climate window"@en ;
     rdfs:domain hedera:ScheduledTransaction ;
     rdfs:range xsd:string ;
-    rdfs:subPropertyOf cliamont:hasReportingPeriod ;
+    rdfs:subPropertyOf claimont:hasReportingPeriod ;
     skos:definition "Specifies the reporting period for a scheduled climate commitment."@en ;
     hedera:sourceDocument <https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/how-scheduled-transactions-work> ;
-    dcterms:source <https://datadudes.xyz/cliamont#hasReportingPeriod> ;
+    dcterms:source <https://datadudes.xyz/claimont#hasReportingPeriod> ;
     .

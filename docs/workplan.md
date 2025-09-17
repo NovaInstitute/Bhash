@@ -67,6 +67,13 @@ Focus on cross-cutting abstractions that every module depends on.
 
 Deliver OWL modules iteratively; each sprint targets one service.
 
+### Phase 3 progress review (2025-09-30)
+
+* ✅ Consensus Service sprint delivered a dedicated ontology module with topic/message governance, validator onboarding roles, and mirror export artefacts plus SHACL coverage to keep key requirements executable. [`ontology/src/consensus.ttl`](../ontology/src/consensus.ttl) · [`ontology/shapes/consensus.shacl.ttl`](../ontology/shapes/consensus.shacl.ttl)
+* ✅ Token Service sprint introduced HIP-540-compliant classes for stablecoins, token key assignments, and custom fees with supporting competency assets answering CQ-COMP-003. [`ontology/src/token.ttl`](../ontology/src/token.ttl) · [`docs/competency/token-compliance.md`](competency/token-compliance.md) · [`tests/queries/cq-comp-003.rq`](../tests/queries/cq-comp-003.rq)
+* 🔄 Governance traceability for validator stewardship remains in progress to close CQ-GOV-001-B; consensus module scaffolding is in place but still needs end-to-end evidence bundles referencing council rosters. [`docs/competency/backlog.md`](competency/backlog.md)
+* ⚠️ Remaining Phase 3 modules (Smart Contracts, File/Schedule, Mirror/Analytics, Hiero overlay) have design notes but no ontology commits yet; backlogged tasks depend on new data fixtures and automation reuse. [`docs/competency/backlog.md`](competency/backlog.md)
+
 ### 3A. Consensus Service (HCS)
 
 * Model topics, messages, submission flow, ordering, finality guarantees, message retention policies, and associated throttling/fee schedule concepts.
@@ -124,16 +131,14 @@ Each module should deliver:
 * **Pilot integrations:** Support proof-of-concept projects (compliance analytics, DeFi dashboards, educational materials) that consume the ontology.
 * **Maintenance cadence:** Establish quarterly review cycles to align with Hedera network upgrades, new HIPs, and Hiero milestones.
 
-## Immediate next actions (updated 2025-09-16)
+## Immediate next actions (updated 2025-09-30)
 
 | # | Action | Status | Notes |
 | - | ------ | ------ | ----- |
-| 1 | Finalise bibliography and decision log structure (Phase 0). | ✅ Complete | Bibliography and decision log are seeded; continue routine maintenance as new Hedera/Hiero releases publish. |
-| 2 | Draft initial glossary and competency questions for accounts, governance, and node roles (Phase 1). | ✅ Complete | Dedicated glossary published in [`inventory/accounts-governance-glossary.md`](inventory/accounts-governance-glossary.md) with supporting competency evidence. |
-| 3 | Prototype the core ontology module skeleton in Protégé, including namespaces and base classes (Phase 2 deliverable). | ✅ Complete | `ontology/src/core.ttl` provides the foundational class/property scaffold for subsequent modules. |
-| 4 | Define automation requirements (CI tools, reasoning engines) and capture them as issues for implementation. | ✅ Complete | [`tooling/automation-requirements.md`](tooling/automation-requirements.md) now lists issue stubs, steps, and definitions of done for AUT-001 through AUT-006 to seed the automation backlog. |
-| 5 | Promote CQ-GOV-001, CQ-COMP-003, and CQ-DEV-005 to "In review" by gathering required documentation citations, data sources, and draft SPARQL/SHACL validation approaches. | ✅ Complete | Evidence bundles created in [`competency/evidence/`](competency/evidence) and backlog statuses updated to "In review". |
-| 6 | Outline PROV-O/DCAT import and profiling tasks for the core module and schedule implementation in the Phase 2 sprint backlog. | ✅ Complete | Import planning captured in [`ontology/import-plan.md`](ontology/import-plan.md) with actionable tasks for Phase 2. |
+| 7 | Complete governance traceability modelling to close CQ-GOV-001-B (Phase 3 consensus focus). | 🔄 In progress | Extend `ontology/src/consensus.ttl` with council committee relationships and link evidence in [`docs/competency/evidence/CQ-GOV-001.md`](competency/evidence/CQ-GOV-001.md). |
+| 8 | Assemble live stablecoin key custody snapshot for CQ-COMP-003-A. | ⏳ Not started | Create extraction script for mirror REST data and populate `data/token-compliance.json` before expanding ontology annotations. |
+| 9 | Kick off Smart Contract Service module covering HTS precompile usage (CQ-DEV-005-B). | ⏳ Not started | Introduce `ontology/src/smart-contracts.ttl` with `hedera:PrecompileInvocation` classes and align with automation hooks in [`scripts/run_sparql.py`](../scripts/run_sparql.py). |
+| 10 | Plan File/Scheduled Transactions and Mirror/Analytics sprints with dependency on shared datasets. | 📝 Planned | Draft modelling outline and dataset requirements to unblock subsequent Phase 3 submodules once consensus and token tasks land. |
 
 ## Risk considerations
 

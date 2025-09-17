@@ -1,0 +1,205 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ex: <https://bhash.dev/examples/core/> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Mainnet
+    a hedera:Network ;
+    rdfs:label "Hedera mainnet"@en ;
+    hedera:isGovernedBy ex:HederaCouncil ;
+    hedera:hasLayer ex:HieroConsensusLayerMainnet ;
+    hedera:hasShard ex:MainnetShardAlpha ;
+    .
+
+ex:HederaCouncil
+    a hedera:GovernanceBody ;
+    rdfs:label "Hedera Governing Council"@en ;
+    hedera:hasMandate "HIP-840 validator onboarding"@en ;
+    hedera:governs ex:Mainnet , ex:MainnetShardAlpha ;
+    .
+
+ex:ConsensusService
+    a hedera:Service ;
+    rdfs:label "Hedera Consensus Service"@en ;
+    hedera:isOperatedBy ex:HederaCouncil ;
+    hedera:exposedOn ex:Mainnet ;
+    hedera:managesArtefact ex:ConsensusTransaction ;
+    hedera:consumesArtefact ex:ConsensusTransaction ;
+    .
+
+ex:HieroConsensusLayerMainnet
+    a hedera:HieroConsensusLayer ;
+    rdfs:label "Mainnet Hiero consensus layer"@en ;
+    hedera:isLayerOf ex:Mainnet ;
+    hedera:virtualisesService ex:ConsensusService ;
+    .
+
+ex:MainnetShardAlpha
+    a hedera:HieroShard ;
+    rdfs:label "Mainnet shard alpha"@en ;
+    hedera:isShardOf ex:Mainnet ;
+    hedera:isGovernedBy ex:HederaCouncil ;
+    .
+
+ex:Node3
+    a hedera:ConsensusNode ;
+    rdfs:label "Consensus node 3"@en ;
+    hedera:hasAccount ex:Node3Account ;
+    hedera:participatesIn ex:Node3Onboarding , ex:ConsensusTransactionConsensus , ex:ConsensusTransactionExecution ;
+    .
+
+ex:Node3Account
+    a hedera:Account ;
+    rdfs:label "Node 3 staking account"@en ;
+    hedera:hasAccountId "0.0.3" ;
+    hedera:hasAccountAlias "0x0003" ;
+    hedera:declinesStakingRewards "false"^^xsd:boolean ;
+    hedera:isAccountOf ex:Node3 ;
+    hedera:securedBy ex:Node3Key ;
+    hedera:stakesTo ex:Node3 ;
+    .
+
+ex:Node3Key
+    a hedera:KeyList ;
+    rdfs:label "Node 3 council-controlled key list"@en ;
+    hedera:securesAccount ex:Node3Account ;
+    .
+
+ex:CommunityWallet
+    a hedera:Actor ;
+    rdfs:label "Community wallet operator"@en ;
+    hedera:hasAccount ex:CommunityWalletAccount ;
+    .
+
+ex:CommunityWalletAccount
+    a hedera:Account ;
+    rdfs:label "Community wallet"@en ;
+    hedera:hasAccountId "0.0.1234" ;
+    hedera:hasAccountAlias "0xFEEDFACE" ;
+    hedera:declinesStakingRewards "false"^^xsd:boolean ;
+    hedera:isAccountOf ex:CommunityWallet ;
+    hedera:securedBy ex:CommunityWalletKey ;
+    hedera:stakesTo ex:Node3 ;
+    .
+
+ex:CommunityWalletKey
+    a hedera:PublicKey ;
+    rdfs:label "Community wallet Ed25519 key"@en ;
+    hedera:securesAccount ex:CommunityWalletAccount ;
+    .
+
+ex:Node3Onboarding
+    a hedera:ValidatorOnboardingProcess ;
+    rdfs:label "Node 3 onboarding"@en ;
+    hedera:occursOn ex:Mainnet ;
+    hedera:hasParticipant ex:HederaCouncil , ex:Node3 ;
+    hedera:targetsValidator ex:Node3 ;
+    hedera:issuesDecision ex:OnboardNode3Decision ;
+    .
+
+ex:OnboardNode3Decision
+    a hedera:GovernanceDecision ;
+    rdfs:label "Council approval for node 3"@en ;
+    prov:wasGeneratedBy ex:Node3Onboarding ;
+    .
+
+ex:MirrorNode
+    a hedera:MirrorNode ;
+    rdfs:label "Community mirror node"@en ;
+    hedera:hasAccount ex:MirrorNodeAccount ;
+    hedera:publishesDataset ex:MainnetMirrorDataset ;
+    hedera:participatesIn ex:ConsensusTransactionExport ;
+    .
+
+ex:MirrorNodeAccount
+    a hedera:Account ;
+    rdfs:label "Mirror node account"@en ;
+    hedera:hasAccountId "0.0.20" ;
+    hedera:hasAccountAlias "0xMIRROR" ;
+    hedera:declinesStakingRewards "true"^^xsd:boolean ;
+    hedera:isAccountOf ex:MirrorNode ;
+    hedera:securedBy ex:MirrorNodeKey ;
+    .
+
+ex:MirrorNodeKey
+    a hedera:PublicKey ;
+    rdfs:label "Mirror node key"@en ;
+    hedera:securesAccount ex:MirrorNodeAccount ;
+    .
+
+ex:MainnetMirrorDataset
+    a hedera:MirrorDataset ;
+    dcterms:title "Mainnet public mirror dataset"@en ;
+    dcterms:description "REST dataset exposing transactions, balances, and topics for analytics"@en ;
+    dcat:accessURL <https://mainnet-public.mirrornode.hedera.com/api/v1/> ;
+    hedera:isPublishedBy ex:MirrorNode ;
+    .
+
+ex:ConsensusTransaction
+    a hedera:Transaction ;
+    rdfs:label "HBAR transfer illustration"@en ;
+    dcterms:description "Illustrative transaction used in CQ-CORE-001"@en ;
+    hedera:submittedBy ex:CommunityWalletAccount ;
+    hedera:hasTransactionPhase ex:ConsensusTransactionSubmission , ex:ConsensusTransactionConsensus , ex:ConsensusTransactionExecution , ex:ConsensusTransactionExport ;
+    hedera:hasRecord ex:ConsensusTransactionConsensusRecord , ex:ConsensusTransactionExecutionRecord , ex:ConsensusTransactionMirrorRecord ;
+    hedera:registeredIn ex:Mainnet ;
+    .
+
+ex:ConsensusTransactionSubmission
+    a hedera:TransactionSubmission ;
+    rdfs:label "HBAR transfer submission"@en ;
+    hedera:occursOn ex:Mainnet ;
+    hedera:hasParticipant ex:CommunityWalletAccount ;
+    hedera:hasPhaseOrder "1"^^xsd:integer ;
+    hedera:precedesPhase ex:ConsensusTransactionConsensus ;
+    .
+
+ex:ConsensusTransactionConsensus
+    a hedera:ConsensusFinalityPhase ;
+    rdfs:label "HBAR transfer consensus"@en ;
+    hedera:occursOn ex:Mainnet ;
+    hedera:hasParticipant ex:Node3 ;
+    hedera:hasPhaseOrder "2"^^xsd:integer ;
+    hedera:precedesPhase ex:ConsensusTransactionExecution ;
+    hedera:producesRecord ex:ConsensusTransactionConsensusRecord ;
+    .
+
+ex:ConsensusTransactionExecution
+    a hedera:TransactionExecutionPhase ;
+    rdfs:label "HBAR transfer execution"@en ;
+    hedera:occursOn ex:Mainnet ;
+    hedera:hasParticipant ex:Node3 ;
+    hedera:hasPhaseOrder "3"^^xsd:integer ;
+    hedera:precedesPhase ex:ConsensusTransactionExport ;
+    hedera:producesRecord ex:ConsensusTransactionExecutionRecord ;
+    .
+
+ex:ConsensusTransactionExport
+    a hedera:MirrorExportPhase ;
+    rdfs:label "HBAR transfer mirror export"@en ;
+    hedera:occursOn ex:Mainnet ;
+    hedera:hasParticipant ex:MirrorNode ;
+    hedera:hasPhaseOrder "4"^^xsd:integer ;
+    hedera:producesRecord ex:ConsensusTransactionMirrorRecord ;
+    .
+
+ex:ConsensusTransactionConsensusRecord
+    a hedera:TransactionRecord ;
+    dcterms:description "Consensus ordering result"@en ;
+    prov:wasGeneratedBy ex:ConsensusTransactionConsensus ;
+    .
+
+ex:ConsensusTransactionExecutionRecord
+    a hedera:TransactionRecord ;
+    dcterms:description "Execution outcome"@en ;
+    prov:wasGeneratedBy ex:ConsensusTransactionExecution ;
+    .
+
+ex:ConsensusTransactionMirrorRecord
+    a hedera:TransactionRecord ;
+    dcterms:description "Mirror API entry"@en ;
+    prov:wasGeneratedBy ex:ConsensusTransactionExport ;
+    .

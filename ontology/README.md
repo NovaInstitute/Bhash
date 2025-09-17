@@ -12,10 +12,17 @@ in the project README and will expand as modelling sprints deliver additional mo
 
 ## Core module
 
-`src/core.ttl` introduces the upper-level vocabulary shared by all service-specific modules.  The initial scaffold defines
-classes for actors, networks, services, artefacts, processes, and events together with the relationships that connect them.  The
-module is intentionally lightweight so that it can be extended incrementally as governance, token, and smart contract modules
-contribute richer detail.
+`src/core.ttl` introduces the upper-level vocabulary shared by all service-specific modules.  Phase 2 expanded the scaffold
+with account/credential abstractions, validator onboarding processes, transaction lifecycle phases, mirror data publications,
+and Hiero layer overlays so downstream modules can specialise these foundations instead of redefining them.  The module keeps
+PROV-O and DCAT alignments lightweight while adding new object/datatype properties for mandates, staking relationships, and
+transaction ordering.
 
 All IRIs follow the canonical namespace `https://bhash.dev/hedera/`.  Additional namespaces (e.g., `/governance/`, `/hts/`)
 will be introduced as the project migrates from the core to service-focused modelling work.
+
+### Example data
+
+- `examples/core-consensus.ttl` provides a small worked example showing a mainnet validator, its staking account, the governing
+  council mandate, transaction phases, and mirror datasets.  The sample underpins the foundational competency query
+  `tests/queries/cq-core-001.rq` documented in `docs/competency/core-foundational.md`.

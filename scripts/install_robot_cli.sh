@@ -10,9 +10,103 @@ INSTALL_PREFIX="${INSTALL_PREFIX:-$HOME/opt/robot}"
 BIN_DIR="${BIN_DIR:-$HOME/bin}"
 ROBOT_JAR_PATH="${INSTALL_PREFIX}/robot.jar"
 ROBOT_WRAPPER_PATH="${BIN_DIR}/robot"
+CONFIG_DIR="${CONFIG_DIR:-$HOME/.config/bhash}"
+SECRETS_FILE="${SECRETS_FILE:-$CONFIG_DIR/secrets.env}"
+PROFILE_FILES=(${PROFILE_FILES:-$HOME/.bashrc $HOME/.profile $HOME/.zshrc})
+INTERACTIVE="${INTERACTIVE:-1}"
+SECRETS_HEADER="# >>> bhash secrets >>>"
+SECRETS_FOOTER="# <<< bhash secrets <<<"
 
 log() {
   printf '[ROBOT-SETUP] %s\n' "$1"
+}
+
+persist_env_var() {
+  local key="$1"
+  local value="$2"
+  mkdir -p "$CONFIG_DIR"
+  touch "$SECRETS_FILE"
+  chmod 600 "$SECRETS_FILE"
+
+  local tmp
+  tmp=$(mktemp)
+  if ! grep -v "^export ${key}=" "$SECRETS_FILE" >"$tmp" 2>/dev/null; then
+    :
+  fi
+  printf 'export %s=%q\n' "$key" "$value" >>"$tmp"
+  mv "$tmp" "$SECRETS_FILE"
+  export "$key=$value"
+  log "Persisted ${key} to ${SECRETS_FILE}."
+}
+
+set_default_env_var() {
+  local key="$1"
+  local default_value="$2"
+  local value="${!key:-$default_value}"
+  persist_env_var "$key" "$value"
+}
+
+prompt_for_secret() {
+  local key="$1"
+  local prompt="$2"
+  local secret_input="${3:-0}"
+  local value="${!key:-}"
+
+  if [[ -n "$value" ]]; then
+    log "Using existing value for ${key}."
+  elif [[ "$INTERACTIVE" == "0" ]]; then
+    log "Environment variable ${key} must be set when running non-interactively."
+    exit 1
+  else
+    if [[ "$secret_input" == "1" ]]; then
+      read -r -s -p "$prompt" value || true
+      printf '\n'
+    else
+      read -r -p "$prompt" value || true
+    fi
+  fi
+
+  if [[ -z "$value" ]]; then
+    log "No value provided for ${key}."
+    exit 1
+  fi
+
+  persist_env_var "$key" "$value"
+}
+
+ensure_profile_hook() {
+  local hook="[ -f \"$SECRETS_FILE\" ] && source \"$SECRETS_FILE\""
+  for profile in "${PROFILE_FILES[@]}"; do
+    [[ -z "$profile" ]] && continue
+    if [[ ! -e "$profile" ]]; then
+      if [[ "$profile" == "$HOME/.bashrc" ]]; then
+        touch "$profile"
+      else
+        continue
+      fi
+    fi
+
+    if ! grep -Fq "$SECRETS_HEADER" "$profile" 2>/dev/null; then
+      {
+        printf '\n%s\n' "$SECRETS_HEADER"
+        printf '%s\n' "$hook"
+        printf '%s\n' "$SECRETS_FOOTER"
+      } >>"$profile"
+      log "Added secrets sourcing hook to ${profile}."
+    fi
+  done
+}
+
+configure_secrets() {
+  log "Configuring Hedera and Fluree secrets."
+  prompt_for_secret "HEDERA_OPERATOR_ID" "Enter Hedera operator ID (e.g. 0.0.x): "
+  prompt_for_secret "HEDERA_OPERATOR_KEY" "Enter Hedera operator private key: " 1
+  set_default_env_var "HEDERA_NETWORK" "testnet"
+  prompt_for_secret "FLUREE_API_TOKEN" "Enter Fluree API token: " 1
+  prompt_for_secret "FLUREE_HANDLE" "Enter Fluree tenant handle (e.g. team/ledger): "
+  set_default_env_var "FLUREE_BASE_URL" "https://data.flur.ee"
+  ensure_profile_hook
+  log "Secrets stored in ${SECRETS_FILE}."
 }
 
 require_command() {
@@ -88,6 +182,8 @@ ensure_java
 
 log "Ensuring curl is available for downloads."
 ensure_curl
+
+configure_secrets
 
 log "Installing ROBOT CLI."
 install_robot

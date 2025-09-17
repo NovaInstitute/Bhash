@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Execute repository SPARQL regression queries."""
+
+# DEPRECATED: use ``bhashctl sparql`` (Go implementation) instead.
 from __future__ import annotations
 
 import csv

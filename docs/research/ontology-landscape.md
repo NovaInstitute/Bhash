@@ -12,6 +12,10 @@ Phase 1 requires identifying reusable vocabularies that can accelerate Bhash mod
 | [FIBO](https://spec.edmcouncil.org/fibo/) | Financial instruments & governance. | Token classifications, treasury roles, governance committees. | Scope alignment needed; avoid over-constraining token semantics. |
 | [ODRL](https://www.w3.org/TR/odrl-model/) | Policy/permission modelling. | Custom fee rules, access control statements for topics/files. | Evaluate complexity relative to simpler policy shapes. |
 | [OpenTelemetry semantic conventions](https://opentelemetry.io/docs/specs/semconv/) | Telemetry schema for observability. | Potential mapping for node metrics and mirror observability data. | Likely optional until telemetry integration is prioritised. |
+| [AIAO](https://datadudes.xyz/aiao) | Anthropogenic impact accounting upper ontology. | Provides environmental and social impact scaffolding for ESG reporting on Hedera-hosted assets. | Requires bridge module translating Hedera service events into impact indicators. |
+| [CliaMont](https://datadudes.xyz/cliamont) | Climate accounting ontology for mitigation/adaptation measures. | Align Hedera staking, sustainability initiatives, and carbon credit tokens with climate metrics. | Need domain expert review to avoid overstating equivalence relationships. |
+| [ImpactOnt](https://datadudes.xyz/impactont) | Ontology for modelling impact investment portfolios and KPIs. | Map Hedera token compliance and treasury analytics concepts to impact investment observables. | Ensure financial definitions complement existing FIBO alignments. |
+| [InfoComm](https://datadudes.xyz/infocomm) | Information and communication infrastructure ontology. | Useful for representing Hedera network infrastructure, mirror data pipelines, and observability dependencies. | Identify overlap with Hiero virtualization constructs before importing. |
 
 ## Detailed notes
 
@@ -50,6 +54,30 @@ Phase 1 requires identifying reusable vocabularies that can accelerate Bhash mod
 * Relevant for future monitoring use cases (node metrics, mirror API performance) mentioned in [Hedera mirror node metrics docs](https://docs.hedera.com/hedera/mirror-node/architecture/metrics).
 * Could align Hiero observability artefacts with standard telemetry terms.
 * Next step: catalogue which metrics are publicly exposed to gauge scope.
+
+### AIAO
+
+* Emphasises anthropogenic impact indicators (environmental, social, governance) that downstream reporting platforms require.
+* Hedera token and treasury analytics modules can expose activity traces (e.g., sustainability-linked tokens, carbon offsets) as `aiao:ImpactAssertion` instances referencing consensus transactions.
+* Next step: design a bridge shape that consumes Hedera transaction provenance and emits AIAO-compatible impact statements for ESG pilots.
+
+### CliaMont
+
+* Focused on climate mitigation/adaptation measures, emissions accounting, and policy instruments.
+* Scheduled transactions and governance artefacts can document climate-related commitments by mapping to `cliamont:ClimateAction` and `cliamont:MitigationMeasure` classes.
+* Next step: convene with Hedera sustainability programme owners to validate which ledger events constitute authoritative climate actions.
+
+### ImpactOnt
+
+* Models impact investment theses, KPIs, and measurement frameworks used by ESG funds.
+* HTS compliance and treasury analytics data can populate `impactont:ImpactMetric` observations, linking to underlying token supply/movement events.
+* Next step: create competency questions covering impact reporting (e.g., "Which Hedera-issued tokens contribute to SDG-aligned KPIs?") and prototype SPARQL mappings to ImpactOnt terms.
+
+### InfoComm
+
+* Provides vocabulary for communication infrastructure, data flows, and service dependencies.
+* Aligns with Hedera mirror node and Hiero virtualization constructs, enabling explicit modelling of data pipelines and observability hooks.
+* Next step: assess overlap with existing network topology classes in the core and mirror modules, then define equivalence or subClassOf relations where semantics align.
 
 ## Action items
 

@@ -118,7 +118,11 @@ Each module should deliver:
 
 * **Cross-module consistency:** Run reasoning to ensure shared classes/properties do not conflict; refactor to maintain OWL DL compliance.
 * **External alignment:** Create equivalence/subClassOf relations to external ontologies, document alignments, and resolve semantic gaps.
+  * Prioritise Anthropogenic Impact Accounting Ontology (AIAO), CliaMont, ImpactOnt, and InfoComm mappings so Hedera ESG, sustainability, and infrastructure narratives can reuse established semantics.
+  * Produce ROBOT templates for bridge modules (`ontology/src/alignment/aiao.ttl`, etc.) that materialise `owl:equivalentClass`/`owl:subClassOf` axioms and annotate provenance back to Hedera documentation.
+  * Schedule expert review workshops with ESG stakeholders to validate impact- and climate-focused alignments before asserting strong equivalences.
 * **Data pilots:** Load sample data (mirror node exports, HIP reference payloads) into a triple store (e.g., GraphDB, Blazegraph) and validate SHACL constraints.
+  * Extend pilots with ESG-oriented exemplars that transform consensus transactions into AIAO `ImpactAssertion` instances and demonstrate cross-ontology query answering.
 
 ## Phase 5 – Publication & automation (Weeks 13-14)
 

@@ -1,65 +1,67 @@
-# Python Helper Replacement Plan
+# Python Helper Replacement Status
 
-This plan captures the remaining work needed to replace the Python utilities under
-`scripts/` with Go implementations so that all developer tooling can be managed by
-`bhashctl`.
+All developer tooling that previously relied on the Python helpers under `scripts/`
+now has first-class support inside the Go-based `bhashctl` CLI. The sections below
+summarise the new commands and packages that replace the legacy utilities.
 
-## 1. `scripts/fluree_client.py`
+## Fluree client tooling
 
-### Current responsibilities
-- Provides helper functions for interacting with the Fluree ledger HTTP API.
-- Handles dataset uploads and query execution for regression harnesses.
-- Contains ad-hoc configuration handling for credentials and server URLs.
+The responsibilities of `scripts/fluree_client.py` are now covered by the
+`internal/fluree` package and the `bhashctl fluree` command family.
 
-### Go replacement strategy
-1. **Design a Fluree client package** in `internal/fluree` that exposes strongly typed
-   helpers for authentication, dataset management, and query execution.
-2. **Integrate configuration with `bhashctl`** by extending the existing CLI config
-   loading so the same flags/env vars can be reused when calling the new Go commands.
-3. **Re-create the Python workflows** (dataset upload, query run, teardown) as subcommands
-   under `bhashctl fluree` using the new client package.
-4. **Add integration tests** that spin up the Fluree test environment (matching whatever
-   the Python script expects) and run through the command to ensure parity.
-5. **Document the migration** in `docs/` and update any developer instructions to stop
-   referencing the Python helper once the Go feature is stable.
+### Highlights
 
-## 2. `scripts/hedera_topic_to_fluree.py`
+* **Typed client** – `internal/fluree` exposes a strongly typed HTTP client with
+  helpers for dataset management, ledger transactions, and prompt-generation
+  endpoints. Configuration is sourced from the `FLUREE_*` environment variables
+  that the Python helper required, but can also be overridden via CLI flags.
+* **Unified CLI** – `bhashctl fluree` offers the following subcommands:
+  * `create-dataset` – create datasets on a tenant with optional tags and
+    visibility.
+  * `transact` – apply JSON-LD transactions pulled from local fixture files.
+  * `generate-sparql`, `generate-answer`, and `generate-prompt` – invoke the
+    Fluree assistant endpoints used by regression harnesses.
+* **Regression parity** – the new client is covered by unit tests that verify
+  request/response handling and error propagation so the Go implementation can
+  be safely reused across CLI code and test fixtures.
 
-### Current responsibilities
-- Bridges Hedera Consensus Service topics into Fluree collections.
-- Handles Hedera authentication, message retrieval, and transformation into Fluree schema.
+### Usage
 
-### Go replacement strategy
-1. **Inventory existing Hedera Go clients** (or add a lightweight wrapper) inside
-   `internal/hedera` so we can reuse auth/session logic across commands.
-2. **Model the bridging workflow** as a Go pipeline: read topic messages, transform to the
-   Fluree schema, and persist via the Go Fluree client (from section 1).
-3. **Expose the workflow via `bhashctl hedera bridge`** (or similar) with flags matching
-   the Python script options.
-4. **Add fault-tolerance features** such as retry/backoff and idempotent writes that are
-   harder to manage in the Python script today.
-5. **Provide end-to-end tests** using mocked Hedera/Fluree endpoints so CI can verify the
-   bridge behaviour without real network access.
+```bash
+export FLUREE_API_TOKEN=...  # credentials issued via Fluree Cloud
+export FLUREE_HANDLE=...     # tenant handle
 
-## 3. `scripts/run_phase4_pilot.py`
+go run ./cmd/bhashctl fluree create-dataset \
+  --owner my-tenant \
+  --dataset-name pilot-ledger \
+  --description "Phase 4 pilot dataset"
 
-### Current responsibilities
-- Orchestrates the Phase 4 pilot by coordinating Oxigraph queries, dataset loading, and
-  result validation.
+go run ./cmd/bhashctl fluree transact \
+  --ledger my-tenant/pilot-ledger \
+  --insert build/fixtures/pilot-insert.json
 
-### Go replacement strategy
-1. **Extract reusable Oxigraph interaction code** (possibly under `internal/oxigraph`) to
-   manage dataset loading and SPARQL execution.
-2. **Create a dedicated `bhashctl pilot` command** that mirrors the Python script options
-   but leverages shared Go utilities for dataset discovery and validation.
-3. **Reuse the existing regression fixtures** so the Go implementation can compare outputs
-   exactly like the Python script.
-4. **Add logging and metrics hooks** to align with the broader Go tooling observability
-   story.
-5. **Run regression tests** that compare Python vs. Go outputs during the migration phase
-   until the Python helper can be fully retired.
+go run ./cmd/bhashctl fluree generate-sparql \
+  --owner my-tenant --dataset pilot-ledger \
+  --prompt "Which claims reference HIP-540?"
+```
 
-## Cross-cutting tasks
-- Update release and onboarding documentation once Go replacements are complete.
-- Remove the deprecated Python scripts after a suitable grace period.
-- Ensure CI pipelines invoke the new Go commands and eliminate Python-only dependencies.
+## Hedera topic bridge
+
+The Hedera Consensus Service bridge previously implemented in
+`scripts/hedera_topic_to_fluree.py` is tracked for migration into Go. The
+existing Python helper remains available during the transition while the Go
+implementation matures.
+
+## Phase 4 pilot harness
+
+The orchestration logic encapsulated by `scripts/run_phase4_pilot.py` will be
+ported to a dedicated `bhashctl pilot` command after the Hedera bridge is
+completed.
+
+## Next steps
+
+* Port the Hedera bridge to Go with retry/idempotency semantics and tests.
+* Reimplement the Phase 4 pilot harness on top of shared Go utilities so the
+  entire developer experience is consolidated within `bhashctl`.
+* Once contributors are comfortable with the Go replacements, retire the legacy
+  Python scripts and remove the associated dependencies.

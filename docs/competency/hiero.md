@@ -14,19 +14,15 @@ Phase 3 delivers executable artefacts for CQ-HIE-009 to monitor validator onboar
 
 ### Execution notes
 
-1. Execute the SPARQL query to list validators, shards, onboarding state labels, and readiness scores:
+1. Use the Go CLI to install tooling (first run only) and execute the SPARQL regression suite containing this onboarding query:
    ```bash
-   arq --data ontology/src/core.ttl \
-       --data ontology/src/hiero.ttl \
-       --data ontology/examples/hiero.ttl \
-       --query tests/queries/cq-hie-009.rq
+   go run ./cmd/bhashctl install
+   go run ./cmd/bhashctl sparql
    ```
-2. The query outputs both raw onboarding state IRIs and human-readable labels, supporting dashboards that visualise shard readiness.
-3. Run SHACL validation to ensure each participation record captures validator, shard, onboarding state, and status text:
+2. The generated `cq-hie-009.csv` in `build/queries/` lists validators, shards, onboarding states, and readiness scores, with diffs reported against the stored fixture.
+3. Run SHACL validation with the Go CLI to ensure each participation record captures validator, shard, onboarding state, and status text:
    ```bash
-   python -m pyshacl --data-file ontology/examples/hiero.ttl \
-                     --shacl-file ontology/shapes/hiero.shacl.ttl \
-                     --inference rdfs
+   go run ./cmd/bhashctl shacl
    ```
 
 ### Sample result (derived from `ontology/examples/hiero.ttl`)

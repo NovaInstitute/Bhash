@@ -14,20 +14,17 @@ Phase 3 delivers executable artefacts for CQ-ANL-007 to track dataset retention 
 
 ### Execution notes
 
-1. Run the SPARQL query to enumerate mirror datasets, their covered services, retention windows, and downstream workspaces:
+1. Use the Go CLI to install tooling (first run only) and execute the SPARQL regression suite that includes this retention query:
    ```bash
-   arq --data ontology/src/core.ttl \
-       --data ontology/src/mirror-analytics.ttl \
-       --data ontology/examples/mirror-analytics.ttl \
-       --query tests/queries/cq-anl-007.rq
+   go run ./cmd/bhashctl install
+   go run ./cmd/bhashctl sparql
    ```
-2. Use SHACL validation to ensure datasets expose retention metadata required by compliance teams:
+2. The generated `cq-anl-007.csv` in `build/queries/` enumerates mirror datasets, covered services, retention windows, and downstream workspaces, with diffs surfaced against fixtures.
+3. Use SHACL validation via the Go CLI to ensure datasets expose retention metadata required by compliance teams:
    ```bash
-   python -m pyshacl --data-file ontology/examples/mirror-analytics.ttl \
-                     --shacl-file ontology/shapes/mirror-analytics.shacl.ttl \
-                     --inference rdfs
+   go run ./cmd/bhashctl shacl
    ```
-3. Future automation will layer token balance aggregates on top of the validated retention model.
+4. Future automation will layer token balance aggregates on top of the validated retention model.
 
 ### Sample result (derived from `ontology/examples/mirror-analytics.ttl`)
 

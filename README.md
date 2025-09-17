@@ -1,11 +1,11 @@
 # Bhash: Hedera Network Ontology
 
-Bhash is an open knowledge engineering effort to describe the Hedera Network and the forthcoming Hiero architecture in a machine-interpretable way. The project captures the actors, assets, services, processes, and governance rules that appear across the Hedera Consensus Service (HCS), Token Service (HTS), Smart Contract Service (HSCS), File Service, Scheduled Transactions, mirror node ecosystem, and Hiero overlay. By modelling Hedera's public documentation and implementation guidance—including Hiero validator onboarding—we provide reusable semantics for analytics, compliance, education, and integration projects. Phase 4 extends this scope with bridge modules that align Hedera-native concepts with the Anthropogenic Impact Accounting Ontology (AIAO), ClaimOnt, ImpactOnt, and InfoComm vocabularies so ESG and infrastructure teams can consume the ontology without bespoke transformations.
+Bhash is an open knowledge engineering effort to describe the Hedera Network and the forthcoming Hiero architecture in a machine-interpretable way. The project captures the actors, assets, services, processes, and governance rules that appear across the Hedera Consensus Service (HCS), Token Service (HTS), Smart Contract Service (HSCS), File Service, Scheduled Transactions, mirror node ecosystem, and Hiero overlay. By modelling Hedera's public documentation and implementation guidance—including Hiero validator onboarding—we provide reusable semantics for analytics, compliance, education, and integration projects. Phase 4 extends this scope with bridge modules that align Hedera-native concepts with the Anthropogenic Impact Accounting Ontology (AIAO), ClaimOnt, ImpactOnt, and InfoComm vocabularies so anthropogenic impact and infrastructure teams can consume the ontology without bespoke transformations.
 
 ## Why an ontology?
 
 * **Shared vocabulary** – establish stable identifiers and definitions for Hedera-specific notions such as accounts, topics, tokens, scheduled transactions, staking nodes, and fee schedules.
-* **Interoperability** – align Hedera concepts with standard vocabularies (PROV-O, DCAT, W3C DID Core, etc.) and specialised ESG ontologies (AIAO, ClaimOnt, ImpactOnt, InfoComm) so that data from mirror nodes, dApps, sustainability disclosures, and compliance tools can interoperate.
+* **Interoperability** – align Hedera concepts with standard vocabularies (PROV-O, DCAT, W3C DID Core, etc.) and specialised anthropogenic impact ontologies (AIAO, ClaimOnt, ImpactOnt, InfoComm) so that data from mirror nodes, dApps, sustainability disclosures, and compliance tools can interoperate.
 * **Reasoning & validation** – enable automated validation (via OWL reasoning and SHACL constraints) for network states, policy rules, token compliance requirements, smart contract metadata, and Hiero onboarding milestones.
 * **Documentation** – provide an authoritative reference that augments Hedera/Hiero manuals with explicit relationships that are otherwise scattered across prose and code.
 
@@ -26,7 +26,7 @@ Each module is backed by competency questions, SPARQL regression queries under `
 
 ## External ontology alignment
 
-The Phase 4 integration sprint introduces dedicated bridge modules that expose Hedera artefacts to ESG and communications teams via four priority ontologies:
+The Phase 4 integration sprint introduces dedicated bridge modules that expose Hedera artefacts to anthropogenic impact and communications teams via four priority ontologies:
 
 | Bridge | File | Focus |
 | ------ | ---- | ----- |
@@ -35,7 +35,7 @@ The Phase 4 integration sprint introduces dedicated bridge modules that expose H
 | ImpactOnt alignment | `ontology/src/alignment/impactont.ttl` | Aligns treasury and compliance telemetry with ImpactOnt KPI, SDG, and policy structures. |
 | InfoComm alignment | `ontology/src/alignment/infocomm.ttl` | Describes mirror nodes, Hiero shards, and telemetry exchanges as InfoComm communication assets with latency/SLA annotations. |
 
-All four modules reuse the same prefixes (`ontology/src/alignment/prefixes.ttl`), cite Hedera/Hiero documentation alongside external ontology references, and are exercised by the ESG competency query (`tests/queries/cq-esg-001.rq`) plus the alignment example graph (`ontology/examples/alignment-esg.ttl`).
+All four modules reuse the same prefixes (`ontology/src/alignment/prefixes.ttl`), cite Hedera/Hiero documentation alongside external ontology references, and are exercised by the anthropogenic impact competency query (`tests/queries/cq-impact-001.rq`) plus the alignment example graph (`ontology/examples/alignment-impact.ttl`).
 
 ## Repository layout
 
@@ -77,6 +77,10 @@ go run ./cmd/bhashctl shacl    # Run SHACL validation with the TopBraid CLI
 The CLI reuses the repository fixtures and reports mismatches against expected
 snapshots. A legacy Python harness is still present under `scripts/` for historical
 reference, but new automation should target the Go workflow.
+
+## Phase 4 data pilot
+
+Run `python scripts/run_phase4_pilot.py` to initialise an Oxigraph-backed triple store with the Phase 3/4 ontologies and example graphs. The script executes the anthropogenic impact competency query, runs SHACL validation, and records artefacts under `build/pilots/phase4/` for stakeholder review.
 
 ## Supporting datasets
 

@@ -2,8 +2,8 @@ Term,Source Document,Notes
 hedera:TreasuryImpactKPI,https://docs.hedera.com/hedera/mirror-node/architecture/metrics,Treasury telemetry metrics back ImpactOnt KPIs tracking sustainability funding flows.
 hedera:ComplianceAlignmentScore,https://hips.hedera.com/hip/hip-540,HIP-540 compliance controls map to ImpactOnt compliance indicators.
 hedera:targetsSDGGoal,https://docs.hedera.com/hedera/mirror-node/architecture/metrics,Mirror telemetry exposes SDG goal tagging aligned with ImpactOnt's SDG vocabulary.
-hedera:summarisesToken,https://docs.hedera.com/hedera/sdks-and-apis/token-service/token-relationships,Token balance coverage is required to measure ESG instruments and maps to ImpactOnt asset metrics.
+hedera:summarisesToken,https://docs.hedera.com/hedera/sdks-and-apis/token-service/token-relationships,Token balance coverage is required to measure anthropogenic impact instruments and maps to ImpactOnt asset metrics.
 hedera:hasMetricValue,https://docs.hedera.com/hedera/mirror-node/architecture/metrics,Numeric metric values align with ImpactOnt quantitative reporting requirements.
 hedera:hasImpactVariance,https://docs.hedera.com/hedera/mirror-node/architecture/metrics,Variance calculations match ImpactOnt variance semantics for KPI monitoring.
 hedera:alignsWithPolicy,https://hips.hedera.com/hip/hip-540,Policy alignment references HIP mandates and ImpactOnt policy instruments.
-hedera:hasImpactBaseline,https://docs.hedera.com/hedera/mirror-node/architecture/metrics,Baseline values support ImpactOnt baseline comparisons for ESG KPIs.
+hedera:hasImpactBaseline,https://docs.hedera.com/hedera/mirror-node/architecture/metrics,Baseline values support ImpactOnt baseline comparisons for anthropogenic impact KPIs.

@@ -15,7 +15,7 @@ func (c *Config) datasetPaths() ([]string, error) {
 		filepath.Join(c.RepoRoot, "ontology", "examples", "file-schedule.ttl"),
 		filepath.Join(c.RepoRoot, "ontology", "examples", "mirror-analytics.ttl"),
 		filepath.Join(c.RepoRoot, "ontology", "examples", "hiero.ttl"),
-		filepath.Join(c.RepoRoot, "ontology", "examples", "alignment-esg.ttl"),
+                filepath.Join(c.RepoRoot, "ontology", "examples", "alignment-impact.ttl"),
 	}
 	fixturesDir := filepath.Join(c.RepoRoot, "tests", "fixtures", "datasets")
 	entries, err := os.ReadDir(fixturesDir)

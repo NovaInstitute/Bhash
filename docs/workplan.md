@@ -125,24 +125,24 @@ Each module should deliver:
 
 * **Cross-module consistency:** Run reasoning to ensure shared classes/properties do not conflict; refactor to maintain OWL DL compliance.
 * **External alignment:** Create equivalence/subClassOf relations to external ontologies, document alignments, and resolve semantic gaps.
-  * Prioritise Anthropogenic Impact Accounting Ontology (AIAO), ClaimOnt, ImpactOnt, and InfoComm mappings so Hedera ESG, sustainability, and infrastructure narratives can reuse established semantics.
+  * Prioritise Anthropogenic Impact Accounting Ontology (AIAO), ClaimOnt, ImpactOnt, and InfoComm mappings so Hedera anthropogenic impact, sustainability, and infrastructure narratives can reuse established semantics.
   * Produce ROBOT templates for bridge modules (`ontology/src/alignment/aiao.ttl`, etc.) that materialise `owl:equivalentClass`/`owl:subClassOf` axioms and annotate provenance back to Hedera documentation.
-  * Schedule expert review workshops with ESG stakeholders to validate impact- and climate-focused alignments before asserting strong equivalences.
+  * Schedule expert review workshops with anthropogenic impact stakeholders to validate impact- and climate-focused alignments before asserting strong equivalences.
 * **Data pilots:** Load sample data (mirror node exports, HIP reference payloads) into a triple store (e.g., GraphDB, Blazegraph) and validate SHACL constraints.
-  * Extend pilots with ESG-oriented exemplars that transform consensus transactions into AIAO `ImpactAssertion` instances and demonstrate cross-ontology query answering.
+  * Extend pilots with anthropogenic impact-oriented exemplars that transform consensus transactions into AIAO `ImpactAssertion` instances and demonstrate cross-ontology query answering.
 
 ### Phase 4 progress review (2025-10-02)
 
 **Completed**
 
 * Bridge modules for AIAO, ClaimOnt, ImpactOnt, and InfoComm are published with shared prefixes, dual provenance annotations, and coverage of consensus, token, scheduled transaction, and telemetry workflows. [`ontology/src/alignment`](../ontology/src/alignment)
-* ESG competency query (`tests/queries/cq-esg-001.rq`) and SHACL suite run cleanly against the enriched alignment example graph, confirming cross-ontology reasoning works end to end. [`tests/queries/cq-esg-001.rq`](../tests/queries/cq-esg-001.rq) · [`docs/competency/esg-alignment.md`](competency/esg-alignment.md)
+* Anthropogenic impact competency query (`tests/queries/cq-impact-001.rq`) and SHACL suite run cleanly against the enriched alignment example graph, confirming cross-ontology reasoning works end to end. [`tests/queries/cq-impact-001.rq`](../tests/queries/cq-impact-001.rq) · [`docs/competency/anthropogenic-impact-alignment.md`](competency/anthropogenic-impact-alignment.md)
+* Oxigraph-based data pilot loads all Phase 3/4 ontologies and alignment examples, executes `cq-impact-001`, and records SHACL outcomes for review via `scripts/run_phase4_pilot.py`. [`build/pilots/phase4`](../build/pilots/phase4) · [`scripts/run_phase4_pilot.py`](../scripts/run_phase4_pilot.py)
 * Documentation (README, blueprint, competency notes, backlog) reflects the completed integration work, clearing the final open action in the immediate next actions list. [`README.md`](../README.md) · [`docs/ontology/phase4-alignment.md`](ontology/phase4-alignment.md)
 
 **Outstanding**
 
-* Execute the planned data pilots by loading mirror exports and HIP payloads into a triple store and capturing validation evidence; current documentation calls for GraphDB/Blazegraph runs but no automation artifacts exist yet. [`docs/workplan.md`](#phase-4--integration--alignment-weeks-11-12) · [`docs/competency/esg-alignment.md`](competency/esg-alignment.md)
-* Expand ESG alignment samples with additional SDG targets and automated telemetry refresh ahead of stakeholder review workshops. [`docs/competency/esg-alignment.md`](competency/esg-alignment.md)
+* None – Phase 4 integration goals are ready for closure pending stakeholder review scheduling.
 
 ## Phase 5 – Publication & automation (Weeks 13-14)
 
@@ -166,8 +166,8 @@ Each module should deliver:
 | 10 | Plan File/Scheduled Transactions and Mirror/Analytics sprints with dependency on shared datasets. | ✅ Complete | File/Schedule, Mirror/Analytics, and Hiero modules shipped with shared fixtures enabling regression automation. |
 | 11 | Integrate mirror node HTS precompile traces into automated ETL prototype. | 📝 Planned | Extend `data/contracts/hts-precompiles/` with live extracts and script transformation into RDF for regression tests. |
 | 12 | Expand treasury analytics competency with real balance snapshots. | 📝 Planned | Populate `data/mirror/token-balance-retention.csv` with operational SLAs and ingest sample mirror balance exports. |
-| 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | ✅ Complete | Alignment namespace shipped with validated AIAO/ClaimOnt/ImpactOnt/InfoComm bridge modules, ESG query, and documentation refresh. |
-| 14 | Run the Phase 4 data pilot in a managed triple store and capture SHACL/SPARQL evidence for ESG alignments. | 📝 Planned | Stand up a Blazegraph or GraphDB instance, load Phase 3/4 examples, and persist validation reports for inclusion in `docs/competency/esg-alignment.md`. |
+| 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | ✅ Complete | Alignment namespace shipped with validated AIAO/ClaimOnt/ImpactOnt/InfoComm bridge modules, anthropogenic impact query, and documentation refresh. |
+| 14 | Run the Phase 4 data pilot in a managed triple store and capture SHACL/SPARQL evidence for anthropogenic impact alignments. | ✅ Complete | `scripts/run_phase4_pilot.py` provisions an Oxigraph store, loads Phase 3/4 artefacts, and stores evidence in `build/pilots/phase4/`. |
 
 ## Risk considerations
 

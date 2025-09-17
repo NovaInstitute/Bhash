@@ -19,9 +19,9 @@
 
 ## Proposed modelling updates
 
-1. Introduce `hedera:StablecoinToken` subclass tagged with `dcterms:identifier "HIP-540"` and connect to the controlling accounts via `hedera:hasRole` roles (`hedera:KYCController`, `hedera:FreezeController`).
-2. Represent key assets as `hedera:Artefact` instances (e.g., `hedera:KYCKey`) annotated with enforcement state (present, removed, unusable) derived from HIP-540 semantics.
-3. Capture provenance between HIP-540 requirements and token instances using `prov:wasDerivedFrom` so compliance checks can assert traceability.
+1. Introduce `hedera:StablecoinToken` subclass tagged with `dcterms:identifier "HIP-540"` and connect to controller actors via `hedera:hasKeyAssignment` artefacts.
+2. Represent key assets as `hedera:TokenKey` subclasses (`hedera:KYCKey`, `hedera:FreezeKey`) linked through `hedera:TokenKeyAssignment` nodes that record controller actors and governance roles.
+3. Capture provenance between HIP-540 requirements and token instances using `hedera:provTrace` so compliance checks can assert traceability.
 
 ## Validation approach
 
@@ -31,16 +31,18 @@
   SELECT ?token ?treasury ?kycController ?freezeController
   WHERE {
     ?token a hedera:StablecoinToken ;
-           hedera:hasRole hedera:HIP540Compliant .
-    ?token hedera:hasKeyAssignment [
-      a hedera:KYCKeyAssignment ;
-      hedera:isControlledBy ?kycController
-    ] .
-    ?token hedera:hasKeyAssignment [
-      a hedera:FreezeKeyAssignment ;
-      hedera:isControlledBy ?freezeController
-    ] .
-    ?token hedera:isOperatedBy ?treasury .
+           hedera:hasTreasury ?treasury ;
+           hedera:hasKeyAssignment ?kycAssignment , ?freezeAssignment .
+
+    ?kycAssignment a hedera:KYCKeyAssignment ;
+                   hedera:isControlledBy ?kycController .
+    ?kycController hedera:hasRole ?kycRole .
+    ?kycRole a hedera:KYCControllerRole .
+
+    ?freezeAssignment a hedera:FreezeKeyAssignment ;
+                      hedera:isControlledBy ?freezeController .
+    ?freezeController hedera:hasRole ?freezeRole .
+    ?freezeRole a hedera:FreezeControllerRole .
   }
   ```
   This query lists HIP-540 stablecoins with explicit controller accounts for KYC and freeze keys.

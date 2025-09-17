@@ -1,0 +1,26 @@
+PREFIX hedera: <https://bhash.dev/hedera/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?token ?tokenLabel ?symbol ?treasuryAccount ?kycController ?kycLabel ?freezeController ?freezeLabel
+WHERE {
+  ?token a hedera:StablecoinToken ;
+         hedera:hasSymbol ?symbol ;
+         hedera:hasTreasury ?treasuryAccount ;
+         hedera:hasKeyAssignment ?kycAssignment , ?freezeAssignment .
+
+  ?kycAssignment a hedera:KYCKeyAssignment ;
+                 hedera:isControlledBy ?kycController .
+  ?freezeAssignment a hedera:FreezeKeyAssignment ;
+                   hedera:isControlledBy ?freezeController .
+
+  ?kycController hedera:hasRole ?kycRole .
+  ?kycRole a hedera:KYCControllerRole .
+
+  ?freezeController hedera:hasRole ?freezeRole .
+  ?freezeRole a hedera:FreezeControllerRole .
+
+  OPTIONAL { ?token rdfs:label ?tokenLabel }
+  OPTIONAL { ?kycController rdfs:label ?kycLabel }
+  OPTIONAL { ?freezeController rdfs:label ?freezeLabel }
+}
+ORDER BY ?token ?kycController ?freezeController

@@ -1,0 +1,81 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix hedera: <https://bhash.dev/hedera/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+hedera:StablecoinKeyGovernanceShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:StablecoinToken ;
+    sh:property [
+        sh:path hedera:hasTreasury ;
+        sh:minCount 1 ;
+        sh:message "Stablecoin tokens must declare a treasury account."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasKeyAssignment ;
+        sh:qualifiedValueShape hedera:KYCKeyAssignmentShape ;
+        sh:qualifiedMinCount 1 ;
+        sh:message "Stablecoin tokens must have at least one KYC key assignment."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:hasKeyAssignment ;
+        sh:qualifiedValueShape hedera:FreezeKeyAssignmentShape ;
+        sh:qualifiedMinCount 1 ;
+        sh:message "Stablecoin tokens must have at least one freeze key assignment."@en ;
+    ] ;
+    .
+
+hedera:KYCKeyAssignmentShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:KYCKeyAssignment ;
+    sh:property [
+        sh:path hedera:assignsKey ;
+        sh:minCount 1 ;
+        sh:message "KYC key assignments must reference a token key."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:isControlledBy ;
+        sh:minCount 1 ;
+        sh:node hedera:KYCControllerActorShape ;
+        sh:message "KYC key assignments must identify a controller with an appropriate governance role."@en ;
+    ] ;
+    .
+
+hedera:FreezeKeyAssignmentShape
+    a sh:NodeShape ;
+    sh:targetClass hedera:FreezeKeyAssignment ;
+    sh:property [
+        sh:path hedera:assignsKey ;
+        sh:minCount 1 ;
+        sh:message "Freeze key assignments must reference a token key."@en ;
+    ] ;
+    sh:property [
+        sh:path hedera:isControlledBy ;
+        sh:minCount 1 ;
+        sh:node hedera:FreezeControllerActorShape ;
+        sh:message "Freeze key assignments must identify a controller with an appropriate governance role."@en ;
+    ] ;
+    .
+
+hedera:KYCControllerActorShape
+    a sh:NodeShape ;
+    sh:property [
+        sh:path hedera:hasRole ;
+        sh:qualifiedValueShape [
+            sh:class hedera:KYCControllerRole ;
+        ] ;
+        sh:qualifiedMinCount 1 ;
+        sh:message "KYC controllers must hold a KYC controller role."@en ;
+    ] ;
+    .
+
+hedera:FreezeControllerActorShape
+    a sh:NodeShape ;
+    sh:property [
+        sh:path hedera:hasRole ;
+        sh:qualifiedValueShape [
+            sh:class hedera:FreezeControllerRole ;
+        ] ;
+        sh:qualifiedMinCount 1 ;
+        sh:message "Freeze controllers must hold a freeze controller role."@en ;
+    ] ;
+    .

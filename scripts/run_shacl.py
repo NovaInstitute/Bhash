@@ -13,6 +13,7 @@ REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 SHAPES_DIR = REPO_ROOT / "ontology" / "shapes"
 DATASETS = [
     REPO_ROOT / "ontology" / "examples" / "core-consensus.ttl",
+    REPO_ROOT / "ontology" / "examples" / "token-compliance.ttl",
 ]
 DATASETS.extend(sorted((REPO_ROOT / "tests" / "fixtures" / "datasets").glob("*.ttl")))
 

@@ -1,0 +1,6 @@
+Term,Source Document,Notes
+hedera:StablecoinToken,https://hips.hedera.com/hip/hip-540,HIP-540 defines compliance controls for HIP-540 stablecoin profiles.
+hedera:KYCKeyAssignment,https://hips.hedera.com/hip/hip-540,Assignment captures accountable operators for KYC enforcement per HIP-540.
+hedera:FreezeKeyAssignment,https://hips.hedera.com/hip/hip-540,Freeze controller responsibilities derived from HIP-540 governance requirements.
+hedera:TokenRelationship,https://docs.hedera.com/hedera/sdks-and-apis/token-service/token-relationships,Mirror node relationship states ground KYC/freeze checks in CQ-COMP-003.
+hedera:TokenTreasuryRole,https://docs.hedera.com/hedera/sdks-and-apis/token-service/treasury-and-supply,Treasury responsibilities ensure reserves and distribution controls are modelled.

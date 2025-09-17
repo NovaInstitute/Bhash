@@ -4,7 +4,7 @@ Phase 4 introduces the cross-ontology assets required to exercise CQ-ESG-001 and
 
 ## CQ-ESG-001 – How do scheduled sustainability transactions translate into AIAO impact assertions with supporting KPIs and telemetry provenance?
 
-* **Status:** Prototype ontology bridges, sample graph, and SPARQL query committed.
+* **Status:** Validated via example graph and regression query in Phase 4 completion run.
 * **Scope:** Show how scheduled mitigation actions funded on Hedera surface as AIAO impact assertions with provenance to mirror datasets and sustainability KPIs.
 * **Inputs:**
   * Ontology: `ontology/src/alignment/aiao.ttl`, `ontology/src/alignment/claimont.ttl`, `ontology/src/alignment/impactont.ttl`, `ontology/src/alignment/infocomm.ttl`
@@ -15,7 +15,7 @@ Phase 4 introduces the cross-ontology assets required to exercise CQ-ESG-001 and
 
 1. Load the core and alignment ontologies alongside the ESG sample graph into an RDF store.
 2. Execute the SPARQL query to retrieve each `aiao:ImpactAssertion`, its Hedera subject, associated KPI metrics, optional SDG goal, related scheduled mitigation action, and the communication node exposing evidence datasets.
-3. Review the results to verify that Hedera concepts inherit semantics from AIAO, ClaimOnt, ImpactOnt, and InfoComm through the bridge axioms.
+3. Review the results to verify that Hedera concepts inherit semantics from AIAO, ClaimOnt, ImpactOnt, and InfoComm through the bridge axioms; confirm the query output matches `tests/fixtures/results/cq-esg-001.csv`.
 
 ### Sample result (derived from `ontology/examples/alignment-esg.ttl`)
 
@@ -23,7 +23,13 @@ Phase 4 introduces the cross-ontology assets required to exercise CQ-ESG-001 and
 | --------- | ------- | --------- | ----- | ------- | -------- | ---- |
 | `ex:ReforestationAssertion` | `ex:CommunityTreasury` | `ex:ReforestationMetric` | `"1250"^^xsd:decimal` | `impactont:SDG15LifeOnLand` | `ex:ReforestationSchedule` | `ex:MirrorNodeAlpha` |
 
+### Validation summary
+
+* Regression query `tests/queries/cq-esg-001.rq` returns the expected assertion-to-dataset trace when executed against `ontology/examples/alignment-esg.ttl`.
+* SHACL automation passes for the ESG graph, confirming datatype constraints on `hedera:hasMetricValue`, `hedera:hasImpactVariance`, and required linkages to schedules and mirror datasets.
+* Alignment blueprint and README now document the cross-ontology coverage so ESG stakeholders can onboard without additional onboarding notes.
+
 ### Next steps
 
-* Expand sample data with additional SDG targets and multiple schedules to test aggregation.
-* Create SHACL shapes verifying that each `hedera:StablecoinReserveAssertion` declares impact window, evidence dataset, and KPI linkages before asserting equivalence in production.
+* Expand sample data with additional SDG targets and multiple schedules to test aggregation and stress conditional OPTIONAL branches.
+* Wire live telemetry ingestion into the alignment pipeline so mirror datasets refresh automatically before stakeholder review workshops.

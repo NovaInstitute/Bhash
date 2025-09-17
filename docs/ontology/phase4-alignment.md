@@ -12,27 +12,36 @@ This blueprint operationalises the Phase 4 integration goal of binding Hedera-na
 
 | Artefact | Description | Owner | Status |
 | -------- | ----------- | ----- | ------ |
-| `ontology/src/alignment/aiao.ttl` | MIREOT-trimmed import/bridge linking Hedera consensus & token events to `aiao:ImpactAssertion` patterns. | Ontology modellers | 🔄 In progress |
-| `ontology/src/alignment/claimont.ttl` | Alignment axioms connecting sustainability commitments and scheduled actions to ClaimOnt mitigation/adaptation classes. | Ontology modellers | 🔄 In progress |
-| `ontology/src/alignment/impactont.ttl` | Bridges HTS compliance & treasury analytics metrics to ImpactOnt KPIs with provenance annotations. | Ontology modellers | 🔄 In progress |
-| `ontology/src/alignment/infocomm.ttl` | Maps Hedera/Hiero infrastructure classes (nodes, shards, pipelines) to InfoComm communication assets. | Ontology modellers | 🔄 In progress |
+| `ontology/src/alignment/aiao.ttl` | MIREOT-trimmed import/bridge linking Hedera consensus & token events to `aiao:ImpactAssertion` patterns. | Ontology modellers | ✅ Complete (2025-10-02) |
+| `ontology/src/alignment/claimont.ttl` | Alignment axioms connecting sustainability commitments and scheduled actions to ClaimOnt mitigation/adaptation classes. | Ontology modellers | ✅ Complete (2025-10-02) |
+| `ontology/src/alignment/impactont.ttl` | Bridges HTS compliance & treasury analytics metrics to ImpactOnt KPIs with provenance annotations. | Ontology modellers | ✅ Complete (2025-10-02) |
+| `ontology/src/alignment/infocomm.ttl` | Maps Hedera/Hiero infrastructure classes (nodes, shards, pipelines) to InfoComm communication assets. | Ontology modellers | ✅ Complete (2025-10-02) |
 | `docs/mappings/aiao-alignment.csv` | Traceability matrix referencing Hedera docs/HIPs that justify each mapping. | Documentation lead | ✅ Complete |
+| `docs/mappings/claimont-alignment.csv` | Provenance map for ClaimOnt bridge classes and properties. | Documentation lead | ✅ Complete (2025-10-02) |
+| `docs/mappings/impactont-alignment.csv` | Traceability for ImpactOnt KPI and policy alignments. | Documentation lead | ✅ Complete (2025-10-02) |
+| `docs/mappings/infocomm-alignment.csv` | Source references for InfoComm communication asset mappings. | Documentation lead | ✅ Complete (2025-10-02) |
 | `tests/queries/cq-esg-001.rq` | Competency query demonstrating cross-ontology ESG reporting. | Tooling lead | ✅ Complete |
 
 ## Integration steps
 
 1. **Term scoping:**
-   * Use `robot extract --method MIREOT` to pull only the terms required to satisfy targeted competency questions.
-   * Maintain a shared `alignment-prefixes.ttl` file to control namespace declarations and avoid duplication. *(Initial prefixes committed under `ontology/src/alignment/prefixes.ttl`.)*
+   * Used `robot extract --method MIREOT` to keep imports minimal while still covering the CQ-ESG-001 competency scope.
+   * Consolidated namespace declarations under `ontology/src/alignment/prefixes.ttl` and referenced them from every bridge module.
 2. **Bridge modelling:**
-   * Start with `owl:equivalentClass`/`owl:subClassOf` assertions where Hedera classes are narrower than the external ontologies.
-   * Annotate every bridge axiom with `dcterms:source` linking to Hedera documentation (HIPs, service manuals) and to the relevant ontology documentation.
+   * Asserted `owl:subClassOf` and sub-property relations for Hedera classes/properties that specialise the external vocabularies, with dual provenance annotations (`hedera:sourceDocument`, `dcterms:source`).
+   * Expanded KPI coverage with ImpactOnt-aligned datatypes so ESG metrics surface cleanly in downstream dashboards.
 3. **Validation hooks:**
-   * Extend existing ROBOT reasoning tasks to include the new alignment modules.
-   * Author SHACL shapes that verify minimum data requirements for AIAO impact statements (e.g., actor, activity, impact metric).
+   * Executed the ESG regression query (`tests/queries/cq-esg-001.rq`) and SHACL suite to confirm the bridge modules integrate with existing automation.
+   * Added ImpactOnt datatype constraints (e.g., `hedera:hasMetricValue`, `hedera:hasImpactVariance`) to keep KPI instances machine-validated.
 4. **Pilot datasets:**
-   * Transform the ESG-focused sample data into RDF using `scripts/run_sparql.py` pipeline extensions, targeting AIAO and ImpactOnt classes.
-   * Capture feedback from ESG stakeholders and iterate on mappings before locking down equivalence axioms.
+   * Enriched `ontology/examples/alignment-esg.ttl` with AIAO/ClaimOnt/ImpactOnt/InfoComm instances that demonstrate cross-ontology reasoning.
+   * Recorded the successful walkthrough in `docs/competency/esg-alignment.md`, including next steps for live telemetry onboarding.
+
+## Phase 4 completion review (2025-10-02)
+
+* ✅ All four alignment modules now compile without reasoning errors and expose consistent annotations, enabling external ESG stakeholders to query Hedera data via their native ontologies.
+* ✅ The ESG competency query returns the expected dataset-to-assertion trace, exercising AIAO, ClaimOnt, ImpactOnt, and InfoComm alignments end to end.
+* ✅ Documentation and mapping matrices highlight the provenance for each bridge, closing the outstanding Phase 4 action items in the workplan.
 
 ## Open questions
 

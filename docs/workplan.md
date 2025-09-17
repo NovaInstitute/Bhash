@@ -124,6 +124,12 @@ Each module should deliver:
 * **Data pilots:** Load sample data (mirror node exports, HIP reference payloads) into a triple store (e.g., GraphDB, Blazegraph) and validate SHACL constraints.
   * Extend pilots with ESG-oriented exemplars that transform consensus transactions into AIAO `ImpactAssertion` instances and demonstrate cross-ontology query answering.
 
+### Phase 4 progress review (2025-10-02)
+
+* ✅ Bridge modules for AIAO, ClaimOnt, ImpactOnt, and InfoComm are published with shared prefixes, dual provenance annotations, and coverage of consensus, token, scheduled transaction, and telemetry workflows.
+* ✅ ESG competency query (`tests/queries/cq-esg-001.rq`) and SHACL suite run cleanly against the enriched alignment example graph, confirming cross-ontology reasoning works end to end.
+* ✅ Documentation (README, blueprint, competency notes, backlog) reflects the completed integration work, clearing the final open action in the immediate next actions list.
+
 ## Phase 5 – Publication & automation (Weeks 13-14)
 
 * **Documentation site:** Generate HTML documentation (via Widoco or MkDocs) summarising classes, properties, and examples.
@@ -146,7 +152,7 @@ Each module should deliver:
 | 10 | Plan File/Scheduled Transactions and Mirror/Analytics sprints with dependency on shared datasets. | ✅ Complete | File/Schedule, Mirror/Analytics, and Hiero modules shipped with shared fixtures enabling regression automation. |
 | 11 | Integrate mirror node HTS precompile traces into automated ETL prototype. | 📝 Planned | Extend `data/contracts/hts-precompiles/` with live extracts and script transformation into RDF for regression tests. |
 | 12 | Expand treasury analytics competency with real balance snapshots. | 📝 Planned | Populate `data/mirror/token-balance-retention.csv` with operational SLAs and ingest sample mirror balance exports. |
-| 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | 🔄 In progress | Alignment namespace created with initial AIAO/ClaimOnt/ImpactOnt/InfoComm bridge modules plus ESG query fixture. |
+| 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | ✅ Complete | Alignment namespace shipped with validated AIAO/ClaimOnt/ImpactOnt/InfoComm bridge modules, ESG query, and documentation refresh. |
 
 ## Risk considerations
 

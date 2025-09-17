@@ -1,0 +1,2 @@
+assertion,subject,indicator,value,sdgGoal,schedule,node
+https://bhash.dev/examples/esg/ReforestationAssertion,https://bhash.dev/examples/esg/CommunityTreasury,https://bhash.dev/examples/esg/ReforestationMetric,1250,https://datadudes.xyz/ontology/impactont#SDG15LifeOnLand,https://bhash.dev/examples/esg/ReforestationSchedule,https://bhash.dev/examples/esg/MirrorNodeAlpha

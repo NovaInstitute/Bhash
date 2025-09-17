@@ -1,11 +1,11 @@
 # Bhash: Hedera Network Ontology
 
-Bhash is an open knowledge engineering effort to describe the Hedera Network and the forthcoming Hiero architecture in a machine-interpretable way. The project captures the actors, assets, services, processes, and governance rules that appear across the Hedera Consensus Service (HCS), Token Service (HTS), Smart Contract Service (HSCS), File Service, Scheduled Transactions, mirror node ecosystem, and Hiero overlay. By modelling Hedera's public documentation and implementation guidance—including Hiero validator onboarding—we provide reusable semantics for analytics, compliance, education, and integration projects.
+Bhash is an open knowledge engineering effort to describe the Hedera Network and the forthcoming Hiero architecture in a machine-interpretable way. The project captures the actors, assets, services, processes, and governance rules that appear across the Hedera Consensus Service (HCS), Token Service (HTS), Smart Contract Service (HSCS), File Service, Scheduled Transactions, mirror node ecosystem, and Hiero overlay. By modelling Hedera's public documentation and implementation guidance—including Hiero validator onboarding—we provide reusable semantics for analytics, compliance, education, and integration projects. Phase 4 extends this scope with bridge modules that align Hedera-native concepts with the Anthropogenic Impact Accounting Ontology (AIAO), ClaimOnt, ImpactOnt, and InfoComm vocabularies so ESG and infrastructure teams can consume the ontology without bespoke transformations.
 
 ## Why an ontology?
 
 * **Shared vocabulary** – establish stable identifiers and definitions for Hedera-specific notions such as accounts, topics, tokens, scheduled transactions, staking nodes, and fee schedules.
-* **Interoperability** – align Hedera concepts with standard vocabularies (PROV-O, DCAT, W3C DID Core, etc.) so that data from mirror nodes, dApps, and compliance tools can interoperate.
+* **Interoperability** – align Hedera concepts with standard vocabularies (PROV-O, DCAT, W3C DID Core, etc.) and specialised ESG ontologies (AIAO, ClaimOnt, ImpactOnt, InfoComm) so that data from mirror nodes, dApps, sustainability disclosures, and compliance tools can interoperate.
 * **Reasoning & validation** – enable automated validation (via OWL reasoning and SHACL constraints) for network states, policy rules, token compliance requirements, smart contract metadata, and Hiero onboarding milestones.
 * **Documentation** – provide an authoritative reference that augments Hedera/Hiero manuals with explicit relationships that are otherwise scattered across prose and code.
 
@@ -23,6 +23,19 @@ Phase 3 targets service-specific ontology modules. The following artefacts are n
 | Hiero overlay | `ontology/src/hiero.ttl` | `ontology/shapes/hiero.shacl.ttl` | `ontology/examples/hiero.ttl` | `docs/competency/hiero.md` |
 
 Each module is backed by competency questions, SPARQL regression queries under `tests/queries/`, expected results in `tests/fixtures/results/`, and SHACL shapes verifying structural requirements.
+
+## External ontology alignment
+
+The Phase 4 integration sprint introduces dedicated bridge modules that expose Hedera artefacts to ESG and communications teams via four priority ontologies:
+
+| Bridge | File | Focus |
+| ------ | ---- | ----- |
+| AIAO alignment | `ontology/src/alignment/aiao.ttl` | Maps consensus evidence, scheduled transactions, and token reserve events to `aiao:ImpactAssertion` patterns for sustainability attestations. |
+| ClaimOnt alignment | `ontology/src/alignment/claimont.ttl` | Projects scheduled climate commitments and milestones into ClaimOnt mitigation/adaptation taxonomies. |
+| ImpactOnt alignment | `ontology/src/alignment/impactont.ttl` | Aligns treasury and compliance telemetry with ImpactOnt KPI, SDG, and policy structures. |
+| InfoComm alignment | `ontology/src/alignment/infocomm.ttl` | Describes mirror nodes, Hiero shards, and telemetry exchanges as InfoComm communication assets with latency/SLA annotations. |
+
+All four modules reuse the same prefixes (`ontology/src/alignment/prefixes.ttl`), cite Hedera/Hiero documentation alongside external ontology references, and are exercised by the ESG competency query (`tests/queries/cq-esg-001.rq`) plus the alignment example graph (`ontology/examples/alignment-esg.ttl`).
 
 ## Repository layout
 

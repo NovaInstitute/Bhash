@@ -1,0 +1,8 @@
+Term,Source Document,Notes
+hedera:ScheduledMitigationAction,https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/introduction,Scheduled transactions act as programmable mitigation disbursements that ClaimOnt classifies as MitigationAction.
+hedera:ClimateAdaptationSchedule,https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/how-scheduled-transactions-work,Recurring disbursements can finance adaptation projects that ClaimOnt models as AdaptationCommitment.
+hedera:ResilienceMilestone,https://docs.hedera.com/hiero/roadmap,Hiero milestones evidence resilience outcomes aligned with ClaimOnt's ResilienceOutcome.
+hedera:advancesClimateObjective,https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/introduction,Scheduled actions cite the climate objective they advance in alignment with ClaimOnt objectives.
+hedera:linkedImpactAssertion,https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/how-scheduled-transactions-work,Impact statements document the execution of scheduled climate actions per ClaimOnt guidance.
+hedera:tracksResilienceMilestone,https://docs.hedera.com/hiero/roadmap,Hiero programme milestones serve as indicators for ClaimOnt monitoring requirements.
+hedera:hasClimateWindow,https://docs.hedera.com/hedera/core-concepts/scheduled-transactions/how-scheduled-transactions-work,Reporting windows on scheduled actions map to ClaimOnt reporting period semantics.

@@ -118,7 +118,7 @@ Each module should deliver:
 
 * **Cross-module consistency:** Run reasoning to ensure shared classes/properties do not conflict; refactor to maintain OWL DL compliance.
 * **External alignment:** Create equivalence/subClassOf relations to external ontologies, document alignments, and resolve semantic gaps.
-  * Prioritise Anthropogenic Impact Accounting Ontology (AIAO), CliaMont, ImpactOnt, and InfoComm mappings so Hedera ESG, sustainability, and infrastructure narratives can reuse established semantics.
+  * Prioritise Anthropogenic Impact Accounting Ontology (AIAO), ClaimOnt, ImpactOnt, and InfoComm mappings so Hedera ESG, sustainability, and infrastructure narratives can reuse established semantics.
   * Produce ROBOT templates for bridge modules (`ontology/src/alignment/aiao.ttl`, etc.) that materialise `owl:equivalentClass`/`owl:subClassOf` axioms and annotate provenance back to Hedera documentation.
   * Schedule expert review workshops with ESG stakeholders to validate impact- and climate-focused alignments before asserting strong equivalences.
 * **Data pilots:** Load sample data (mirror node exports, HIP reference payloads) into a triple store (e.g., GraphDB, Blazegraph) and validate SHACL constraints.
@@ -146,7 +146,7 @@ Each module should deliver:
 | 10 | Plan File/Scheduled Transactions and Mirror/Analytics sprints with dependency on shared datasets. | ✅ Complete | File/Schedule, Mirror/Analytics, and Hiero modules shipped with shared fixtures enabling regression automation. |
 | 11 | Integrate mirror node HTS precompile traces into automated ETL prototype. | 📝 Planned | Extend `data/contracts/hts-precompiles/` with live extracts and script transformation into RDF for regression tests. |
 | 12 | Expand treasury analytics competency with real balance snapshots. | 📝 Planned | Populate `data/mirror/token-balance-retention.csv` with operational SLAs and ingest sample mirror balance exports. |
-| 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | 🔄 In progress | Alignment namespace created with initial AIAO/CliaMont/ImpactOnt/InfoComm bridge modules plus ESG query fixture. |
+| 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | 🔄 In progress | Alignment namespace created with initial AIAO/ClaimOnt/ImpactOnt/InfoComm bridge modules plus ESG query fixture. |
 
 ## Risk considerations
 

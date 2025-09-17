@@ -1,6 +1,6 @@
 PREFIX hedera: <https://bhash.dev/hedera/core/>
 PREFIX aiao: <https://datadudes.xyz/ontology/aiao#>
-PREFIX cliamont: <https://datadudes.xyz/ontology/cliamont#>
+PREFIX claimont: <https://datadudes.xyz/claimont#>
 PREFIX impactont: <https://datadudes.xyz/ontology/impactont#>
 PREFIX infocomm: <https://datadudes.xyz/ontology/infocomm#>
 
@@ -19,7 +19,7 @@ WHERE {
 
   OPTIONAL {
     ?assertion hedera:deliveredBySchedule ?schedule .
-    ?schedule a cliamont:MitigationAction .
+    ?schedule a claimont:MitigationAction .
   }
 
   OPTIONAL {

@@ -77,12 +77,13 @@ go run ./cmd/bhashctl hedera bootstrap # Create Hedera artefacts and export onto
 ```
 
 The CLI reuses the repository fixtures and reports mismatches against expected
-snapshots. A legacy Python harness is still present under `scripts/` for historical
-reference, but new automation should target the Go workflow.
+snapshots. A handful of legacy Python harnesses remain under `scripts/` while
+their Go replacements are scheduled, but new automation should target the Go
+workflow.
 
 ## Phase 4 data pilot
 
-Run `python scripts/run_phase4_pilot.py` to initialise an Oxigraph-backed triple store with the Phase 3/4 ontologies and example graphs. The script executes the anthropogenic impact competency query, runs SHACL validation, and records artefacts under `build/pilots/phase4/` for stakeholder review.
+Run `python scripts/run_phase4_pilot.py` to initialise an Oxigraph-backed triple store with the Phase 3/4 ontologies and example graphs. The script executes the anthropogenic impact competency query, runs SHACL validation, and records artefacts under `build/pilots/phase4/` for stakeholder review. A Go-native pilot command is on the roadmap; see `docs/python_helper_migration_plan.md` for the migration schedule.
 
 ## Supporting datasets
 

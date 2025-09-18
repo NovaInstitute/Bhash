@@ -31,8 +31,8 @@ shacl: python-venv
 sparql: python-venv
 	$(PYTHON_BIN) scripts/run_sparql.py
 
-fluree-smoke: python-venv
-	$(PYTHON_BIN) -m pytest -m fluree_smoke tests/test_fluree_client.py
+fluree-smoke:
+        go test ./internal/fluree ./scripts/flureeclient
 
 clean:
 	rm -rf build

@@ -32,7 +32,7 @@ Phase 4 introduces the cross-ontology assets required to exercise CQ-IMPACT-001 
 
 ### Triple store data pilot
 
-Run `python scripts/run_phase4_pilot.py` to initialise an Oxigraph-backed triple store, load the alignment ontologies and expanded sample data, execute `cq-impact-001`, and persist evidence under `build/pilots/phase4/`.
+Run `python scripts/run_phase4_pilot.py` to initialise an Oxigraph-backed triple store, load the alignment ontologies and expanded sample data, execute `cq-impact-001`, and persist evidence under `build/pilots/phase4/`. A Go-based pilot command is planned as part of the Python helper retirement workstream.
 
 * `build/pilots/phase4/cq-impact-001.csv` – live query results exported from the Oxigraph store.
 * `build/pilots/phase4/shacl-report.txt` / `.ttl` – SHACL validation transcript derived from the triple store dump.

@@ -10,7 +10,7 @@ Phase 0 establishes the shared tooling required to research, author, and continu
 | Ontology authoring | Protégé | Interactive OWL editing, class hierarchy management, annotation authoring. | Install Protégé 5.5+; configure the Bhash namespace prefix and enable reasoning with HermiT/ELK for spot checks. |
 | Automation & validation | **Go CLI (`cmd/bhashctl`)** | Orchestrates ROBOT-driven SPARQL suites and TopBraid SHACL validation while keeping fixtures in sync. | Install Go 1.21+. Run `go run ./cmd/bhashctl install` to download ROBOT and the TopBraid SHACL CLI into `build/tools/`, then reuse `go run ./cmd/bhashctl {sparql,shacl}` for checks. |
 | Underlying ontology automation | ROBOT | CLI executed by `bhashctl` for reasoning, report generation, and release assembly. | Advanced users can call `robot` directly; the Go CLI fetches the jar automatically and exposes configuration under `internal/tools`. |
-| Legacy data scripting | Python 3 + RDFlib (optional) | Historical ingestion helpers and Fluree prototypes awaiting Go ports. | Create a virtual environment manually (`python3 -m venv build/venv && build/venv/bin/pip install -r requirements.txt`) if you need to run scripts under `scripts/`. |
+| Legacy data scripting | Python 3 + RDFlib (optional) | Historical ingestion helpers slated for migration to Go (`run_phase4_pilot.py`, `run_shacl.py`, `run_sparql.py`). | Only install a virtual environment (`python3 -m venv build/venv && build/venv/bin/pip install -r requirements.txt`) when the remaining Python scripts are required. |
 
 ## Why ROBOT for automation?
 
@@ -53,7 +53,7 @@ exec java -jar "$(dirname "$0")/../opt/robot/robot.jar" "$@"
 
 ### Fluree Cloud credentials
 
-Phase A introduces a lightweight Python client for the Fluree Cloud HTTP API. Networked tests and CLI helpers expect the following environment variables:
+Phase A introduces a lightweight Go client for the Fluree Cloud HTTP API. Networked tests and CLI helpers expect the following environment variables:
 
 | Variable | Purpose |
 | --- | --- |
@@ -61,7 +61,7 @@ Phase A introduces a lightweight Python client for the Fluree Cloud HTTP API. 
 | `FLUREE_HANDLE` | Tenant handle that prefixes Cloud API routes. |
 | `FLUREE_BASE_URL` (optional) | Override for non-production tenants; defaults to `https://data.flur.ee`. |
 
-Integration tests marked with `@pytest.mark.fluree_live` remain skipped unless both the credentials are present **and** `pytest` is invoked with `--run-fluree`. Offline smoke tests use mocked HTTP responses and are safe to run by default.
+Integration tests are opt-in: pass `-run-fluree` to `go test ./internal/fluree` and export `FLUREE_DATASET` alongside the credentials. Unit tests rely on mocked HTTP servers and remain safe to run by default.
 
 ## Codex collaboration guidelines
 

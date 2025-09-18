@@ -73,6 +73,7 @@ go run ./cmd/bhashctl install          # Fetch ROBOT + TopBraid SHACL into build
 go run ./cmd/bhashctl sparql           # Execute SPARQL regression queries via ROBOT
 go run ./cmd/bhashctl shacl            # Run SHACL validation with the TopBraid CLI
 go run ./cmd/bhashctl fluree transact  # Apply JSON-LD transactions to a Fluree ledger
+go run ./cmd/bhashctl hedera bootstrap # Create Hedera artefacts and export ontology-aligned JSON-LD
 ```
 
 The CLI reuses the repository fixtures and reports mismatches against expected

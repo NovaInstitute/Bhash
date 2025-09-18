@@ -6,6 +6,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -14,6 +15,8 @@ import (
 	"github.com/hashgraph/bhash/internal/fluree"
 	"github.com/hashgraph/bhash/internal/tools"
 )
+
+var outputWriter io.Writer = os.Stdout
 
 func main() {
 	if len(os.Args) < 2 {
@@ -30,6 +33,8 @@ func main() {
 		runSparql(os.Args[2:])
 	case "fluree":
 		runFluree(os.Args[2:])
+	case "hedera":
+		runHedera(os.Args[2:])
 	default:
 		usage()
 		os.Exit(1)
@@ -37,7 +42,7 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintf(os.Stderr, "Usage: %s <install|shacl|sparql|fluree> [options]\n", filepath.Base(os.Args[0]))
+	fmt.Fprintf(os.Stderr, "Usage: %s <install|shacl|sparql|fluree|hedera> [options]\n", filepath.Base(os.Args[0]))
 }
 
 func runInstall(args []string) {
@@ -313,7 +318,7 @@ func loadJSONMap(path string) (map[string]any, error) {
 }
 
 func printJSON(value any) {
-	encoder := json.NewEncoder(os.Stdout)
+	encoder := json.NewEncoder(outputWriter)
 	encoder.SetIndent("", "  ")
 	if err := encoder.Encode(value); err != nil {
 		fmt.Fprintf(os.Stderr, "encode JSON: %v\n", err)

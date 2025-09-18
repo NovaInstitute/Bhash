@@ -46,7 +46,13 @@ if __package__ in (None, ""):
 
 from hedera import AccountId, Client, PrivateKey, TopicCreateTransaction
 
-from scripts.fluree_client import FlureeClient, FlureeClientError, FlureeConfig
+try:  # pragma: no cover - transitional compatibility layer
+    from scripts.fluree_client import FlureeClient, FlureeClientError, FlureeConfig  # type: ignore
+except ModuleNotFoundError as exc:  # pragma: no cover - transitional compatibility layer
+    raise RuntimeError(
+        "The Python Fluree client has been replaced by the Go implementation. "
+        "Use 'go run ./cmd/bhashctl hedera bootstrap' or the scripts/flureeclient package instead."
+    ) from exc
 
 LOGGER = logging.getLogger("hedera_fluree")
 

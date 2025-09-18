@@ -20,9 +20,9 @@
 ## 2. Testing & example integration strategy
 
 ### 2.1 Local automation guardrails
-- Add environment-aware pytest fixtures that read `FLUREE_API_TOKEN`, `FLUREE_HANDLE`, and optional dataset identifiers. Skip network tests when secrets are absent.
-- Create a shared helper in `scripts/` (e.g., `scripts/fluree_client.py`) that wraps Cloud API calls, handles headers, and centralises logging for debugging.
-- Use `responses` or `pytest-vcr` to mock Cloud API responses for unit-level tests so CI can run without external dependencies; integration suites can run selectively with `--run-fluree` marker.
+- Add environment-aware Go test helpers that read `FLUREE_API_TOKEN`, `FLUREE_HANDLE`, and optional dataset identifiers. Skip network tests when secrets are absent.
+- Create a shared helper in `scripts/` (for example, `scripts/flureeclient`) that wraps Cloud API calls, handles headers, and centralises logging for debugging.
+- Use Go's `httptest` package (or a lightweight HTTP mock library) to stub Cloud API responses for unit-level tests so CI can run without external dependencies; integration suites can run selectively with the `-run-fluree` flag.
 
 ### 2.2 Dataset provisioning for tests
 - Automate dataset creation during integration tests only when a `FLUREE_TEST_DATASET` variable is absent; otherwise reuse configured dataset to avoid quota exhaustion.
@@ -54,7 +54,7 @@
 
 | Phase | Focus | Key tasks | Owners |
 | --- | --- | --- | --- |
-| Phase A (Week 1) | Enable tooling | - Implement `scripts/fluree_client.py` and pytest fixtures.<br>- Document required secrets in `docs/tooling/toolchain.md`.<br>- Create smoke test using a mock dataset. | Ontology tooling team |
+| Phase A (Week 1) | Enable tooling | - Implement `scripts/flureeclient` (Go) and integration flags.<br>- Document required secrets in `docs/tooling/toolchain.md`.<br>- Create smoke test using a mock dataset. | Ontology tooling team |
 | Phase B (Week 2) | Dataset bootstrapping | - Convert existing example graphs to JSON-LD inserts.<br>- Automate `/fluree/transact` seeding for staging dataset.<br>- Capture dataset metadata in `data/fluree/fixtures.json`. | Data engineering |
 | Phase C (Week 3) | `f:DataModel` build | - Generate initial data model referencing core ontology modules.<br>- Validate LLM chat responses against competency Qs.<br>- Iterate on prompt templates to improve answers. | Ontology modelling |
 | Phase D (Week 4) | Documentation & CI | - Publish tutorial notebook + CLI walkthrough.<br>- Add integration test marker to CI.<br>- Schedule weekly smoke tests with real API credentials. | DevRel & QA |

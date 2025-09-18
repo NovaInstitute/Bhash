@@ -1,13 +1,16 @@
 # Python Helper Replacement Status
 
 All developer tooling that previously relied on the Python helpers under `scripts/`
-now has first-class support inside the Go-based `bhashctl` CLI. The sections below
-summarise the new commands and packages that replace the legacy utilities.
+now has first-class support inside the Go-based toolchain. The sections below
+summarise the new commands and packages that replace the legacy utilities and
+highlight any remaining Python entry points that still need attention.
 
 ## Fluree client tooling
 
 The responsibilities of `scripts/fluree_client.py` are now covered by the
-`internal/fluree` package and the `bhashctl fluree` command family.
+`internal/fluree` package, the `scripts/flureeclient` Go helper (exposing
+structured logging for Cloud debugging), and the `bhashctl fluree` command
+family.
 
 ### Highlights
 
@@ -21,9 +24,10 @@ The responsibilities of `scripts/fluree_client.py` are now covered by the
   * `transact` – apply JSON-LD transactions pulled from local fixture files.
   * `generate-sparql`, `generate-answer`, and `generate-prompt` – invoke the
     Fluree assistant endpoints used by regression harnesses.
-* **Regression parity** – the new client is covered by unit tests that verify
-  request/response handling and error propagation so the Go implementation can
-  be safely reused across CLI code and test fixtures.
+* **Regression parity** – the Go client and the logging wrapper are covered by
+  unit tests that verify request/response handling and error propagation. Live
+  integration checks can be enabled with `go test ./internal/fluree -run-fluree`
+  once the `FLUREE_*` secrets and `FLUREE_DATASET` identifiers are exported.
 
 ### Usage
 
@@ -63,5 +67,8 @@ completed.
 * Port the Hedera bridge to Go with retry/idempotency semantics and tests.
 * Reimplement the Phase 4 pilot harness on top of shared Go utilities so the
   entire developer experience is consolidated within `bhashctl`.
-* Once contributors are comfortable with the Go replacements, retire the legacy
-  Python scripts and remove the associated dependencies.
+* Replace the remaining Python utilities (`run_phase4_pilot.py`,
+  `run_shacl.py`, and `run_sparql.py`) with Go equivalents and update the
+  Makefile targets accordingly.
+* Once the replacements land, remove the Python runtime dependency and delete
+  the legacy scripts.

@@ -1,6 +1,16 @@
 # Bhash: Hedera Network Ontology
 
-Bhash is an open knowledge engineering effort to describe the Hedera Network and the forthcoming Hiero architecture in a machine-interpretable way. The project captures the actors, assets, services, processes, and governance rules that appear across the Hedera Consensus Service (HCS), Token Service (HTS), Smart Contract Service (HSCS), File Service, Scheduled Transactions, mirror node ecosystem, and Hiero overlay. By modelling Hedera's public documentation and implementation guidance—including Hiero validator onboarding—we provide reusable semantics for analytics, compliance, education, and integration projects. Phase 4 extends this scope with bridge modules that align Hedera-native concepts with the Anthropogenic Impact Accounting Ontology (AIAO), ClaimOnt, ImpactOnt, and InfoComm vocabularies so anthropogenic impact and infrastructure teams can consume the ontology without bespoke transformations.
+Bhash is an open knowledge engineering effort to describe the Hedera Network and the forthcoming Hiero architecture in a machine-interpretable way. The project captures the actors, assets, services, processes, and governance rules that appear across:
+
+* Hedera Consensus Service (HCS),
+* Token Service (HTS),
+* Smart Contract Service (HSCS),
+* File Service,
+* Scheduled Transactions,
+* mirror node ecosystem, and
+* Hiero overlay.
+
+By modelling Hedera's public documentation and implementation guidance—including Hiero validator onboarding—we provide reusable semantics for analytics, compliance, education, and integration projects. Phase 4 extends this scope with bridge modules that align Hedera-native concepts with the Anthropogenic Impact Accounting Ontology (AIAO), ClaimOnt, ImpactOnt, and InfoComm vocabularies so anthropogenic impact and infrastructure teams can consume the ontology without bespoke transformations.
 
 ## Why an ontology?
 

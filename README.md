@@ -10,7 +10,11 @@ Bhash is an open knowledge engineering effort to describe the Hedera Network and
 * mirror node ecosystem, and
 * Hiero overlay.
 
-By modelling Hedera's public documentation and implementation guidance—including Hiero validator onboarding—we provide reusable semantics for analytics, compliance, education, and integration projects. Phase 4 extends this scope with bridge modules that align Hedera-native concepts with the Anthropogenic Impact Accounting Ontology (AIAO), ClaimOnt, ImpactOnt, and InfoComm vocabularies so anthropogenic impact and infrastructure teams can consume the ontology without bespoke transformations.
+By modelling Hedera's public documentation and implementation guidance—including Hiero validator onboarding—we provide reusable semantics for analytics, compliance, education, and integration projects. Phase 4 extends this scope with bridge modules that align Hedera-native concepts with the 
+* Anthropogenic Impact Accounting Ontology (AIAO),
+* Claim Ontology,
+* Impact Ontology, and
+* Information Communication Ontology
 
 ## Why an ontology?
 

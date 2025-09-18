@@ -86,6 +86,7 @@ Deliver OWL modules iteratively; each sprint targets one service.
 * Governance traceability for validator stewardship now closes CQ-GOV-001-B, with committee classes, stewardship properties, and refreshed fixtures tying council rosters to HIP mandates. [`docs/competency/backlog.md`](competency/backlog.md) · [`docs/competency/evidence/CQ-GOV-001.md`](competency/evidence/CQ-GOV-001.md)
 * Smart Contracts, File/Schedule, Mirror/Analytics, and Hiero overlay modules are modelled with corresponding SHACL shapes, sample graphs, and competency assets, unblocking the remaining Phase 3 backlog. [`ontology/src`](../ontology/src) · [`docs/competency`](competency)
 * Shared datasets and automation hooks were added so the new modules can reuse SPARQL and SHACL pipelines (e.g., updated `scripts/run_sparql.py`, new fixtures under `data/`). [`scripts/run_sparql.py`](../scripts/run_sparql.py) · [`data/`](../data)
+* ✅ Operational integrations now cover Hedera artefact bootstrapping and Fluree persistence: the `bhashctl hedera bootstrap` flow provisions accounts/topics/tokens via the SDK-backed `internal/hedera` package and optionally commits ontology-aligned JSON-LD transactions through `internal/fluree`. [`cmd/bhashctl/hedera_cmd.go`](../cmd/bhashctl/hedera_cmd.go) · [`internal/hedera`](../internal/hedera) · [`internal/fluree`](../internal/fluree)
 
 **Outstanding**
 
@@ -178,8 +179,10 @@ Each module should deliver:
 | 12 | Expand treasury analytics competency with real balance snapshots. | 📝 Planned | Populate `data/mirror/token-balance-retention.csv` with operational SLAs and ingest sample mirror balance exports. |
 | 13 | Initiate Phase 4 alignment sprint focusing on AIAO equivalences. | ✅ Complete | Alignment namespace shipped with validated AIAO/ClaimOnt/ImpactOnt/InfoComm bridge modules, anthropogenic impact query, and documentation refresh. |
 | 14 | Run the Phase 4 data pilot in a managed triple store and capture SHACL/SPARQL evidence for anthropogenic impact alignments. | ✅ Complete | `scripts/run_phase4_pilot.py` provisions an Oxigraph store, loads Phase 3/4 artefacts, and stores evidence in `build/pilots/phase4/`. |
-| 15 | Design Hedera Go SDK integration surfaces aligned with ontology constructs. | 🆕 Proposed | Audit `hiero-sdk-go` for account/topic/token operations, define abstraction interfaces, and plan configuration management for credentials and network targeting. |
-| 16 | Implement Fluree ingestion layer and link to Hedera artefact workflows. | 🆕 Proposed | Model Fluree collections/predicates from ontology classes, create HTTP client package, and script end-to-end artefact creation + persistence scenarios. |
+| 15 | Design Hedera Go SDK integration surfaces aligned with ontology constructs. | ✅ Complete | `internal/hedera` now wraps the Go SDK with deterministic mocks, JSON-LD export helpers, and CLI wiring so ontology bootstrap specs create live artefacts when credentials are supplied. |
+| 16 | Implement Fluree ingestion layer and link to Hedera artefact workflows. | ✅ Complete | `internal/fluree` ships a typed HTTP client that `bhashctl hedera bootstrap --commit` uses to persist ontology-aligned transactions, enabling Phase 3G end-to-end demos. |
+| 17 | Draft Phase 5 release automation plan (Widoco/MkDocs, semantic versioning). | 🆕 Proposed | Outline packaging steps, documentation site generation, and release-notes structure aligned with Phase 5 goals. |
+| 18 | Define CI workflow to run `bhashctl` regression suites and Go unit tests. | 🆕 Proposed | Document GitHub Actions (or equivalent) that execute SPARQL/SHACL checks, Go tests, and linting so operational integrations remain healthy. |
 
 ## Risk considerations
 

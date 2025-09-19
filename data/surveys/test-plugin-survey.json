@@ -1,0 +1,49 @@
+{
+  "id": "test-plugin-survey",
+  "title": "Plugin Smoke Test Survey",
+  "description": "A short five-question survey for exercising survey ingestion and response flows during plugin testing.",
+  "language": "en",
+  "version": "0.1.0",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "single_choice",
+      "text": "How familiar are you with the Bhash ontology project?",
+      "options": [
+        { "id": "q1o1", "label": "Not at all familiar" },
+        { "id": "q1o2", "label": "Somewhat familiar" },
+        { "id": "q1o3", "label": "Very familiar" }
+      ]
+    },
+    {
+      "id": "q2",
+      "type": "rating",
+      "scale": { "min": 1, "max": 5, "label_min": "Poor", "label_max": "Excellent" },
+      "text": "Rate the ease of installing and running the Bhash plugin tooling."
+    },
+    {
+      "id": "q3",
+      "type": "multi_choice",
+      "text": "Which Bhash modules are you most interested in exploring?",
+      "options": [
+        { "id": "q3o1", "label": "Consensus service" },
+        { "id": "q3o2", "label": "Token service" },
+        { "id": "q3o3", "label": "Smart contract service" },
+        { "id": "q3o4", "label": "Mirror and analytics" }
+      ],
+      "allow_other": true
+    },
+    {
+      "id": "q4",
+      "type": "text",
+      "text": "What is the primary goal you hope to achieve while testing the plugin?",
+      "placeholder": "Describe your testing goal"
+    },
+    {
+      "id": "q5",
+      "type": "boolean",
+      "text": "Would you like to participate in future feedback sessions?",
+      "labels": { "true": "Yes, keep me in the loop", "false": "No, not right now" }
+    }
+  ]
+}
